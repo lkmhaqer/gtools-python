@@ -2,4 +2,21 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-# Create your models here.
+class neighbor(models.Model):
+    aut_num = models.ForeignKey('aut_num', on_delete=models.CASCADE)
+    peer_ip = models.GenericIPAddressField(unpack_ipv4=True)
+    soft_inbound = models.BooleanField()
+
+class router(models.Model):
+    router_id = models.GenericIPAddressField(unpack_ipv4=True)
+    hostname = models.CharField(max_length=255)
+    ibgp = models.BooleanField()
+    network_os = models.ForeignKey('network_os', on_delete=models.CASCADE)
+
+class network_os(models.Model):
+    name = models.CharField(max_length=255)
+
+class aut_num(models.Model):
+    asn = models.IntegerField()
+    name = models.CharField(max_length=255)
+    contact = models.EmailField()
