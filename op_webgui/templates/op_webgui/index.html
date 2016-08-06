@@ -1,0 +1,11 @@
+{% load bootstrap3 %}
+
+{% if router_list %}
+    <ul>
+    {% for router in router_list %}
+        <li><a href="{% url 'op_webgui:router_detail' router.id %}">{{ router.hostname }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No routers ¯\_(ツ)_/¯</p>
+{% endif %}
