@@ -9,7 +9,7 @@ class neighbor(models.Model):
     soft_inbound = models.BooleanField(default=1)
 
     def __str__(self):
-        return self.peer_ip
+        return self.aut_num.name + " - " + self.router.hostname + " " + self.peer_ip
 
 class router(models.Model):
     routing_id = models.GenericIPAddressField(unpack_ipv4=True)
@@ -27,7 +27,7 @@ class network_os(models.Model):
         return self.name
 
 class aut_num(models.Model):
-    asn = models.BigIntegerField()
+    asn = models.BigIntegerField(unique=True)
     name = models.CharField(max_length=255)
     contact = models.EmailField(blank=True)
 
