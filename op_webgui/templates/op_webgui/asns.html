@@ -1,0 +1,19 @@
+{% extends 'op_webgui/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}{% block title %}ASN List{% endblock %}{% endblock %}
+
+{% block content %}
+
+    {% if asn_list %}
+        <ul>
+        {% for asn in asn_list %}
+            <li><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No ASNs ¯\_(ツ)_/¯</p>
+    {% endif %}
+
+{% endblock %}
