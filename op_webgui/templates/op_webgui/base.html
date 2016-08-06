@@ -1,0 +1,20 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_content %}
+
+    <div class="container">
+        <h1>{% block title %}(no title){% endblock %}</h1>
+
+        <p>
+          <ul class="nav nav-tabs">
+            <li role="presentation"><a href="{% url 'op_webgui:index' %}">routers</a></li>
+          </ul>
+        </p>
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+        {% block content %}(no content){% endblock %}
+    </div>
+
+{% endblock %}
