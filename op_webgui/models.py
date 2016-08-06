@@ -32,4 +32,4 @@ class aut_num(models.Model):
     contact = models.EmailField(blank=True)
 
     def __str__(self):
-        return str(self.asn) + " - " + self.name + " (" + self.contact + ")"
+        return str(self.asn) + ": " + self.name + " (" + self.contact + ")"
