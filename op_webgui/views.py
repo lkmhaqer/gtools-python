@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
 
 from .models import router, aut_num
@@ -7,7 +8,17 @@ def index(request):
     return render(request, 'op_webgui/index.html', {'router_list': router_list})
 
 def asn(request):
-    asn_list = aut_num.objects.order_by('asn')
+    asns = aut_num.objects.order_by('asn')
+    paginator = Paginator(asns, 20)
+
+    page = request.GET.get('page')
+    try:
+        asn_list = paginator.page(page)
+    except PageNotAnInteger:
+        asn_list = paginator.page(1)
+    except EmptyPage:
+        asn_list = paginator.page(paginator.num_pages)
+
     return render(request, 'op_webgui/asns.html', {'asn_list': asn_list})
 
 def aut_num_detail(request, aut_num_id):
