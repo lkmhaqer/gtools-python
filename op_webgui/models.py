@@ -28,7 +28,7 @@ class network_os(models.Model):
 class aut_num(models.Model):
     asn = models.BigIntegerField()
     name = models.CharField(max_length=255)
-    contact = models.EmailField(blank=False)
+    contact = models.EmailField(blank=True)
 
     def __str__(self):
-        return self.asn + " - " + self.name
+        return str(self.asn) + " - " + self.name
