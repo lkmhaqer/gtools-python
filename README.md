@@ -1,7 +1,7 @@
 # gtools-python
 A re-write of gurrilla tools in Python with the Django framework.
 
-Built with: Django==1.10, MySQL-python==1.2.5
+Built with: Django==1.10, MySQL-python==1.2.5, django-bootstrap3==7.0.1
 
 ## Install
 
