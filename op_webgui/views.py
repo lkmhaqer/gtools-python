@@ -38,3 +38,9 @@ def aut_num_detail(request, aut_num_id):
 def router_detail(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
     return render(request, 'op_webgui/router.html', {'router': router_obj})
+
+def router_config(request, router_id):
+    router_obj = get_object_or_404(router, pk=router_id)
+    router_list = router.objects.exclude(id=router_id)
+    nos = router_obj.network_os.name
+    return render(request, 'op_webgui/' + nos + '.config.html', {'router': router_obj, 'router_list': router_list})

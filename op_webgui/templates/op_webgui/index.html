@@ -9,7 +9,10 @@
     {% if router_list %}
         <ul>
         {% for router in router_list %}
-            <li><a href="{% url 'op_webgui:router_detail' router.id %}">{{ router.hostname }}</a></li>
+            <li>
+                <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-default btn-xs">config</a>
+                <a href="{% url 'op_webgui:router_detail' router.id %}">{{ router.hostname }}</a>
+            </li>
         {% endfor %}
         </ul>
     {% else %}

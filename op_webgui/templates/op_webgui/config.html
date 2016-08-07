@@ -1,0 +1,12 @@
+{% extends 'op_webgui/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}{% block title %}Router {{ router.hostname }} Config{% endblock %}{% endblock %}
+
+{% block content %}
+
+    Here is the config for {{ router.network_os }}:
+    <pre>{% block device_config %}{% endblock %}</pre>
+
+{% endblock %}
