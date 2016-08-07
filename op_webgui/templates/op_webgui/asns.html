@@ -12,24 +12,9 @@
             <li><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn }}</a></li>
         {% endfor %}
         </ul>
+        {% bootstrap_pagination asn_list %}
     {% else %}
         <p>No ASNs ¯\_(ツ)_/¯</p>
     {% endif %}
-
-        <div class="pagination">
-            <span class="step-links">
-                {% if asn_list.has_previous %}
-                    <a href="?page={{ asn_list.previous_page_number }}">previous</a>
-                {% endif %}
-
-            <span class="current">
-                page {{ asn_list.number }} of {{ asn_list.paginator.num_pages }}
-            </span>
-
-            {% if asn_list.has_next %}
-                <a href="?page={{ asn_list.next_page_number }}">next</a>
-            {% endif %}
-            </span>
-        </div>
 
 {% endblock %}
