@@ -10,7 +10,7 @@ To get a basic copy running with the built in httpd, there should just be a few 
 Virtualenv is a good idea, but I leave that up to you. You'll want to have python, django, and the database libraries of your choice. (MySQL by default in this project.)
 
 * Example for Debian/Ubuntu: `apt-get install python-pip python-dev libmysqlclient-dev`
-* Install Python libraries: `pip install -r requitements.txt`
+* Install Python libraries: `pip install -r requirements.txt`
 * Check out the code: `git clone https://github.com/lkmhaqer/gtools-python.git`
 * Move to your new directory: `cd gtools-python`
 
