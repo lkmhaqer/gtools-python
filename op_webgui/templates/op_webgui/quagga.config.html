@@ -10,7 +10,7 @@ router bgp 4242420031
  neighbor ibgp update-source {{ router.routing_id }}
  neighbor ibgp next-hop-self
  neighbor ibgp soft-reconfiguration inbound
-{% for router in router_list %} neighbor {{ router.routing_id }} peer-gourp ibgp
+{% for router in router_list %} neighbor {{ router.routing_id }} peer-group ibgp
 {% endfor %}{% for neighbor in router.neighbor_set.all %} neighbor {{ neighbor.peer_ip }} remote-as {{ neighbor.aut_num.asn }}
  neighbor {{ neighbor.peer_ip }} soft-reconfiguration inbound
  neighbor {{ neighbor.peer_ip }} prefix-list dn42 in
