@@ -5,10 +5,16 @@ from .models import router, aut_num
 
 def index(request):
     router_list = router.objects.order_by('hostname')
-    return render(request, 'op_webgui/index.html', {'router_list': router_list})
+    router_count = router_list.count()
+    context = {
+        'router_list': router_list,
+        'router_count': router_count,
+    }
+    return render(request, 'op_webgui/index.html', context)
 
 def asn(request):
     asns = aut_num.objects.order_by('asn')
+    asn_count = asns.count()
     paginator = Paginator(asns, 20)
 
     page = request.GET.get('page')
@@ -19,7 +25,11 @@ def asn(request):
     except EmptyPage:
         asn_list = paginator.page(paginator.num_pages)
 
-    return render(request, 'op_webgui/asns.html', {'asn_list': asn_list})
+    context = {
+        'asn_list': asn_list,
+        'asn_count': asn_count,
+    }
+    return render(request, 'op_webgui/asns.html', context)
 
 def aut_num_detail(request, aut_num_id):
     aut_num_obj = get_object_or_404(aut_num, pk=aut_num_id)

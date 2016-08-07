@@ -9,11 +9,23 @@
 
         <p>
           <ul class="nav nav-tabs">
-            <li role="presentation"><a href="{% url 'op_webgui:index' %}">routers</a></li>
-            <li role="presentation"><a href="{% url 'op_webgui:asn' %}">aut-num</a></li>
+
+            <li role="presentation"{% if router_count %} class="active"{% endif %}>
+              <a href="{% url 'op_webgui:index' %}">routers
+                {% if router_count %}&nbsp;<span class="badge">{{ router_count }}</span>{% endif %}
+              </a>
+            </li>
+
+            <li role="presentation"{% if asn_count %} class="active"{% endif %}>
+              <a href="{% url 'op_webgui:asn' %}">aut-num 
+                {% if asn_count %}&nbsp;<span class="badge">{{ asn_count }}</span>{% endif %}
+              </a>
+            </li>
+
             <li role="presentation"><a href="{% url 'admin:index' %}">admin</a></li>
+
           </ul>
-        </p>
+        <p>
         {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 
         {% block content %}(no content){% endblock %}
