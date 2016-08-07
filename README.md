@@ -21,3 +21,7 @@ Once you have your database, and user setup for mysql, simply run django's migra
 * Start the webserver on all IPs: `python manage.py runserver 0.0.0.0:8000`
 
 Now you should be able to navigate to your host on port 8000 and see your new gtools install!
+
+## Device Specific Template Files
+
+So, you have all your data in gtools, now to generate router configs! All device configs are located in `$INSTALL_DIR/op_webgui/templates/op_webgui/`, some examples are included for Quagga and bird.
