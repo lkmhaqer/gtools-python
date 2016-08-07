@@ -14,7 +14,6 @@ protocol device {
 
 protocol direct {
   interface "lo*";
-  interface "tun-dn42-client";
 }
 
 protocol static {
@@ -27,7 +26,7 @@ protocol static {
 log "/var/log/bird/daemon" all;
 
 define OWNAS = 4242420031;
-define OWNIP = 172.22.150.127;
+define OWNIP = {{ router.routing_id }};
 
 function is_self_net() {
   return net ~ [172.22.150.64/26+];
@@ -95,14 +94,13 @@ template bgp dnpeers {
     reject;
   };
   route limit 10000;
-  source address OWNIP;
 };
 
 template bgp ibgp {
   local as OWNAS;
   path metric 1;
   route limit 10000;
-  source address 172.22.150.126;
+  source address OWNIP;
   gateway recursive;
   next hop self;
   import filter {

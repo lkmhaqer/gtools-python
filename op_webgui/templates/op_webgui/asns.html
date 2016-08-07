@@ -12,7 +12,9 @@
             <li><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn }}</a></li>
         {% endfor %}
         </ul>
-        {% bootstrap_pagination asn_list %}
+        {% if asn_list.has_previous or asn_list.has_next %}
+            {% bootstrap_pagination asn_list %}
+        {% endif %}
     {% else %}
         <p>No ASNs ¯\_(ツ)_/¯</p>
     {% endif %}
