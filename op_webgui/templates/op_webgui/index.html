@@ -7,16 +7,22 @@
 {% block content %}
 
     {% if router_list %}
-        <ul>
+        <p>&nbsp;
+        <table class="table table-hover">
+            <tr>
+                <th>configuration</th>
+                <th>Hostname</th>
+            </tr>
         {% for router in router_list %}
-            <li>
-                <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-default btn-xs">config</a>
-                <a href="{% url 'op_webgui:router_detail' router.id %}">{{ router.hostname }}</a>
-            </li>
+            <tr>
+                <td><a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-default btn-xs">config</a></td>
+                <td><a href="{% url 'op_webgui:router_detail' router.id %}">{{ router.hostname }}</a></td>
+            </tr>
         {% endfor %}
-        </ul>
+        </table>
     {% else %}
-        <p>No routers ¯\_(ツ)_/¯</p>
+        <p>
+        No routers ¯\_(ツ)_/¯
     {% endif %}
 
 {% endblock %}

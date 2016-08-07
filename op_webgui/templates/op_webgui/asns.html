@@ -7,11 +7,21 @@
 {% block content %}
 
     {% if asn_list %}
-        <ul>
+        <p>&nbsp;
+        <table class="table table-hover">
+            <tr>
+                <th>ASN</th>
+                <th>Name</th>
+                <th>Contact</th>
+            </tr>
         {% for asn in asn_list %}
-            <li><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn }}</a></li>
+            <tr>
+                <td><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn.asn }}</a></td>
+                <td>{{ asn.name }}</td>
+                <td>{{ asn.contact }}</td>
+            </tr>
         {% endfor %}
-        </ul>
+        </table>
         {% if asn_list.has_previous or asn_list.has_next %}
             {% bootstrap_pagination asn_list %}
         {% endif %}
