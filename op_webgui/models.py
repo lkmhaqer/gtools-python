@@ -2,6 +2,22 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+class ipv6_address(models.Model):
+    interface = models.ForeignKey('logical_interface', on_delete=models.CASCADE)
+    host      = models.GenericIPAddressField(unpack_ipv4=False)
+    cidr      = models.PositiveSmallIntegerField(default=24)
+
+    def __str__(self):
+        return self.host + "/" + self.cidr
+
+class ipv4_address(models.Model):
+    interface = models.ForeignKey('logical_interface', on_delete=models.CASCADE)
+    host      = models.GenericIPAddressField(unpack_ipv4=True)
+    cidr      = models.PositiveSmallIntegerField(default=24)
+
+    def __str__(self):
+        return self.host + "/" + self.cidr
+
 class logical_interface(models.Model):
     interface = models.ForeignKey('interface', on_delete=models.CASCADE)
     name      = models.CharField(max_length=255)
@@ -9,7 +25,7 @@ class logical_interface(models.Model):
     vlan      = models.BigIntegerField(blank=True)
 
     def __str__(self):
-        return self.name
+        return self.interface.router.name + " " + self.interface.name + "." + self.name
 
 class interface(models.Model):
     router    = models.ForeignKey('router', on_delete=models.CASCADE)
@@ -17,7 +33,7 @@ class interface(models.Model):
     mtu       = models.BigIntegerField(default=1514)
 
     def __str__(self):
-        return self.name
+        return self.router.name + " " + self.name
 
 class neighbor(models.Model):
     router        = models.ForeignKey('router', on_delete=models.CASCADE)
