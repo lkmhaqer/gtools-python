@@ -5,6 +5,7 @@ from django.db import models
 class interface(models.Model):
     router    = models.ForeignKey('router', on_delete=models.CASCADE)
     name      = models.CharField(max_length=255)
+    mtu       = models.BigIntegerField(default=1500)
 
     def __str__(self):
         return self.name
