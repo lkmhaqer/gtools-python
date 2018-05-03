@@ -15,7 +15,17 @@
   <ul>
   {% for interface in router.interface_set.all %}
     {% for logical_interface in interface.logical_interface_set.all %}
-    <li>{{ router.hostname }} {{ interface.name }}.{{ logical_interface.name }} ({{ interface.description }}) {{ logical_interface.description }} </li>
+    <li>{{ router.hostname }} {{ interface.name }}.{{ logical_interface.name }} ({{ interface.description }}) {{ logical_interface.description }}</li>
+      <ul>
+      {% for ipv4_address in logical_interface.ipv4_address_set.all %}
+         <li>{{ ipv4_address.host }}/{{ ipv4_address.cidr }}</li>
+      {% endfor %}
+      </ul>
+      <ul>
+      {% for ipv6_address in logical_interface.ipv6_address_set.all %}
+         <li>{{ ipv6_address.host }}/{{ ipv6_address.cidr }}</li>
+      {% endfor %}
+      </ul>
     {% endfor %}
   {% endfor %}
   </ul>
