@@ -4,6 +4,9 @@ from __future__ import unicode_literals
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
+
+
 """
 IPv6 Addresses - 128 bit Internet Protocol Addresses
 
@@ -21,6 +24,9 @@ class ipv6_address(models.Model):
     def __str__(self):
         return str(self.host) + "/" + str(self.cidr)
 
+
+
+
 """
 IPv4 Addresses - 32 bit Internet Protocol Addresses
 
@@ -37,6 +43,9 @@ class ipv4_address(models.Model):
 
     def __str__(self):
         return str(self.host) + "/" + str(self.cidr)
+
+
+
 
 """
 Logical Interface - An abstract instance of a physical interface, usually seperated layer2 protocols (VLANs, DLCIs, etc.)
@@ -65,6 +74,9 @@ class logical_interface(models.Model):
         else:
             return self.interface.router.hostname + " " + self.interface.name + "." + self.name + " (" + self.description + ")"
 
+
+
+
 """
 Interface - Physical network interface, may contain multiple logical interfaces.
 
@@ -83,6 +95,9 @@ class interface(models.Model):
 
     def __str__(self):
         return self.router.hostname + " " + self.name + " (" + self.description + ")"
+
+
+
 
 """
 BGP Neighbor - Peering sesssions with our neighbors over BGP.
@@ -103,6 +118,9 @@ class neighbor(models.Model):
     def __str__(self):
         return self.aut_num.name + " - " + self.router.hostname + " " + self.peer_ip
 
+
+
+
 """
 Router - A network device that moves packets around.
 
@@ -122,6 +140,9 @@ class router(models.Model):
     def __str__(self):
         return self.hostname
 
+
+
+
 """
 Network Operating Systems - The software platform which runs networking focused hardware.
 
@@ -136,6 +157,9 @@ class network_os(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
 
 """
 Autonomous System Number - Used in BGPv4 to represent an administrative domain where internet prefixes are exchanged.
