@@ -12,4 +12,12 @@
   {% endfor %}
   </ul>
 
+  <ul>
+  {% for interface in router.interface_set.all %}
+    {% for logical_interface in interface.logical_interface_set.all %}
+    <li>{{ router.hostname }} {{ interface.name }}.{{ logical_interface.name }} ({{ interface.description }}) {{ logical_interface.description }} </li>
+    {% endfor %}
+  {% endfor %}
+  </ul>
+
 {% endblock %}
