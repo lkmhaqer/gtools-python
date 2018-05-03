@@ -83,7 +83,7 @@ DATABASES = {
         'USER': 'gtools',
         'PASSWORD': 'OOsX7qu6Scp1EHcxvMy7JLxw',
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES';",
         }
     }
 }
