@@ -8,7 +8,7 @@ class ipv6_address(models.Model):
     cidr      = models.PositiveSmallIntegerField(default=24)
 
     def __str__(self):
-        return self.host + "/" + self.cidr
+        return str(self.host) + "/" + str(self.cidr)
 
 class ipv4_address(models.Model):
     interface = models.ForeignKey('logical_interface', on_delete=models.CASCADE)
@@ -16,16 +16,16 @@ class ipv4_address(models.Model):
     cidr      = models.PositiveSmallIntegerField(default=24)
 
     def __str__(self):
-        return self.host + "/" + self.cidr
+        return str(self.host) + "/" + str(self.cidr)
 
 class logical_interface(models.Model):
     interface = models.ForeignKey('interface', on_delete=models.CASCADE)
     name      = models.CharField(max_length=255)
     mtu       = models.BigIntegerField(default=1500)
-    vlan      = models.BigIntegerField(blank=True)
+    vlan      = models.BigIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.interface.router.name + " " + self.interface.name + "." + self.name
+        return self.interface.router.hostname + " " + self.interface.name + "." + self.name
 
 class interface(models.Model):
     router    = models.ForeignKey('router', on_delete=models.CASCADE)
@@ -33,7 +33,7 @@ class interface(models.Model):
     mtu       = models.BigIntegerField(default=1514)
 
     def __str__(self):
-        return self.router.name + " " + self.name
+        return self.router.hostname + " " + self.name
 
 class neighbor(models.Model):
     router        = models.ForeignKey('router', on_delete=models.CASCADE)
