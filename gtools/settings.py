@@ -1,3 +1,5 @@
+# file: gtools/settings.py
+
 """
 Django settings for gtools project.
 

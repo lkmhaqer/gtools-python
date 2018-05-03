@@ -1,3 +1,5 @@
+# file: op_webgui/views.py
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
 
