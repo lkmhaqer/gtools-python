@@ -14,8 +14,9 @@ chassis {
     }
 } {% if router.interface_set.all %}
 interfaces { {% for interface in router.interface_set.all %}
-    {{ interface.name }} {
-        description "{{ interface.description }}"; {% for logical_interface in interface.logical_interface_set.all %}
+    {{ interface.name }} { 
+        description "{{ interface.description }}"; {% if interface.dot1q %}
+        vlan-tagging; {% endif %} {% for logical_interface in interface.logical_interface_set.all %}
         unit {{ logical_interface.name }} {
             description "{{ logical_interface.description }}"; {% if logical_interface.vlan %}
             vlan-id {{ logical_interface.vlan }}; {% endif %} {% if logical_interface.ipv4_address_set.all %}

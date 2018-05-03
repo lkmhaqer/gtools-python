@@ -66,7 +66,7 @@ class logical_interface(models.Model):
     description           = models.CharField(max_length=1024, blank=True)
     mtu                   = models.BigIntegerField(default=1500)
     vlan                  = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(1),MaxValueValidator(4096)])
-    physical_interface    = models.BooleanField(default=0)
+    physical_interface    = models.BooleanField(default=False)
 
     def __str__(self):
         if self.physical_interface:
@@ -92,6 +92,7 @@ class interface(models.Model):
     name          = models.CharField(max_length=255)
     description   = models.CharField(max_length=1024, blank=True)
     mtu           = models.BigIntegerField(default=1514)
+    dot1q         = models.BooleanField(default=False)
 
     def __str__(self):
         return self.router.hostname + " " + self.name + " (" + self.description + ")"
@@ -113,7 +114,7 @@ class neighbor(models.Model):
     router        = models.ForeignKey('router', on_delete=models.CASCADE)
     aut_num       = models.ForeignKey('aut_num', on_delete=models.CASCADE)
     peer_ip       = models.GenericIPAddressField(unpack_ipv4=True)
-    soft_inbound  = models.BooleanField(default=1)
+    soft_inbound  = models.BooleanField(default=True)
 
     def __str__(self):
         return self.aut_num.name + " - " + self.router.hostname + " " + self.peer_ip
