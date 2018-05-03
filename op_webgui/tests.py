@@ -21,9 +21,10 @@ class RouterViewTests(TestCase):
         """
         Create a router, then check that the view reflects this.
         """
-        nos = network_os.objects.create(name='test-os')
-        router.objects.create(routing_id='1.1.1.1', hostname='test-router', ibgp=True, network_os=nos)
-        response = self.client.get(reverse('op_webgui:index'))
+        nos        = network_os.objects.create(name='test-os')
+        one_router = router.objects.create(routing_id='1.1.1.1', hostname='test-router', ibgp=True, network_os=nos)
+        response   = self.client.get(reverse('op_webgui:index'))
+
         self.assertQuerysetEqual(
             response.context['router_list'], ['<router: test-router>']
         )
@@ -32,13 +33,14 @@ class RouterViewTests(TestCase):
         """
         Create a bunch of routers, then verify the view.
         """
-        nos = network_os.objects.create(name='many-test-os')
+        nos             = network_os.objects.create(name='many-test-os')
         new_router_list = []
+
         for i in range(0, 5):
             router.objects.create(
-                hostname = 'test-router-' + str(i),
+                hostname   = 'test-router-' + str(i),
                 routing_id = '1.1.1.' + str(i),
-                ibgp = True,
+                ibgp       = True,
                 network_os = nos,
             )
             new_router_list.append('<router: test-router-' + str(i) + '>')
@@ -47,4 +49,17 @@ class RouterViewTests(TestCase):
         self.assertQuerysetEqual(
             response.context['router_list'], new_router_list
         )
+
+class InterfacesViewTests(TestCase):
+    def test_router_with_no_intefaces(self):
+        """
+        Show no results if there are no interfaces.
+        """
+        nos        = network_os.objects.create(name='test-os')
+        one_router = router.objects.create(routing_id='1.1.1.1', hostname='test-router', ibgp=True, network_os=nos)
+        response   = self.client.get(reverse('op_webgui:router_detail', kwargs={'router_id': one_router.id}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['router'].interface_set.all(), [])
+
 
