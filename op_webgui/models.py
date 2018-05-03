@@ -19,21 +19,23 @@ class ipv4_address(models.Model):
         return str(self.host) + "/" + str(self.cidr)
 
 class logical_interface(models.Model):
-    interface = models.ForeignKey('interface', on_delete=models.CASCADE)
-    name      = models.CharField(max_length=255)
-    mtu       = models.BigIntegerField(default=1500)
-    vlan      = models.BigIntegerField(null=True, blank=True)
+    interface     = models.ForeignKey('interface', on_delete=models.CASCADE)
+    name          = models.CharField(max_length=255)
+    description   = models.CharField(max_length=1024, blank=True)
+    mtu           = models.BigIntegerField(default=1500)
+    vlan          = models.BigIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.interface.router.hostname + " " + self.interface.name + "." + self.name
+        return self.interface.router.hostname + " " + self.interface.name + "." + self.name + " (" + self.description + ")"
 
 class interface(models.Model):
-    router    = models.ForeignKey('router', on_delete=models.CASCADE)
-    name      = models.CharField(max_length=255)
-    mtu       = models.BigIntegerField(default=1514)
+    router        = models.ForeignKey('router', on_delete=models.CASCADE)
+    name          = models.CharField(max_length=255)
+    description   = models.CharField(max_length=1024, blank=True)
+    mtu           = models.BigIntegerField(default=1514)
 
     def __str__(self):
-        return self.router.hostname + " " + self.name
+        return self.router.hostname + " " + self.name + " (" + self.description + ")"
 
 class neighbor(models.Model):
     router        = models.ForeignKey('router', on_delete=models.CASCADE)
