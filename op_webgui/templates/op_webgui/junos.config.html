@@ -12,7 +12,7 @@ chassis {
             device-count 64;
         }
     }
-}
+} {% if router.interface_set.all %}
 interfaces { {% for interface in router.interface_set.all %}
     {{ interface.name }} {
         description "{{ interface.description }}"; {% for logical_interface in interface.logical_interface_set.all %}
@@ -27,24 +27,24 @@ interfaces { {% for interface in router.interface_set.all %}
             } {% endif %}
         } {% endfor %}
     } {% endfor %}
-}
+} {% endif %}
 routing-options {
     router-id {{ router.routing_id }};
     autonomous-system 65000;
-}
-protocols {
-    bgp {
+} {% if router.ibgp or router.neighbor_set.all %}
+protocols { {% if router.ibgp or router.neighbor_set.all %}
+    bgp { {% if router.ibgp %}
          group ibgp {
              type internal;
              description "iBGP Neighbors Group, for all peers of the ASN!";
              local-address {{ router.routing_id }}; {% for router in router_list %}
              neighbor {{ router.routing_id }}; {% endfor %}
-         } {% for neighbor in router.neighbor_set.all %}
+         } {% endif %} {% for neighbor in router.neighbor_set.all %}
          group {{ neighbor.aut_num.name }} {
              type external;
              peer-as {{ neighbor.aut_num.asn }};
              neighbor {{ neighbor.peer_ip }};
          } {% endfor %}
-    }
-}
+    } {% endif %}
+} {% endif %}
 {% endblock %}
