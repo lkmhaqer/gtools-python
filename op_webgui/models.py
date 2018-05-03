@@ -29,7 +29,10 @@ class logical_interface(models.Model):
     physical_interface    = models.BooleanField(default=0)
 
     def __str__(self):
-        return self.interface.router.hostname + " " + self.interface.name + "." + self.name + " (" + self.description + ")"
+        if self.physical_interface:
+            return self.interface.router.hostname + " " + self.interface.name + " (" + self.description + ")"
+        else:
+            return self.interface.router.hostname + " " + self.interface.name + "." + self.name + " (" + self.description + ")"
 
 class interface(models.Model):
     router        = models.ForeignKey('router', on_delete=models.CASCADE)
