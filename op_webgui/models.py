@@ -5,7 +5,7 @@ from django.db import models
 class ipv6_address(models.Model):
     interface = models.ForeignKey('logical_interface', on_delete=models.CASCADE)
     host      = models.GenericIPAddressField(unpack_ipv4=False)
-    cidr      = models.PositiveSmallIntegerField(default=24)
+    cidr      = models.PositiveSmallIntegerField(default=64)
 
     def __str__(self):
         return str(self.host) + "/" + str(self.cidr)
