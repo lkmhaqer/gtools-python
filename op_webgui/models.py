@@ -146,7 +146,7 @@ class router(models.Model):
 """
 Network Operating Systems - The software platform which runs networking focused hardware.
 
-name:    The name of the NOS, and the template file to build the configuration with.
+name:    The name of the NOS, and the template file to build the configuration with.    [junos]
 
 Example string: junos
                 ios-12
