@@ -145,7 +145,6 @@ class router(models.Model):
 
 
 
-
 """
 Network Operating Systems - The software platform which runs networking focused hardware.
 

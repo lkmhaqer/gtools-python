@@ -6,6 +6,14 @@
 system {
     host-name {{ router.hostname }};
 }
+services { {% if router.service_ssh %}
+    ssh {
+        protocol-version v2;
+    } {% endif %} {% if router.service_netconf %}
+    netconf {
+        ssh;
+    } {% endif %}
+}
 chassis {
     aggregated-devices {
         ethernet {
