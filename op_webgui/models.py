@@ -18,7 +18,7 @@ cidr:         The CIDR (Classless Inter-Domain Routing) notation of mask length 
 Example string: 2001:db8:1:1::1/64
 """
 class ipv6_address(models.Model):
-    interface    = models.ForeignKey('logical_interface', on_delete=models.CASCADE, null=True, blank=True)
+    interface    = models.ForeignKey('logical_interface', on_delete=models.CASCADE)
     host         = models.GenericIPAddressField(unpack_ipv4=False)
     cidr         = models.PositiveSmallIntegerField(default=64)
 
@@ -38,7 +38,7 @@ cidr:         The CIDR (Classless Inter-Domain Routing) notation of mask length 
 Example string: 198.51.100.0/24
 """
 class ipv4_address(models.Model):
-    interface    = models.ForeignKey('logical_interface', on_delete=models.CASCADE, null=True, blank=True)
+    interface    = models.ForeignKey('logical_interface', on_delete=models.CASCADE)
     host         = models.GenericIPAddressField(unpack_ipv4=True)
     cidr         = models.PositiveSmallIntegerField(default=24)
 
