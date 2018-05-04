@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+import socket, struct
 
 
 
@@ -40,6 +41,11 @@ class ipv4_address(models.Model):
     interface    = models.ForeignKey('logical_interface', on_delete=models.CASCADE, null=True, blank=True)
     host         = models.GenericIPAddressField(unpack_ipv4=True)
     cidr         = models.PositiveSmallIntegerField(default=24)
+
+    def subnet_mask(self):
+        host_bits = 32 - int(self.cidr)
+        netmask = socket.inet_ntoa(struct.pack('!I', (1 << 32) - (1 << host_bits)))
+        return netmask
 
     def __str__(self):
         return str(self.host) + "/" + str(self.cidr)
