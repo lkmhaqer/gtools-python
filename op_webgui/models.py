@@ -133,10 +133,12 @@ network_os:    The network operating system and subsequent template this router 
 Example string: Router1
 """
 class router(models.Model):
-    routing_id    = models.GenericIPAddressField(unpack_ipv4=True)
-    hostname      = models.CharField(max_length=255)
-    ibgp          = models.BooleanField()
-    network_os    = models.ForeignKey('network_os', on_delete=models.CASCADE)
+    routing_id         = models.GenericIPAddressField(unpack_ipv4=True)
+    hostname           = models.CharField(max_length=255)
+    ibgp               = models.BooleanField()
+    network_os         = models.ForeignKey('network_os', on_delete=models.CASCADE)
+    service_ssh        = models.BooleanField(default=True)
+    service_netconf    = models.BooleanField(default=True)
 
     def __str__(self):
         return self.hostname
