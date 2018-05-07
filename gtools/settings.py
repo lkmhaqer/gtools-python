@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'bootstrap3',
+    'config_gen.apps.ConfigGenConfig',
     'op_webgui.apps.OpWebguiConfig',
     'django.contrib.admin',
     'django.contrib.auth',

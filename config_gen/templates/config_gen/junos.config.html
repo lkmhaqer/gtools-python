@@ -1,0 +1,53 @@
+system {
+    host-name {{ router.hostname }};
+}
+services { {% if router.service_ssh %}
+    ssh {
+        protocol-version v2;
+    } {% endif %} {% if router.service_netconf %}
+    netconf {
+        ssh;
+    } {% endif %}
+}
+chassis {
+    aggregated-devices {
+        ethernet {
+            device-count 64;
+        }
+    }
+} {% if router.interface_set.all %}
+interfaces { {% for interface in router.interface_set.all %}
+    {{ interface.name }} { 
+        description "{{ interface.description }}"; {% if interface.dot1q %}
+        vlan-tagging; {% endif %} {% for logical_interface in interface.logical_interface_set.all %}
+        unit {{ logical_interface.name }} {
+            description "{{ logical_interface.description }}"; {% if logical_interface.vlan %}
+            vlan-id {{ logical_interface.vlan }}; {% endif %} {% if logical_interface.ipv4_address_set.all %}
+            family inet { {% endif %} {% for ipv4_address in logical_interface.ipv4_address_set.all %}
+                address {{ ipv4_address }}; {% endfor %} {% if logical_interface.ipv4_address_set.all %}
+            } {% endif %} {% if logical_interface.ipv6_address_set.all %}
+            family inet6 { {% endif %} {% for ipv6_address in logical_interface.ipv6_address_set.all %}
+                address {{ ipv6_address }}; {% endfor %} {% if logical_interface.ipv6_address_set.all %}
+            } {% endif %}
+        } {% endfor %}
+    } {% endfor %}
+} {% endif %}
+routing-options {
+    router-id {{ router.routing_id }};
+    autonomous-system 65000;
+} {% if router.ibgp or router.neighbor_set.all %}
+protocols { {% if router.ibgp or router.neighbor_set.all %}
+    bgp { {% if router.ibgp %}
+         group ibgp {
+             type internal;
+             description "iBGP Neighbors Group, for all peers of the ASN!";
+             local-address {{ router.routing_id }}; {% for router in router_list %}
+             neighbor {{ router.routing_id }}; {% endfor %}
+         } {% endif %} {% for neighbor in router.neighbor_set.all %}
+         group {{ neighbor.aut_num.name }} {
+             type external;
+             peer-as {{ neighbor.aut_num.asn }};
+             neighbor {{ neighbor.peer_ip }};
+         } {% endfor %}
+    } {% endif %}
+} {% endif %}
