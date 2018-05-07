@@ -30,9 +30,10 @@ So, you have all your data in gtools, now to generate router configs! All device
 
 If you would like to get going quick, and don't want to use MySQL, there is SQLite. The data will be saved to a file db.sqlite3, in your $INSTALL_DIR. To use it, instead of mysql, just replace the DATABASE variable block in gtools/settings.py with the following:
 
-`DATABASES = {
+```DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
     }
-}`
+}
+```
