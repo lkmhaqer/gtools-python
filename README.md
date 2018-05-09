@@ -1,5 +1,6 @@
 # gtools-python 0.0.2
-A re-write of gurrilla tools in Python with the Django framework.
+
+A configuration generation tool for networking devices. Written in python with Django. Define network information like ports, addressing, and routing neighborships, and generate network device configurations based on templates. Example for IOS and JunOS included.
 
 Built with: Django==1.10, MySQL-python==1.2.5, django-bootstrap3==7.0.1
 
