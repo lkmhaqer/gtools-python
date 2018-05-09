@@ -90,6 +90,7 @@ router:         Router that the interface is tied to.
 name:           Name of the actual interface, on the target platform.                   [et-1/0/0]
 description:    A quick sentence or details on what this interface holds. (optional)    [An ethernet interface]
 mtu:            Maximum Transmission Unit, used when needed.                            [1514]
+dot1q:          Enable 802.1Q VLAN Tags on the interface                                [True]
 
 Example string: Router1 et-1/0/0
 """
