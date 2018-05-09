@@ -9,7 +9,7 @@ def index(request):
     router_list   = router.objects.order_by('hostname')
     router_count  = router_list.count()
     context       = {
-                    'router_list': router_list,
+                    'router_list':  router_list,
                     'router_count': router_count,
                     }
     return render(request, 'op_webgui/index.html', context)
@@ -28,7 +28,7 @@ def asn(request):
         asn_list = paginator.page(paginator.num_pages)
 
     context = {
-              'asn_list': asn_list,
+              'asn_list':  asn_list,
               'asn_count': asn_count,
               }
 
@@ -48,8 +48,8 @@ def router_config(request, router_id):
     nos            = router_obj.network_os.name
     template_name  = 'config_gen/' + nos + '.config.html'
     context        = {
-                     'router': router_obj,
-                     'router_list': router_list,
+                     'router':               router_obj,
+                     'router_list':          router_list,
                      'router_template_name': template_name,
                      }
 

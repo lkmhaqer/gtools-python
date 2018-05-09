@@ -10,7 +10,8 @@ hostname {{ router.hostname }}
 interface {{ interface.name }} {% else %}
 interface {{ interface.name }}.{{ logical_interface.name }} {% endif %} {% if logical_interface.description %}
  description "{{ logical_interface.description }}" {% endif %} {% if logical_interface.vlan %}
- encapsulation dot1Q {{ logical_interface.vlan }} {% endif %} {% for ipv4_address in logical_interface.ipv4_address_set.all %}
+ encapsulation dot1Q {{ logical_interface.vlan }} {% endif %} {% if logical_interface.ldp %}
+ mpls ip {% endif %} {% for ipv4_address in logical_interface.ipv4_address_set.all %}
  ip address {{ ipv4_address.host }} {{ ipv4_address.subnet_mask }} {% empty %}{% endfor %} {% for ipv6_address in logical_interface.ipv6_address_set.all %}
  ipv6 address {{ ipv6_address }} {% empty %}{% endfor %} {% endfor %} {% endfor %} {% endif %}
 !

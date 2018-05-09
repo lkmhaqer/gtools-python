@@ -35,19 +35,22 @@ interfaces { {% for interface in router.interface_set.all %}
 routing-options {
     router-id {{ router.routing_id }};
     autonomous-system 65000;
-} {% if router.ibgp or router.neighbor_set.all %}
+} {% if router.ibgp or router.neighbor_set.all or router.interface_set.all %}
 protocols { {% if router.ibgp or router.neighbor_set.all %}
     bgp { {% if router.ibgp %}
-         group ibgp {
-             type internal;
-             description "iBGP Neighbors Group, for all peers of the ASN!";
-             local-address {{ router.routing_id }}; {% for router in router_list %}
-             neighbor {{ router.routing_id }}; {% endfor %}
-         } {% endif %} {% for neighbor in router.neighbor_set.all %}
-         group {{ neighbor.aut_num.name }} {
-             type external;
-             peer-as {{ neighbor.aut_num.asn }};
-             neighbor {{ neighbor.peer_ip }};
-         } {% endfor %}
+        group ibgp {
+            type internal;
+            description "iBGP Neighbors Group, for all peers of the ASN!";
+            local-address {{ router.routing_id }}; {% for router in router_list %}
+            neighbor {{ router.routing_id }}; {% endfor %}
+        } {% endif %} {% for neighbor in router.neighbor_set.all %}
+        group {{ neighbor.aut_num.name }} {
+            type external;
+            peer-as {{ neighbor.aut_num.asn }};
+            neighbor {{ neighbor.peer_ip }};
+        } {% endfor %}
+    } {% endif %} {% if router.interface_set.all %}
+    ldp { {% for interface in router.interface_set.all %} {% for logical_interface in interface.logical_interface_set.all %} {% if logical_interface.ldp %}
+        interface {{ interface.name }}.{{ logical_interface.name }}; {% endif %} {% endfor %} {% endfor %}
     } {% endif %}
 } {% endif %}
