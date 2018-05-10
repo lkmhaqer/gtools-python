@@ -26,7 +26,7 @@ class ipv6_static(models.Model):
     next_hop    = models.GenericIPAddressField(unpack_ipv4=True)
 
     def __str__(self):
-        return self.router.hostname + " " + self.network + "/" + self.cidr + " next-hop " + self.next_hop
+        return self.router.hostname + " " + str(self.network) + "/" + str(self.cidr) + " next-hop " + str(self.next_hop)
 
 
 
@@ -54,7 +54,7 @@ class ipv4_static(models.Model):
         return netmask
 
     def __str__(self):
-        return self.router.hostname + " " + self.network + "/" + self.cidr + " next-hop " + self.next_hop
+        return self.router.hostname + " " + str(self.network) + "/" + str(self.cidr) + " next-hop " + str(self.next_hop)
 
 
 
