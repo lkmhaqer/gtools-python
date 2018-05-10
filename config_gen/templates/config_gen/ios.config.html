@@ -18,6 +18,13 @@ interface {{ interface.name }}.{{ logical_interface.name }} {% endif %} {% if lo
  ipv6 enable {% elif logical_interface.ipv6_address_set.all %} {% for ipv6_address in logical_interface.ipv6_address_set.all %}
  ipv6 address {{ ipv6_address }} {% empty %}{% endfor %} {% endif %} {% endfor %} {% endfor %} {% endif %}
 !
+!
+! {% if router.ipv4_static_set.all %} {% for ipv4_static in router.ipv4_static_set.all %}
+ip route {{ ipv4_static.network }} {{ ipv4_static.subnet_mask }} {{ ipv4_static.next_hop }} {% endfor %} {% endif %}
+! {% if router.ipv6_static_set.all %} {% for ipv6_static in router.ipv6_static_set.all %}
+ipv6 route {{ ipv6_static.network }}/{{ ipv6_static.cidr }} {{ ipv6_static.next_hop }} {% endfor %} {% endif %}
+!
+!
 ! 
 router bgp {{ router.local_aut_num.asn }}
  bgp router-id {{ router.routing_id }} 
