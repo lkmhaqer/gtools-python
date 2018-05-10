@@ -20,7 +20,7 @@ class ipv6_static(models.Model):
     Example string: Router1 2001:db8:: next-hop 2001:db8:1:1::1
     """
 
-    router      = models.ForeignKey('router', on_delete=models.CASCADE)
+    router      = models.ForeignKey('router', on_delete=models.CASCADE, null=True, blank=True)
     network     = models.GenericIPAddressField(unpack_ipv4=False)
     cidr        = models.PositiveSmallIntegerField(default=64)
     next_hop    = models.GenericIPAddressField(unpack_ipv4=True)
@@ -43,7 +43,7 @@ class ipv4_static(models.Model):
     Example string: Router1 198.51.100.0/24 next-hop 198.51.100.1
     """
 
-    router      = models.ForeignKey('router', on_delete=models.CASCADE)
+    router      = models.ForeignKey('router', on_delete=models.CASCADE, null=True, blank=True)
     network     = models.GenericIPAddressField(unpack_ipv4=True)
     cidr        = models.PositiveSmallIntegerField(default=24)
     next_hop    = models.GenericIPAddressField(unpack_ipv4=True)
