@@ -140,10 +140,13 @@ class router(models.Model):
     """
     Router - A network device that moves packets around.
 
-    routing_id:    An IP address the router will use as identification and routing decisions.    [203.0.113.1]
-    hostname:      The (DNS) hostname of the router, domain included.                            [Router1.isp]
-    ibgp:          Boolean value to build an iBGP mesh with every router in the database.        [True]
-    network_os:    The network operating system and subsequent template this router is tied too.
+    routing_id:         An IP address the router will use as identification and routing decisions.    [203.0.113.1]
+    hostname:           The (DNS) hostname of the router, domain included.                            [Router1.isp]
+    ibgp:               Boolean value to build an iBGP mesh with every router in the database.        [True]
+    network_os:         The network operating system and subsequent template this router is tied too.
+    service_ssh:        Boolean value to enable SSHv2 on the router.                                  [True]
+    service_netconf:    Boolean value to enable NETCONF on the router.                                [True]
+    local_aut_num:      Local autonomous system number for the router.
 
     Example string: Router1
     """
