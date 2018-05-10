@@ -65,7 +65,9 @@ class logical_interface(models.Model):
     mtu:                   Maximum Transmission Unit, used when needed.                                         [1500]
     vlan:                  A VLAN tag ID, used when needed. (optional)                                          [1]
     physical_interface:    A boolean value if this logical interface takes up the entire physical interface.    [False]
-    ldp:                   Boolean value to set LDP transmit and recieve on the interface.                      [False]
+    ldp:                   A boolean value to set LDP transmit and recieve on the interface.                    [False]
+    inet_dhcp_client:      A boolean value for using the interface as a dhcp-client.                            [False]
+    inet6_dhcp_client:     A boolean value for using the interface as a dhcpv6-client.                          [False]
 
     Example string: Router1 FastEthernet1/0
                     Router2 et-1/0/0.100
@@ -78,6 +80,8 @@ class logical_interface(models.Model):
     vlan                  = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(1),MaxValueValidator(4096)])
     physical_interface    = models.BooleanField(default=False)
     ldp                   = models.BooleanField(default=False)
+    inet_dhcp_client      = models.BooleanField(default=False)
+    inet6_dhcp_client     = models.BooleanField(default=False)
 
     def __str__(self):
         if self.physical_interface:

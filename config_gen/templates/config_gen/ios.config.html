@@ -11,9 +11,12 @@ interface {{ interface.name }} {% else %}
 interface {{ interface.name }}.{{ logical_interface.name }} {% endif %} {% if logical_interface.description %}
  description "{{ logical_interface.description }}" {% endif %} {% if logical_interface.vlan %}
  encapsulation dot1Q {{ logical_interface.vlan }} {% endif %} {% if logical_interface.ldp %}
- mpls ip {% endif %} {% for ipv4_address in logical_interface.ipv4_address_set.all %}
- ip address {{ ipv4_address.host }} {{ ipv4_address.subnet_mask }} {% empty %}{% endfor %} {% for ipv6_address in logical_interface.ipv6_address_set.all %}
- ipv6 address {{ ipv6_address }} {% empty %}{% endfor %} {% endfor %} {% endfor %} {% endif %}
+ mpls ip {% endif %} {% if logical_interface.inet_dhcp_client %}
+ ip address dhcp {% elif logical_interface.ipv4_address_set.all %} {% for ipv4_address in logical_interface.ipv4_address_set.all %}
+ ip address {{ ipv4_address.host }} {{ ipv4_address.subnet_mask }} {% empty %}{% endfor %} {% endif %} {% if logical_interface.inet6_dhcp_client %} 
+ ipv6 address dhcp rapid commit
+ ipv6 enable {% elif logical_interface.ipv6_address_set.all %} {% for ipv6_address in logical_interface.ipv6_address_set.all %}
+ ipv6 address {{ ipv6_address }} {% empty %}{% endfor %} {% endif %} {% endfor %} {% endfor %} {% endif %}
 !
 ! 
 router bgp {{ router.local_aut_num.asn }}

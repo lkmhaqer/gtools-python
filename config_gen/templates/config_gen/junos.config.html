@@ -22,12 +22,25 @@ interfaces { {% for interface in router.interface_set.all %}
         vlan-tagging; {% endif %} {% for logical_interface in interface.logical_interface_set.all %}
         unit {{ logical_interface.name }} {
             description "{{ logical_interface.description }}"; {% if logical_interface.vlan %}
-            vlan-id {{ logical_interface.vlan }}; {% endif %} {% if logical_interface.ipv4_address_set.all %}
-            family inet { {% endif %} {% for ipv4_address in logical_interface.ipv4_address_set.all %}
-                address {{ ipv4_address }}; {% endfor %} {% if logical_interface.ipv4_address_set.all %}
-            } {% endif %} {% if logical_interface.ipv6_address_set.all %}
-            family inet6 { {% endif %} {% for ipv6_address in logical_interface.ipv6_address_set.all %}
-                address {{ ipv6_address }}; {% endfor %} {% if logical_interface.ipv6_address_set.all %}
+            vlan-id {{ logical_interface.vlan }}; {% endif %} {% if logical_interface.inet_dhcp_client %} 
+            family inet {
+                dhcp-client;
+            } {% elif logical_interface.ipv4_address_set.all %}
+            family inet { {% for ipv4_address in logical_interface.ipv4_address_set.all %}
+                address {{ ipv4_address }}; {% endfor %} 
+            } {% endif %} {% if logical_interface.inet6_dhcp_client %}
+            family inet6 {
+                dhcpv6-client {
+                    client-type statefull;
+                    client-ia-type ia-pd;
+                    client-ia-type ia-na;
+                    client-identifier duid-type duid-ll;
+                    update-server;
+                    retransmission-attempt 6;
+                }
+            } {% elif logical_interface.ipv6_address_set.all %}
+            family inet6 { {% for ipv6_address in logical_interface.ipv6_address_set.all %}
+                address {{ ipv6_address }}; {% endfor %}
             } {% endif %}
         } {% endfor %}
     } {% endfor %}
