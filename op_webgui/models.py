@@ -148,6 +148,7 @@ class router(models.Model):
     network_os         = models.ForeignKey('network_os', on_delete=models.CASCADE)
     service_ssh        = models.BooleanField(default=True)
     service_netconf    = models.BooleanField(default=True)
+    local_aut_num      = models.ForeignKey('aut_num', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.hostname

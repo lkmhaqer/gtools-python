@@ -16,7 +16,7 @@ protocol direct {
 
 log "/var/log/bird/daemon" all;
 
-define OWNAS = 4242420031;
+define OWNAS = {{ router.local_aut_num.asn }};
 define OWNIP = {{ router.routing_id }};
 
 function bogon() {

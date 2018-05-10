@@ -34,7 +34,7 @@ interfaces { {% for interface in router.interface_set.all %}
 } {% endif %}
 routing-options {
     router-id {{ router.routing_id }};
-    autonomous-system 65000;
+    autonomous-system {{ router.local_aut_num.asn }};
 } {% if router.ibgp or router.neighbor_set.all or router.interface_set.all %}
 protocols { {% if router.ibgp or router.neighbor_set.all %}
     bgp { {% if router.ibgp %}

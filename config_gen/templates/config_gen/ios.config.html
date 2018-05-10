@@ -16,7 +16,7 @@ interface {{ interface.name }}.{{ logical_interface.name }} {% endif %} {% if lo
  ipv6 address {{ ipv6_address }} {% empty %}{% endfor %} {% endfor %} {% endfor %} {% endif %}
 !
 ! 
-router bgp 4242420031
+router bgp {{ router.local_aut_num.asn }}
  bgp router-id {{ router.routing_id }} 
  neighbor ibgp peer-group
  neighbor ibgp remote-as 4242420031
