@@ -7,6 +7,46 @@ from .models import router, network_os, interface, logical_interface
 from address.models import ipv6_address, ipv4_address
 from bgp.models import aut_num
 
+def create_router(network_os_name):
+    nos              = network_os.objects.create(name=network_os_name)
+    local_aut_num    = aut_num.objects.create(asn=65000, name='test asn')
+    one_router       = router.objects.create(routing_id='1.1.1.1',
+                                             hostname='test-router',
+                                             ibgp=True,
+                                             network_os=nos,
+                                             local_aut_num=local_aut_num,
+                                            )
+
+    one_interface    = interface.objects.create(router=one_router,
+                                                name='ge-0/0/0',
+                                                description="A test description.",
+                                                mtu=9000,
+                                                dot1q=True,
+                                               )
+
+    one_logical_int  = logical_interface.objects.create(interface=one_interface,
+                                                        name='10',
+                                                        description="A logical test description.",
+                                                        mtu=4170,
+                                                        vlan=10,
+                                                        physical_interface=False,
+                                                        ldp=True,
+                                                        inet_dhcp_client=False,
+                                                        inet6_dhcp_client=False,
+                                                       )
+
+    one_ipv4_address = ipv4_address.objects.create(interface=one_logical_int,
+                                                   host='1.1.1.1',
+                                                   cidr=24,
+                                                  )
+
+    one_ipv6_address = ipv6_address.objects.create(interface=one_logical_int,
+                                                   host='2600::1',
+                                                   cidr=64,
+                                                  )
+
+    return one_router
+
 class RouterViewTests(TestCase):
     def test_index_view_with_no_routers(self):
         """
@@ -21,15 +61,7 @@ class RouterViewTests(TestCase):
         """
         Create a router, then check that the view reflects this.
         """
-        nos              = network_os.objects.create(name='test-os')
-        local_aut_num    = aut_num.objects.create(asn=65000, name='test asn')
-        one_router       = router.objects.create(routing_id='1.1.1.1',
-                                                 hostname='test-router',
-                                                 ibgp=True,
-                                                 network_os=nos,
-                                                 local_aut_num=local_aut_num,
-                                                )
-
+        test_router      = create_router('ios')
         response         = self.client.get(reverse('op_webgui:index'))
 
         self.assertQuerysetEqual(
@@ -60,47 +92,20 @@ class RouterViewTests(TestCase):
             response.context['router_list'], new_router_list
         )
 
-    def test_config_view_with_router(self):
+    def test_config_view_with_ios_router(self):
         """
-        Create a router, interface, and IP addresses, then check the configuration template output.
+        Create an IOS router, interface, and IP addresses, then check the configuration template output.
         """
-        nos              = network_os.objects.create(name='ios')
-        local_aut_num    = aut_num.objects.create(asn=65000, name='test asn')
-        one_router       = router.objects.create(routing_id='1.1.1.1',
-                                                 hostname='test-router',
-                                                 ibgp=True,
-                                                 network_os=nos,
-                                                 local_aut_num=local_aut_num,
-                                                )
+        test_router      = create_router('ios')
+        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
-        one_interface    = interface.objects.create(router=one_router,
-                                                    name='ge-0/0/0',
-                                                    description="A test description.",
-                                                    mtu=9000,
-                                                    dot1q=True,
-                                                   )
+        self.assertEqual(response.status_code, 200)
 
-        one_logical_int  = logical_interface.objects.create(interface=one_interface,
-                                                            name='10',
-                                                            description="A logical test description.",
-                                                            mtu=4170,
-                                                            vlan=10,
-                                                            physical_interface=False,
-                                                            ldp=True,
-                                                            inet_dhcp_client=False,
-                                                            inet6_dhcp_client=False,
-                                                           )
-
-        one_ipv4_address = ipv4_address.objects.create(interface=one_logical_int,
-                                                       host='1.1.1.1',
-                                                       cidr=24,
-                                                      )
-
-        one_ipv6_address = ipv6_address.objects.create(interface=one_logical_int,
-                                                       host='2600::1',
-                                                       cidr=64,
-                                                      )
-
-        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': one_router.id}))
+    def test_config_view_with_junos_router(self):
+        """
+        Create a JunOS router, interface, and IP addresses, then check the configuration template output.
+        """
+        test_router      = create_router('junos')
+        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
