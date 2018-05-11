@@ -1,9 +1,7 @@
 # file: address/models.py
 
 from __future__ import unicode_literals
-
 from django.db import models
-
 import socket, struct
 
 class ipv6_address(models.Model):
