@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from .models import router, network_os, interface, logical_interface
 from address.models import ipv6_address, ipv4_address
+from static.models import ipv6_static, ipv4_static
 from bgp.models import aut_num
 
 def create_router(network_os_name):
@@ -44,6 +45,18 @@ def create_router(network_os_name):
                                                    host='2600::1',
                                                    cidr=64,
                                                   )
+
+    one_ipv4_static  = ipv4_static.objects.create(router=one_router,
+                                                  network='10.0.0.0',
+                                                  cidr=16,
+                                                  next_hop='172.16.0.1',
+                                                 )
+
+    one_ipv6_static  = ipv6_static.objects.create(router=one_router,
+                                                  network='2001:db8:100::',
+                                                  cidr=48,
+                                                  next_hop='2001:db8::1',
+                                                 )
 
     return one_router
 
