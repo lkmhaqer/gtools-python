@@ -46,6 +46,12 @@ protocol kernel {
   };
 };
 
+{% if router.ipv4_static_set.all or router.ipv6_static_set.all %}
+protocol static { {% for ipv4_static in router.ipv4_static_set.all %}
+  route {{ ipv4_static.network }}/{{ ipv4_static.cidr }} via {{ ipv4_static.next_hop }}; {% endfor %} {% for ipv6_static in router.ipv6_static_set.all %}
+  route {{ ipv6_static.network }}/{{ ipv6_static.cidr }} via {{ ipv6_static.next_hop }}; {% endfor %}
+} {% endif %}
+
 template bgp external {
   local as OWNAS;
   path metric 1;
