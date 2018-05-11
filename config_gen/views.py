@@ -2,7 +2,7 @@
 
 from django.shortcuts import get_object_or_404, render
 
-from op_webgui.models import router
+from .models import router
 
 def index(request):
     context     = {}

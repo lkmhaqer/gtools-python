@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import ipv6_static, ipv4_static, ipv6_address, ipv4_address, logical_interface, interface, neighbor, router, network_os, aut_num
+from config_gen.models import ipv6_static, ipv4_static, ipv6_address, ipv4_address, logical_interface, interface, neighbor, router, network_os, aut_num
 
 # Register your models here.
 

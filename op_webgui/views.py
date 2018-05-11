@@ -3,7 +3,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
 
-from .models import router, aut_num
+from config_gen.models import router, aut_num
 
 def index(request):
     router_list   = router.objects.order_by('hostname')
