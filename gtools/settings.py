@@ -34,6 +34,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'bootstrap3',
+    'netdevice.apps.NetdeviceConfig',
+    'bgp.apps.BgpConfig',
+    'static.apps.StaticConfig',
     'config_gen.apps.ConfigGenConfig',
     'op_webgui.apps.OpWebguiConfig',
     'django.contrib.admin',

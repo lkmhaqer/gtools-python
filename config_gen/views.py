@@ -2,7 +2,7 @@
 
 from django.shortcuts import get_object_or_404, render
 
-from .models import router
+from netdevice.models import router
 
 def index(request):
     context     = {}
