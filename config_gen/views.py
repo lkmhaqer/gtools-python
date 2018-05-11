@@ -1,8 +1,8 @@
+# file: config_gen/views.py
+
 from django.shortcuts import get_object_or_404, render
 
 from op_webgui.models import router
-
-# Create your views here.
 
 def index(request):
     context     = {}
