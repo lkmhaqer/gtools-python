@@ -113,6 +113,8 @@ class RouterViewTests(TestCase):
         response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "ip route 10.0.0.0 255.255.0.0 172.16.0.1")
+        self.assertContains(response, "ipv6 route 2001:db8:100::/48 2001:db8::1")
 
     def test_config_view_with_junos_router(self):
         """
