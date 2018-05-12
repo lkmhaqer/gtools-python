@@ -38,8 +38,8 @@ class StaticViewTest(TestCase):
         response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "ip route 10.0.0.0 255.255.0.0 172.16.0.1")
-        self.assertContains(response, "ipv6 route 2001:db8:100::/48 2001:db8::1")
+        self.assertContains(response, 'ip route 10.0.0.0 255.255.0.0 172.16.0.1')
+        self.assertContains(response, 'ipv6 route 2001:db8:100::/48 2001:db8::1')
 
     def test_config_view_with_junos_static_route(self):
         """
@@ -52,7 +52,45 @@ class StaticViewTest(TestCase):
         response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "route 10.0.0.0/16 next-hop 172.16.0.1")
-        self.assertContains(response, "route 2001:db8:100::/48 next-hop 2001:db8::1")
+        self.assertContains(response, 'route 10.0.0.0/16 next-hop 172.16.0.1')
+        self.assertContains(response, 'route 2001:db8:100::/48 next-hop 2001:db8::1')
+
+    def test_config_view_with_multiple_ios_static_route(self):
+        """
+        Create 100 static routes, and ensure they are templated properly.
+        """
+        test_router       = create_router('ios')
+        route_count       = 100
+
+        for i in range(1, route_count):
+            create_v4_static(test_router, '10.' + str(i) + '.0.0')
+            create_v6_static(test_router, '2001:db8:' + str(i) + '::')
+
+        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+        for i in range(1, route_count):
+            self.assertContains(response, 'ip route 10.' + str(i) + '.0.0 255.255.0.0 172.16.0.1')
+            self.assertContains(response, 'ipv6 route 2001:db8:' + str(i) + '::/48 2001:db8::1')
+
+    def test_config_view_with_multiple_junos_static_route(self):
+        """
+        Create 100 static routes, and ensure they are templated properly.
+        """
+        test_router       = create_router('junos')
+        route_count       = 100
+
+        for i in range(1, route_count):
+            create_v4_static(test_router, '10.' + str(i) + '.0.0')
+            create_v6_static(test_router, '2001:db8:' + str(i) + '::')
+
+        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+        for i in range(1, route_count):
+            self.assertContains(response, 'route 10.' + str(i) + '.0.0/16 next-hop 172.16.0.1')
+            self.assertContains(response, 'route 2001:db8:' + str(i) + '::/48 next-hop 2001:db8::1')
 
 
