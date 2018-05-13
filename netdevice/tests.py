@@ -4,48 +4,40 @@ from django.test import TestCase
 from django.urls import reverse
 
 from .models import router, network_os, interface, logical_interface
-from address.models import ipv6_address, ipv4_address
 from bgp.models import aut_num
 
 def create_router(network_os_name):
-    nos              = network_os.objects.create(name=network_os_name)
-    local_aut_num    = aut_num.objects.create(asn=65000, name='test asn')
-    one_router       = router.objects.create(routing_id='1.1.1.1',
-                                             hostname='test-router',
-                                             ibgp=True,
-                                             network_os=nos,
-                                             local_aut_num=local_aut_num,
-                                            )
+    nos               = network_os.objects.create(name=network_os_name)
+    local_aut_num     = aut_num.objects.create(asn=65000, name='test asn')
+    test_router       = router.objects.create(routing_id='1.1.1.1',
+                                              hostname='test-router',
+                                              ibgp=True,
+                                              network_os=nos,
+                                              local_aut_num=local_aut_num,
+                                             )
 
-    one_interface    = interface.objects.create(router=one_router,
-                                                name='ge-0/0/0',
-                                                description="A test description.",
-                                                mtu=9000,
-                                                dot1q=True,
-                                               )
+    return test_router
 
-    one_logical_int  = logical_interface.objects.create(interface=one_interface,
-                                                        name='10',
-                                                        description="A logical test description.",
-                                                        mtu=4170,
-                                                        vlan=10,
-                                                        physical_interface=False,
-                                                        ldp=True,
-                                                        inet_dhcp_client=False,
-                                                        inet6_dhcp_client=False,
-                                                       )
+def create_interface(test_router):
+    test_interface          = interface.objects.create(router=test_router,
+                                                       name='ge-0/0/0',
+                                                       description="A test description.",
+                                                       mtu=9000,
+                                                       dot1q=True,
+                                                      )
 
-    one_ipv4_address = ipv4_address.objects.create(interface=one_logical_int,
-                                                   host='1.1.1.1',
-                                                   cidr=24,
-                                                  )
+    test_logical_interface  = logical_interface.objects.create(interface=test_interface,
+                                                               name='10',
+                                                               description="A logical test description.",
+                                                               mtu=4170,
+                                                               vlan=10,
+                                                               physical_interface=False,
+                                                               ldp=True,
+                                                               inet_dhcp_client=False,
+                                                               inet6_dhcp_client=False,
+                                                              )
 
-    one_ipv6_address = ipv6_address.objects.create(interface=one_logical_int,
-                                                   host='2600::1',
-                                                   cidr=64,
-                                                  )
-
-    return one_router
+    return test_logical_interface
 
 class RouterViewTests(TestCase):
     def test_index_view_with_no_routers(self):
