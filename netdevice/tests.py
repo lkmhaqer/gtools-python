@@ -8,7 +8,7 @@ from bgp.models import aut_num
 
 def create_router(network_os_name):
     nos               = network_os.objects.create(name=network_os_name)
-    local_aut_num     = aut_num.objects.create(asn=65000, name='test asn')
+    local_aut_num     = aut_num.objects.create(asn=65000, name='Test ASN')
     test_router       = router.objects.create(routing_id='1.1.1.1',
                                               hostname='test-router',
                                               ibgp=True,
