@@ -1,0 +1,21 @@
+stages:
+  - test
+  
+test:
+  image: python:3.6
+  stage: test
+  before_script:
+    - pip install -r requirements.txt
+    - mysql -u root -ptest_user_password -h mysql  gtools -e "GRANT ALL PRIVILEGES ON gtools.* TO 'gtools'@'%'"
+    - python manage.py makemigrations
+    - python manage.py migrate
+  when: on_success
+  script:
+    - python manage.py test -k
+    
+services:
+  - mysql:latest
+
+variables:
+  MYSQL_DATABASE: gtools
+  MYSQL_ROOT_PASSWORD: test_user_password
