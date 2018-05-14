@@ -61,7 +61,7 @@ class AddressViewTests(TestCase):
          test_interface  = create_interface(test_router)
          address_count   = 100
 
-         for i in range(1, 100):
+         for i in range(1, address_count):
              create_v4_address(test_interface, '1.1.' + str(i) + '.1')
              create_v6_address(test_interface, '2600:' + str(i) + '::1')
 
@@ -69,7 +69,7 @@ class AddressViewTests(TestCase):
 
          self.assertEqual(response.status_code, 200)
 
-         for i in range(1, 100):
+         for i in range(1, address_count):
              self.assertContains(response, 'ip address 1.1.' + str(i) + '.1 255.255.255.0')
              self.assertContains(response, 'ipv6 address 2600:' + str(i) + '::1/64')
 
@@ -81,7 +81,7 @@ class AddressViewTests(TestCase):
          test_interface  = create_interface(test_router)
          address_count   = 100
 
-         for i in range(1, 100):
+         for i in range(1, address_count):
              create_v4_address(test_interface, '1.1.' + str(i) + '.1')
              create_v6_address(test_interface, '2600:' + str(i) + '::1')
 
@@ -89,6 +89,6 @@ class AddressViewTests(TestCase):
 
          self.assertEqual(response.status_code, 200)
 
-         for i in range(1, 100):
+         for i in range(1, address_count):
              self.assertContains(response, 'address 1.1.' + str(i) + '.1/24')
              self.assertContains(response, 'address 2600:' + str(i) + '::1/64')
