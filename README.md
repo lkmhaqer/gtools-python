@@ -2,7 +2,14 @@
 
 A configuration generation tool for networking devices. Written in python with Django as web framework and ORM. Define network information like ports, addressing, and routing neighborships, that generate network device configurations based on templates. Examples for IOS and JunOS included.
 
-Built with: Django==1.10, MySQL-python==1.2.5, django-bootstrap3==7.0.1
+Built with:
+
+Django==1.11.13
+django-bootstrap3==10.0.1
+Jinja2==2.9.5
+MarkupSafe==0.23
+MySQL-python==1.2.5
+pytz==2018.4
 
 ## Install
 
