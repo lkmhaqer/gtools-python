@@ -90,5 +90,5 @@ class AddressViewTests(TestCase):
          self.assertEqual(response.status_code, 200)
 
          for i in range(1, 100):
-             self.assertContains(response, 'address 1.1.' + str(i) + '/24')
+             self.assertContains(response, 'address 1.1.' + str(i) + '.1/24')
              self.assertContains(response, 'address 2600:' + str(i) + '::1/64')
