@@ -1,6 +1,6 @@
 # gtools-python 0.0.4
 
-A configuration generation tool for networking devices. Written in python with Django as web framework and ORM. Define network information like ports, addressing, and routing neighborships, that generate network device configurations based on templates. Examples for IOS and JunOS included.
+A configuration generation tool for networking devices. Written in python with Django as web framework and ORM. Define network information like ports, addressing, and routing neighborships, then generate network device configurations based on templates. Examples for IOS, JunOS, BIRD and Quagga included.
 
 Built with:
 
