@@ -6,8 +6,6 @@ test:
   stage: test
   before_script:
     - pip install -r requirements.txt
-    - python manage.py makemigrations
-    - python manage.py migrate
   when: on_success
   script:
     - python manage.py test -k
@@ -16,7 +14,7 @@ services:
   - mysql:5.7
 
 variables:
-  MYSQL_DATABASE: gtools
+  MYSQL_DATABASE: test_gtools
   MYSQL_ROOT_PASSWORD: test_user_password
   MYSQL_USER: gtools
   MYSQL_PASSWORD: OOsX7qu6Scp1EHcxvMy7JLxw
