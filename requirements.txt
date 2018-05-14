@@ -1,3 +1,6 @@
-Django==1.10
-django-bootstrap3==7.0.1
+Django==1.11.13
+django-bootstrap3==10.0.1
+Jinja2==2.9.5
+MarkupSafe==0.23
 MySQL-python==1.2.5
+pytz==2018.4
