@@ -8,13 +8,13 @@ test:
     - pip install -r requirements.txt
   when: on_success
   script:
-    - python manage.py test
+    - python manage.py test -k
 
 services:
   - mysql:5.7
 
 variables:
-  MYSQL_DATABASE: test_db
+  MYSQL_DATABASE: test_gtools
   MYSQL_ROOT_PASSWORD: test_user_password
   MYSQL_USER: gtools
   MYSQL_PASSWORD: OOsX7qu6Scp1EHcxvMy7JLxw
