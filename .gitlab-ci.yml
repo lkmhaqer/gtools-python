@@ -5,8 +5,9 @@ test:
   image: python:2.7-stretch
   stage: test
   before_script:
-    - pip install -r requirements.txt
+    - apt-get install default-mysql-client
     - mysql -u root -ptest_user_password -h mysql  gtools -e "GRANT ALL PRIVILEGES ON gtools.* TO 'gtools'@'%'"
+    - pip install -r requirements.txt
     - python manage.py makemigrations
     - python manage.py migrate
   when: on_success
