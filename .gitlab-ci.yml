@@ -8,7 +8,7 @@ test:
     - pip install -r requirements.txt
   when: on_success
   script:
-    - python manage.py test -k
+    - python manage.py test
 
 services:
   - mysql:5.7
