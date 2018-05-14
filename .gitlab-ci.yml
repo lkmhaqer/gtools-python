@@ -13,7 +13,7 @@ test:
     - python manage.py test -k
 
 services:
-  - mysql:latest
+  - mysql:5.7
 
 variables:
   MYSQL_DATABASE: gtools
