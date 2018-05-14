@@ -86,7 +86,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gtools',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'USER': 'gtools',
         'PASSWORD': 'OOsX7qu6Scp1EHcxvMy7JLxw',
         'OPTIONS': {
