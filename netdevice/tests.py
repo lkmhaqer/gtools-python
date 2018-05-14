@@ -39,7 +39,7 @@ def create_interface(test_router):
 
     return test_logical_interface
 
-class RouterViewTests(TestCase):
+class NetdeviceViewTests(TestCase):
     def test_index_view_with_no_routers(self):
         """
         We want to see an error if there are no routers.
