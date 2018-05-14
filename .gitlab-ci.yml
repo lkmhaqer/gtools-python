@@ -16,7 +16,7 @@ services:
   - mysql:5.7
 
 variables:
-  MYSQL_DATABASE: gtools
+  MYSQL_DATABASE: test_gtools
   MYSQL_ROOT_PASSWORD: test_user_password
   MYSQL_USER: gtools
   MYSQL_PASSWORD: OOsX7qu6Scp1EHcxvMy7JLxw
