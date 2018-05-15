@@ -65,7 +65,7 @@ protocols { {% if router.ibgp or router.neighbor_set.all %}
             local-address {{ router.routing_id }}; {% for router in router_list %}
             neighbor {{ router.routing_id }}; {% endfor %}
         } {% endif %} {% for neighbor in router.neighbor_set.all %}
-        group {{ neighbor.aut_num.name }} {
+        group "{{ neighbor.aut_num.name }}" {
             type external;
             peer-as {{ neighbor.aut_num.asn }};
             neighbor {{ neighbor.peer_ip }};
