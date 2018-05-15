@@ -51,8 +51,9 @@ class AddressViewTests(TestCase):
         response = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'peer-as 65001;\n            neighbor 1.1.1.1;')
-        self.assertContains(response, 'peer-as 65001;\n            neighbor 2001:db8::1;')
+        self.assertContains(response, 'peer-as 65001;')
+        self.assertContains(response, 'neighbor 1.1.1.1;')
+        self.assertContains(response, 'neighbor 2001:db8::1;')
 
     def test_config_view_with_multiple_ios_neighbor(self):
         """
@@ -89,7 +90,8 @@ class AddressViewTests(TestCase):
         response = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'peer-as 65001;')
 
         for i in range(1, neighbor_count):
-            self.assertContains(response, 'peer-as 65001;\n            neighbor 1.1.' + str(i) + '.1;')
-            self.assertContains(response, 'peer-as 65001;\n            neighbor 2001:db8:' +  str(i) + '::1;')
+            self.assertContains(response, 'neighbor 1.1.' + str(i) + '.1;')
+            self.assertContains(response, 'neighbor 2001:db8:' +  str(i) + '::1;')
