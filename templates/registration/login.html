@@ -1,0 +1,17 @@
+{% extends 'op_webgui/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}{% block title %}Login{% endblock %}{% endblock %}
+
+{% block content %}
+
+  <!-- templates/registration/login.html -->
+  <div id="login-box">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+    </form>
+
+{% endblock %}

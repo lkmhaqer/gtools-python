@@ -7,6 +7,8 @@
     <div class="container">
         <h1>{% block title %}(no title){% endblock %}</h1>
 
+        {%  if user.is_authenticated %}
+
         <p>
           <ul class="nav nav-tabs">
 
@@ -24,8 +26,13 @@
 
             <li role="presentation"><a href="{% url 'admin:index' %}">admin</a></li>
 
+            <li role="presentation"><a href="{% url 'logout' %}">logout</a></li>
+
           </ul>
         <p>
+
+        {% endif %}
+
         {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 
         {% block content %}(no content){% endblock %}
