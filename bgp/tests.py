@@ -86,7 +86,7 @@ class AddressViewTests(TestCase):
         test_router      = create_router('junos')
         test_asn_one     = create_aut_num('65001')
         test_asn_two     = create_aut_num('65002')
-        neighbor_count   = 4 # Set this to half desired value, as we'll run two peer-groups.
+        neighbor_count   = 50 # Set this to half desired value, as we'll run two peer-groups.
 
         asn_one_config   = '        group test-asn {\n'
         asn_one_config  += '            type external;\n'
