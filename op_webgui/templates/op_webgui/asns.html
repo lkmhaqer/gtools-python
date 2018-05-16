@@ -10,12 +10,14 @@
         <p>&nbsp;
         <table class="table table-hover">
             <tr>
+                <th>&nbsp;</th>
                 <th>ASN</th>
                 <th>Name</th>
                 <th>Contact</th>
             </tr>
         {% for asn in asn_list %}
             <tr>
+                <td><a href="{% url 'op_webgui:aut_num_edit' asn.id %}" class="btn btn-default btn-xs">edit</a></td>
                 <td><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn.asn }}</a></td>
                 <td>{{ asn.name }}</td>
                 <td>{{ asn.contact }}</td>

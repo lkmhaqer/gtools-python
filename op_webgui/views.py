@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from netdevice.models import router
 from bgp.models import aut_num
 
-from .forms import RouterForm
+from .forms import RouterForm, ASNForm
 
 @login_required
 def index(request):
@@ -44,6 +44,29 @@ def asn(request):
 def aut_num_detail(request, aut_num_id):
     aut_num_obj    = get_object_or_404(aut_num, pk=aut_num_id)
     return render(request, 'op_webgui/aut_num.html', {'aut_num': aut_num_obj})
+
+@login_required
+def aut_num_create(request):
+    if request.method == "POST":
+        form = ASNForm(request.POST)
+        if form.is_valid():
+            asn = form.save()
+            return redirect('op_webgui:aut_num_detail', aut_num_id=asn.pk)
+    else:
+        form = ASNForm()
+    return render(request, 'op_webgui/aut_num_edit.html', {'form': form})
+
+@login_required
+def aut_num_edit(request, aut_num_id):
+    asn = get_object_or_404(aut_num, pk=aut_num_id)
+    if request.method == "POST":
+        form = ASNForm(request.POST, instance=asn)
+        if form.is_valid():
+            asn = form.save()
+            return redirect('op_webgui:aut_num_detail', aut_num_id=asn.pk)
+    else:
+        form = ASNForm(instance=asn)
+    return render(request, 'op_webgui/aut_num_edit.html', {'form': form})
 
 @login_required
 def router_detail(request, router_id):
