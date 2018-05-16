@@ -9,27 +9,31 @@
 
         {%  if user.is_authenticated %}
 
-        <p>
-          <ul class="nav nav-tabs">
+          <p>
+            <ul class="nav nav-tabs">
 
-            <li role="presentation"{% if router_count %} class="active"{% endif %}>
-              <a href="{% url 'op_webgui:index' %}">routers
-                {% if router_count %}&nbsp;<span class="badge">{{ router_count }}</span>{% endif %}
-              </a>
-            </li>
+              <li role="presentation"{% if router_count %} class="active"{% endif %}>
+                <a href="{% url 'op_webgui:index' %}">routers
+                  {% if router_count %}&nbsp;<span class="badge">{{ router_count }}</span>{% endif %}
+                </a>
+              </li>
 
-            <li role="presentation"{% if asn_count %} class="active"{% endif %}>
-              <a href="{% url 'op_webgui:asn' %}">aut-num 
-                {% if asn_count %}&nbsp;<span class="badge">{{ asn_count }}</span>{% endif %}
-              </a>
-            </li>
+              <li role="presentation"{% if asn_count %} class="active"{% endif %}>
+                <a href="{% url 'op_webgui:asn' %}">aut-num 
+                  {% if asn_count %}&nbsp;<span class="badge">{{ asn_count }}</span>{% endif %}
+                </a>
+              </li>
 
-            <li role="presentation"><a href="{% url 'admin:index' %}">admin</a></li>
+              <li role="presentation"><a href="{% url 'admin:index' %}">admin</a></li>
 
-            <li role="presentation"><a href="{% url 'logout' %}">logout</a></li>
+              <li role="presentation"><a href="{% url 'logout' %}">logout</a></li>
 
-          </ul>
-        <p>
+            </ul>
+          <p>
+
+        {% else %}
+
+          <hr>
 
         {% endif %}
 
