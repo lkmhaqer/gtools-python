@@ -22,7 +22,7 @@ Virtualenv is a good idea, but I leave that up to you. You'll want to have pytho
 * Check out the code: `git clone https://github.com/lkmhaqer/gtools-python.git`
 * Move to your new directory: `cd gtools-python`
 
-Once you have your database, and user setup for mysql, simply run django's migrate command. Alternatively, set the backend to sqlite3 in gtools/settings.py (see example below "SQLite Settings") and specifiy a file instead of using mysql, then migrate.
+Setup a database, and user with permissions to it, then update gtools/settings.py with these details. Now you're ready to run django's migrate command. Alternatively, set the backend to sqlite3 in gtools/settings.py (see example below "SQLite Settings") and specifiy a file instead of using mysql, then migrate.
 
 * Django's migrate command: `python manage.py migrate`
 * Create an admin user: `python manage.py createsuperuser`
