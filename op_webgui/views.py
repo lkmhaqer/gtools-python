@@ -59,7 +59,7 @@ def router_create(request):
             return redirect('op_webgui:router_detail', router_id=router_obj.pk)
     else:
         form = RouterForm()
-        return render(request, 'op_webgui/router_edit.html', {'form': form})
+    return render(request, 'op_webgui/router_edit.html', {'form': form})
 
 @login_required
 def router_edit(request, router_id):
