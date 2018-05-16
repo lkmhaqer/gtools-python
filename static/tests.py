@@ -3,6 +3,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from django.contrib.auth.models import User
 from netdevice.tests import create_router
 from .models import ipv6_static, ipv4_static
 
@@ -27,6 +28,9 @@ def create_v6_static(test_router, network):
 
 
 class StaticViewTest(TestCase):
+    def setUp(self):
+        self.client.force_login(User.objects.get_or_create(username='testuser')[0])
+
     def test_config_view_with_a_single_ios_static_route(self):
         """
         Create an IOS router, interface, and IP addresses, then check the configuration template output.

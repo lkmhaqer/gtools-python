@@ -3,6 +3,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from django.contrib.auth.models import User
 from .models import router, network_os, interface, logical_interface
 from bgp.models import aut_num
 
@@ -40,6 +41,9 @@ def create_interface(test_router):
     return test_logical_interface
 
 class NetdeviceViewTests(TestCase):
+    def setUp(self):
+        self.client.force_login(User.objects.get_or_create(username='testuser')[0])
+
     def test_config_view_with_ios_router(self):
         """
         Create an IOS router, interface, and IP addresses, then check the configuration template output.

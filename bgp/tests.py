@@ -3,6 +3,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from django.contrib.auth.models import User
 from netdevice.tests import create_router, create_interface
 from .models import aut_num, neighbor
 
@@ -24,6 +25,9 @@ def create_neighbor(test_router, aut_num, peer_ip):
     return test_neighbor
 
 class AddressViewTests(TestCase):
+    def setUp(self):
+        self.client.force_login(User.objects.get_or_create(username='testuser')[0])
+
     def test_config_view_with_one_ios_neighbor(self):
         """
         Create a test IOS router, with one ipv4 and one ipv6 neighbors then check config view.
