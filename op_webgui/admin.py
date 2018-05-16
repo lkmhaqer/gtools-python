@@ -7,8 +7,6 @@ from address.models import ipv6_address, ipv4_address
 from static.models import ipv6_static, ipv4_static
 from bgp.models import neighbor, aut_num
 
-# Register your models here.
-
 admin.site.register(neighbor)
 admin.site.register(router)
 admin.site.register(network_os)
