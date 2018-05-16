@@ -64,7 +64,7 @@ protocols { {% if router.ibgp or router.neighbor_set.all %}
             description "iBGP Neighbors Group, for all peers of the ASN!";
             local-address {{ router.routing_id }}; {% for router in router_list %}
             neighbor {{ router.routing_id }}; {% endfor %}
-        } {% endif %} {% regroup router.neighbor_set.all by aut_num as asn_list %} {% for asn in asn_list %}
+        } {% endif %} {% regroup router.neighbor_set.all|dictsort:"aut_num.asn" by aut_num as asn_list %} {% for asn in asn_list %}
         group {{ asn.grouper.name|slugify }} {
             type external;
             peer-as {{ asn.grouper.asn }}; {% for neighbor in asn.list %}
