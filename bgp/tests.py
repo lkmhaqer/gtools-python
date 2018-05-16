@@ -84,18 +84,39 @@ class AddressViewTests(TestCase):
         Create a test IOS router, with 100 ipv4 and ipv6 neighbors then check the config view.
         """
         test_router      = create_router('junos')
-        test_asn         = create_aut_num('65001')
-        neighbor_count   = 100
+        test_asn_one     = create_aut_num('65001')
+        test_asn_two     = create_aut_num('65002')
+        neighbor_count   = 4 # Set this to half desired value, as we'll run two peer-groups.
+
+        asn_one_config   = '        group test-asn {\n'
+        asn_one_config  += '            type external;\n'
+
+        asn_two_config   = asn_one_config
+        asn_two_config  += '            peer-as 65002;\n'
+
+        asn_one_config  += '            peer-as 65001;\n'
 
         for i in range(1, neighbor_count):
-            create_neighbor(test_router, test_asn, '1.1.' + str(i) + '.1')
-            create_neighbor(test_router, test_asn, '2001:db8:' +  str(i) + '::1')
+            create_neighbor(test_router, test_asn_one, '1.1.' + str(i) + '.1')
+            asn_one_config += '            neighbor 1.1.' + str(i) + '.1;\n'
+
+            create_neighbor(test_router, test_asn_two, '2.2.' + str(i) + '.1')
+            asn_two_config += '            neighbor 2.2.' + str(i) + '.1;\n'
+
+        for i in range(1, neighbor_count):
+            create_neighbor(test_router, test_asn_one, '2001:db8:' +  str(i) + '::1')
+            asn_one_config += '            neighbor 2001:db8:' +  str(i) + '::1;\n'
+
+            create_neighbor(test_router, test_asn_two, '2001:db8:' +  str(i) + ':2::1')
+            asn_two_config += '            neighbor 2001:db8:' +  str(i) + ':2::1;\n'
+
+        asn_one_config += '        }'
+        asn_two_config += '        }'
 
         response = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
 
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'peer-as 65001;')
+        print response
 
-        for i in range(1, neighbor_count):
-            self.assertContains(response, 'neighbor 1.1.' + str(i) + '.1;')
-            self.assertContains(response, 'neighbor 2001:db8:' +  str(i) + '::1;')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, asn_one_config)
+        self.assertContains(response, asn_two_config)
