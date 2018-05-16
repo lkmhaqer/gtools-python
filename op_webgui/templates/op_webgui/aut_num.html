@@ -6,6 +6,13 @@
 
 {% block content %}
 
+  <br /><a href="{% url 'op_webgui:aut_num_edit' aut_num.id %}" class="btn btn-default btn-sm">Edit</a><hr />
+
+  <ul>
+    <li><b>Name:</b> {{ aut_num.name }}</li>
+    <li><b>Contact:</b> {{ aut_num.contact }}</li>
+  </ul>
+
   <ul>
   {% for neighbor in aut_num.neighbor_set.all %}
     <li>{{ neighbor.peer_ip }} - {{ neighbor.router.hostname }}</li>
