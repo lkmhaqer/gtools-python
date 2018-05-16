@@ -2,10 +2,12 @@
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 from netdevice.models import router
 from bgp.models import aut_num
+
+from .forms import RouterForm
 
 @login_required
 def index(request):
@@ -49,6 +51,17 @@ def router_detail(request, router_id):
     return render(request, 'op_webgui/router.html', {'router': router_obj})
 
 @login_required
+def router_create(request):
+    if request.method == "POST":
+        form = RouterForm(request.POST)
+        if form.is_valid():
+            router_obj = form.save()
+            return redirect('op_webgui:router_detail', router_id=router_obj.pk)
+    else:
+        form = RouterForm()
+        return render(request, 'op_webgui/router_create.html', {'form': form})
+
+@login_required
 def router_config(request, router_id):
     router_obj     = get_object_or_404(router, pk=router_id)
     router_list    = router.objects.exclude(id=router_id)
@@ -60,4 +73,4 @@ def router_config(request, router_id):
                      'router_template_name': template_name,
                      }
 
-    return render(request, 'op_webgui/config.html', context)
+    return render(request, 'op_webgui/router_config.html', context)

@@ -1,0 +1,17 @@
+{% extends 'op_webgui/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}{% block title %}Router Create{% endblock %}{% endblock %}
+
+{% block content %}
+
+  <table>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form }}
+      <tr><th>&nbsp;</th><th><button type="submit">Add Router</button></th></tr>
+    </form>
+  </table>
+
+{% endblock %}
