@@ -2,7 +2,7 @@
 
 {% load bootstrap3 %}
 
-{% block bootstrap3_title %}{% block title %}Router Create{% endblock %}{% endblock %}
+{% block bootstrap3_title %}{% block title %}Router{% endblock %}{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
     <form method="POST">
       {% csrf_token %}
       {{ form }}
-      <tr><th>&nbsp;</th><th><button type="submit">Add Router</button></th></tr>
+      <tr><th>&nbsp;</th><th><button type="submit">Submit</button></th></tr>
     </form>
   </table>
 

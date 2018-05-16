@@ -6,6 +6,8 @@
 
 {% block content %}
 
+  <br /><a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default">Edit</a><hr />
+
   <ul>
     <li><b>Router ID:</b> {{ router.routing_id }}</li>
     <li><b>ASN:</b> {{ router.local_aut_num.asn }}</li>
