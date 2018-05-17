@@ -15,17 +15,18 @@ build:
   image: docker:stable
   stage: build
   before_script:
-    - docker info
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   when: on_success
   script:
-    - docker build -t gtools -f docker/Dockerfile .
-    - docker run gtools "python /home/docker/code/app/manage.py test -k"
+    - docker build -t $IMAGE_TAG -f docker/Dockerfile .
+    - docker push $IMAGE_TAG
 
 services:
   - docker:dind
   - mysql:5.7
 
 variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   DOCKER_DRIVER: overlay2
   MYSQL_DATABASE: test_gtools
   MYSQL_ROOT_PASSWORD: test_user_password
