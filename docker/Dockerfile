@@ -47,11 +47,15 @@ COPY docker/supervisor-app.conf /etc/supervisor/conf.d/
 COPY requirements.txt /home/docker/code/app/
 RUN pip install -r /home/docker/code/app/requirements.txt
 
-# add (the rest of) our code
+# add last of the config files to app root.
 COPY docker/uwsgi.ini /home/docker/code
 COPY docker/uwsgi_params /home/docker/code
+
+# add (the rest of) our code
 COPY . /home/docker/code/app/
-RUN rm -rfv /home/docker/code/app/docker
+
+# create static assets.
+RUN python /home/docker/code/app/manage.py collectstatic
 
 EXPOSE 80
 CMD ["supervisord", "-n"]
