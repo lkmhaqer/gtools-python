@@ -6,7 +6,11 @@
 
 {% block content %}
 
-  <br /><a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default btn-sm">Edit</a><hr />
+  <br />
+  <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default btn-sm">Edit</a>
+  <a href="{% url 'op_webgui:ipv6_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv6 Route</a>
+  <a href="{% url 'op_webgui:ipv4_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv4 Route</a>
+  <hr />
 
   <ul>
     <li><b>Router ID:</b> {{ router.routing_id }}</li>
@@ -19,7 +23,7 @@
 
   <ul>
   {% for neighbor in router.neighbor_set.all %}
-    <li>{{ neighbor.peer_ip }} - {{ neighbor.aut_num }}</li>
+    <li>{{ router.hostname }} {{ neighbor.peer_ip }} - {{ neighbor.aut_num }}</li>
   {% endfor %}
   </ul>
 
@@ -38,6 +42,24 @@
       {% endfor %}
       </ul>
     {% endfor %}
+  {% endfor %}
+  </ul>
+
+  <ul>
+  {% for ipv6_static in router.ipv6_static_set.all %}
+    <li>
+      <a href="{% url 'op_webgui:ipv6_static_edit' ipv6_static.id %}" class="btn btn-default btn-xs">edit</a>
+      {{ ipv6_static }}
+    </li>
+  {% endfor %}
+  </ul>
+
+  <ul>
+  {% for ipv4_static in router.ipv4_static_set.all %}
+    <li>
+      <a href="{% url 'op_webgui:ipv4_static_edit' ipv4_static.id %}" class="btn btn-default btn-xs">edit</a>
+      {{ ipv4_static }}
+    </li>
   {% endfor %}
   </ul>
 
