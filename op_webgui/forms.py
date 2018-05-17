@@ -4,7 +4,7 @@ from django import forms
 
 from netdevice.models import router
 from static.models import ipv6_static, ipv4_static
-from bgp.models import aut_num
+from bgp.models import aut_num, neighbor
 
 class RouterForm(forms.ModelForm):
 
@@ -16,6 +16,12 @@ class ASNForm(forms.ModelForm):
 
     class Meta:
         model  = aut_num
+        fields = ('__all__')
+
+class NeighborForm(forms.ModelForm):
+
+    class Meta:
+        model  = neighbor
         fields = ('__all__')
 
 class IPv6StaticForm(forms.ModelForm):

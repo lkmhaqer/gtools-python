@@ -6,9 +6,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 from netdevice.models import router
 from static.models import ipv6_static, ipv4_static
-from bgp.models import aut_num
+from bgp.models import aut_num, neighbor
 
-from .forms import RouterForm, ASNForm, IPv6StaticForm, IPv4StaticForm
+from .forms import RouterForm, ASNForm, NeighborForm, IPv6StaticForm, IPv4StaticForm
 
 @login_required
 def index(request):
@@ -67,6 +67,30 @@ def aut_num_edit(request, aut_num_id):
             return redirect('op_webgui:aut_num_detail', aut_num_id=asn.pk)
     else:
         form = ASNForm(instance=asn)
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
+
+@login_required
+def neighbor_create(request, router_id):
+    router_obj = get_object_or_404(router, pk=router_id)
+    if request.method == "POST":
+        form = NeighborForm(request.POST)
+        if form.is_valid():
+            neighbor_obj = form.save()
+            return redirect('op_webgui:router_detail', router_id=neighbor_obj.router.pk)
+    else:
+        form = NeighborForm(initial={'router': router_obj})
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
+
+@login_required
+def neighbor_edit(request, neighbor_id):
+    neighbor_obj = get_object_or_404(neighbor, pk=neighbor_id)
+    if request.method == "POST":
+        form = NeighborForm(request.POST, instance=neighbor_obj)
+        if form.is_valid():
+            neighbor_obj = form.save()
+            return redirect('op_webgui:router_detail', router_id=neighbor_obj.router.pk)
+    else:
+        form = NeighborForm(instance=neighbor_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required

@@ -10,6 +10,7 @@
   <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default btn-sm">Edit</a>
   <a href="{% url 'op_webgui:ipv6_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv6 Route</a>
   <a href="{% url 'op_webgui:ipv4_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv4 Route</a>
+  <a href="{% url 'op_webgui:neighbor_create' router.id %}" class="btn btn-success btn-sm">Add BGP Neighbor</a>
   <hr />
 
   <ul>
@@ -23,7 +24,10 @@
 
   <ul>
   {% for neighbor in router.neighbor_set.all %}
-    <li>{{ router.hostname }} {{ neighbor.peer_ip }} - {{ neighbor.aut_num }}</li>
+    <li>
+      <a href="{% url 'op_webgui:neighbor_edit' neighbor.id %}" class="btn btn-default btn-xs">edit</a>
+      {{ router.hostname }} {{ neighbor.peer_ip }} - {{ neighbor.aut_num }}
+    </li>
   {% endfor %}
   </ul>
 
