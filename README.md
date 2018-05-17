@@ -11,7 +11,17 @@ MarkupSafe==0.23
 MySQL-python==1.2.5
 pytz==2018.4
 
-## Install
+## Docker Install
+
+Working towards public docker images now, please let me know if there is demand. Right now, you can build the image yourself with the following steps:
+
+* Clone or pull down this repository: `git clone https://github.com/lkmhaqer/gtools-python.git`
+* Move to your new directory: `cd gtools-python`
+* Build the image with this command: `docker build -t gtools -f docker/Dockerfile .`
+
+If everything went well, you should have an easy to deploy docker image named gtools that you can now run.
+
+## Lab or Development Install
 
 To get a basic copy running with the built in httpd, there should just be a few steps from a clean system:
 
