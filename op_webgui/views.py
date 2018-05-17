@@ -54,7 +54,7 @@ def aut_num_create(request):
             return redirect('op_webgui:aut_num_detail', aut_num_id=asn.pk)
     else:
         form = ASNForm()
-    return render(request, 'op_webgui/aut_num_edit.html', {'form': form})
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required
 def aut_num_edit(request, aut_num_id):
@@ -66,7 +66,7 @@ def aut_num_edit(request, aut_num_id):
             return redirect('op_webgui:aut_num_detail', aut_num_id=asn.pk)
     else:
         form = ASNForm(instance=asn)
-    return render(request, 'op_webgui/aut_num_edit.html', {'form': form})
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required
 def router_detail(request, router_id):
@@ -82,7 +82,7 @@ def router_create(request):
             return redirect('op_webgui:router_detail', router_id=router_obj.pk)
     else:
         form = RouterForm()
-    return render(request, 'op_webgui/router_edit.html', {'form': form})
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required
 def router_edit(request, router_id):
@@ -94,7 +94,7 @@ def router_edit(request, router_id):
             return redirect('op_webgui:router_detail', router_id=router_obj.pk)
     else:
         form = RouterForm(instance=router_obj)
-    return render(request, 'op_webgui/router_edit.html', {'form': form})
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required
 def router_config(request, router_id):
