@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
   
 test:
   image: python:2.7-stretch
@@ -10,10 +11,22 @@ test:
   script:
     - python manage.py test -k
 
+build:
+  image: docker:stable
+  stage: build
+  before_script:
+    - docker info
+  when: on_success
+  script:
+    - docker build -t gtools -f docker/Dockerfile .
+    - docker run gtools "python /home/docker/code/app/manage.py test -k"
+
 services:
+  - docker:dind
   - mysql:5.7
 
 variables:
+  DOCKER_DRIVER: overlay2
   MYSQL_DATABASE: test_gtools
   MYSQL_ROOT_PASSWORD: test_user_password
   MYSQL_USER: gtools
