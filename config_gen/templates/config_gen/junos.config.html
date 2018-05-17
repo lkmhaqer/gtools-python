@@ -70,7 +70,7 @@ protocols { {% if router.ibgp or router.neighbor_set.all %}
             peer-as {{ asn.grouper.asn }}; {% for neighbor in asn.list %}
             neighbor {{ neighbor.peer_ip }}; {% endfor %}
         } {% endfor %}
-    } {% endif %} {% if router.interface_set.all %}
+    } {% endif %} {% if router.ldp_exists %}
     ldp { {% for interface in router.interface_set.all %} {% for logical_interface in interface.logical_interface_set.all %} {% if logical_interface.ldp %}
         interface {{ interface.name }}.{{ logical_interface.name }}; {% endif %} {% endfor %} {% endfor %}
     } {% endif %}

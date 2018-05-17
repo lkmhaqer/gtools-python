@@ -83,6 +83,9 @@ class router(models.Model):
     service_netconf    = models.BooleanField(default=True)
     local_aut_num      = models.ForeignKey('bgp.aut_num', on_delete=models.CASCADE)
 
+    def ldp_exists(self):
+        return self.interface_set.filter(logical_interface__ldp=True).exists()
+
     def __str__(self):
         return self.hostname
 
