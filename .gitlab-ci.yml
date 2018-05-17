@@ -20,6 +20,8 @@ build:
   script:
     - docker build -t $IMAGE_TAG -f docker/Dockerfile .
     - docker push $IMAGE_TAG
+  only:
+    - tags
 
 services:
   - docker:dind
