@@ -13,6 +13,8 @@
   <a href="{% url 'op_webgui:neighbor_create' router.id %}" class="btn btn-success btn-sm">Add BGP Neighbor</a>
   <hr />
 
+  <h3>Router Details</h3>
+
   <ul>
     <li><b>Router ID:</b> {{ router.routing_id }}</li>
     <li><b>ASN:</b> {{ router.local_aut_num.asn }}</li>
@@ -22,6 +24,8 @@
     <li><b>NETCONF Enabled:</b> {{ router.service_netconf }}</li>
   </ul>
 
+  <h3>BGP Neighbors</h3>
+
   <ul>
   {% for neighbor in router.neighbor_set.all %}
     <li>
@@ -30,6 +34,8 @@
     </li>
   {% endfor %}
   </ul>
+
+  <h3>Interfaces and IPs</h3>
 
   <ul>
   {% for interface in router.interface_set.all %}
@@ -48,6 +54,8 @@
     {% endfor %}
   {% endfor %}
   </ul>
+
+  <h3>Static Routes</h3>
 
   <ul>
   {% for ipv6_static in router.ipv6_static_set.all %}
