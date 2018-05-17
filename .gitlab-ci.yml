@@ -18,7 +18,7 @@ build:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   when: on_success
   script:
-    - docker build -t $IMAGE_TAG -f docker/Dockerfile .
+    - docker build --pull -t $IMAGE_TAG -f docker/Dockerfile .
     - docker push $IMAGE_TAG
   only:
     - tags
