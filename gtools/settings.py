@@ -86,7 +86,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gtools',
-        'HOST': 'mysql',
+        'HOST': 'butters.cvn',
         'USER': 'gtools',
         'PASSWORD': 'OOsX7qu6Scp1EHcxvMy7JLxw',
         'OPTIONS': {
