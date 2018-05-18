@@ -1,3 +1,5 @@
+# file: docker/Dockerfile
+
 FROM python:2.7-alpine3.7
 
 # Copy our requirements over first.
