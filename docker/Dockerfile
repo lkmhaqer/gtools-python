@@ -1,61 +1,34 @@
-# Copyright 2013 Thatcher Peskens
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+FROM python:2.7-alpine3.7
 
-FROM ubuntu:16.04
+# Copy our requirements over first.
+COPY requirements.txt /requirements.txt
 
-MAINTAINER Dockerfiles
+# Add all the packages needed.
+RUN set -ex \
+    && apk add --no-cache \
+            gcc \
+            make \
+            nginx \
+            musl-dev \
+            libc-dev \
+            linux-headers \
+            mariadb-dev \
+    && pip install -U pip \
+    && pip install uwsgi supervisor \
+    && pip install -r /requirements.txt 
 
-# Install required packages and remove the apt packages cache when done.
+RUN mkdir /code/
+WORKDIR /code/
+COPY . /code/
 
-RUN apt-get update && \
-    apt-get upgrade -y && \ 
-    apt-get install -y \
-	git \
-        libmysqlclient-dev \
-	python \
-	python-dev \
-	python-setuptools \
-	python-pip \
-	nginx \
-	supervisor \
-	sqlite3 && \
-	pip install -U pip setuptools && \
-  	rm -rf /var/lib/apt/lists/*
+# Copy nginx configuration over.
+COPY docker/nginx-app.conf /etc/nginx/nginx.conf
 
-# install uwsgi now because it takes a little while
-RUN pip install uwsgi
+# Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
+RUN DATABASE_URL=none python manage.py collectstatic --noinput
 
-# setup all the configfiles
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-COPY docker/nginx-app.conf /etc/nginx/sites-available/default
-COPY docker/supervisor-app.conf /etc/supervisor/conf.d/
-
-# COPY requirements.txt and RUN pip install BEFORE adding the rest of your code, this will cause Docker's caching mechanism
-# to prevent re-installinig (all your) dependencies when you made a change a line or two in your app.
-
-COPY requirements.txt /home/docker/code/app/
-RUN pip install -r /home/docker/code/app/requirements.txt
-
-# add last of the config files to app root.
-COPY docker/uwsgi.ini /home/docker/code
-COPY docker/uwsgi_params /home/docker/code
-
-# add (the rest of) our code
-COPY . /home/docker/code/app/
-
-# create static assets.
-RUN python /home/docker/code/app/manage.py collectstatic
-
+# nginx will listen on this port
 EXPOSE 80
-CMD ["supervisord", "-n"]
+
+# Start supervisor
+CMD ["supervisord", "--nodaemon", "--configuration", "/code/docker/supervisor-app.conf"]
