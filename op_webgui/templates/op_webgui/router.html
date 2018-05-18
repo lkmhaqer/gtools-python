@@ -42,26 +42,30 @@
 
   <ul>
   {% for interface in router.interface_set.all %}
-    {% for logical_interface in interface.logical_interface_set.all %}
     <li><hr />
-      {{ interface.name }}.{{ logical_interface.name }}
-      ({{ interface.description }}) {{ logical_interface.description }} <br />
-      <a href="{% url 'op_webgui:interface_edit' interface.id %}" class="btn btn-default btn-xs">
-      edit {{ interface.name }}
-      </a>
-      <a href="{% url 'op_webgui:logical_interface_create' interface.id %}" class="btn btn-success btn-xs">
-      Add Sub-interface
-      </a>
-      <a href="{% url 'op_webgui:logical_interface_edit' logical_interface.id %}" class="btn btn-default btn-xs">
-      edit sub-interface {{ logical_interface.name }}
-      </a>
-      <a href="{% url 'op_webgui:ipv6_address_create' logical_interface.id %}" class="btn btn-success btn-xs">
-      Add IPv6 Address
-      </a>
-      <a href="{% url 'op_webgui:ipv4_address_create' logical_interface.id %}" class="btn btn-success btn-xs">
-      Add IPv4 Address
-      </a><br />&nbsp;
-    </li>
+    <a href="{% url 'op_webgui:interface_edit' interface.id %}" class="btn btn-default btn-xs">
+    edit
+    </a>
+    <a href="{% url 'op_webgui:logical_interface_create' interface.id %}" class="btn btn-success btn-xs">
+    Add Sub-interface
+    </a>
+    <b>Interface:</b> {{ interface.name }} ({{ interface.description }})
+    </li><br />
+    <ul>
+      {% for logical_interface in interface.logical_interface_set.all %}
+      <li>
+        Sub-interface {{ logical_interface.name }}
+        ({{ logical_interface.description }}) <br />
+        <a href="{% url 'op_webgui:logical_interface_edit' logical_interface.id %}" class="btn btn-default btn-xs">
+        edit sub-interface {{ logical_interface.name }}
+        </a>
+        <a href="{% url 'op_webgui:ipv6_address_create' logical_interface.id %}" class="btn btn-success btn-xs">
+        Add IPv6 Address
+        </a>
+        <a href="{% url 'op_webgui:ipv4_address_create' logical_interface.id %}" class="btn btn-success btn-xs">
+        Add IPv4 Address
+        </a>
+      </li><br />
       <ul>
       {% for ipv4_address in logical_interface.ipv4_address_set.all %}
          <li>
@@ -79,8 +83,9 @@
            </a>
          </li>
       {% endfor %}
-      </ul>
+      </ul><br />
     {% endfor %}
+    </ul>
   {% endfor %}
   </ul>
 
