@@ -32,9 +32,9 @@ deploy:
   when: on_success
   script:
     - docker pull $LOCAL_TAG
+    - docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASSWORD"
     - docker tag $LOCAL_TAG $PROD_TAG
     - docker tag $LOCAL_TAG $HUB_REPO:latest
-    - docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASSWORD"
     - docker push $PROD_TAG
     - docker push $HUB_REPO:latest
   only:
