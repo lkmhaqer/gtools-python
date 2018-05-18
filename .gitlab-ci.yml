@@ -21,6 +21,7 @@ build:
   script:
     - docker build --pull -t $LOCAL_TAG -f docker/Dockerfile .
     - docker push $LOCAL_TAG
+    - docker push $CI_REGISTRY_IMAGE:latest
   only:
     - tags
 
