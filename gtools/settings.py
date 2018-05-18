@@ -84,14 +84,11 @@ WSGI_APPLICATION = 'gtools.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('GTOOLS_DB_NAME', 'gtools'),
-        'HOST': os.environ.get('GTOOLS_DB_HOST', 'mysql'),
+        'HOST': os.environ.get('GTOOLS_DB_HOST', 'postgres'),
         'USER': os.environ.get('GTOOLS_DB_USER', 'gtools'),
         'PASSWORD': os.environ.get('GTOOLS_DB_PASS', 'gtools_password'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES';",
-        }
     }
 }
 
