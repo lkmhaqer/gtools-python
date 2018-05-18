@@ -11,6 +11,8 @@
   <a href="{% url 'op_webgui:ipv6_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv6 Static Route</a>
   <a href="{% url 'op_webgui:ipv4_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv4 Static Route</a>
   <a href="{% url 'op_webgui:neighbor_create' router.id %}" class="btn btn-success btn-sm">Add BGP Neighbor</a>
+  <a href="{% url 'op_webgui:interface_create' router.id %}" class="btn btn-success btn-sm">Add Interface</a>
+  <a href="{% url 'op_webgui:logical_interface_create' router.id %}" class="btn btn-success btn-sm">Add Sub-interface</a>
   <hr />
 
   <h3>Router Details</h3>
@@ -40,7 +42,12 @@
   <ul>
   {% for interface in router.interface_set.all %}
     {% for logical_interface in interface.logical_interface_set.all %}
-    <li>{{ router.hostname }} {{ interface.name }}.{{ logical_interface.name }} ({{ interface.description }}) {{ logical_interface.description }}</li>
+    <li>
+      <a href="{% url 'op_webgui:interface_edit' interface.id %}" class="btn btn-default btn-xs">edit {{ interface.name }}</a>
+      <a href="{% url 'op_webgui:logical_interface_edit' logical_interface.id %}" class="btn btn-default btn-xs">edit sub-interface {{ logical_interface.name }}</a>
+      {{ interface.name }}.{{ logical_interface.name }}
+      ({{ interface.description }}) {{ logical_interface.description }}
+    </li>
       <ul>
       {% for ipv4_address in logical_interface.ipv4_address_set.all %}
          <li>{{ ipv4_address.host }}/{{ ipv4_address.cidr }}</li>
