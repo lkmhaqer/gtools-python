@@ -31,7 +31,7 @@ deploy:
   script:
     - docker pull $LOCAL_TAG
     - docker tag $LOCAL_TAG $PROD_TAG
-    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD index.docker.io
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
     - docker push $PROD_TAG
 
 services:
@@ -39,7 +39,7 @@ services:
   - mysql:5.7
 
 variables:
-  PROD_TAG: index.docker.io/slothlogistics/gtools:$CI_COMMIT_REF_NAME
+  PROD_TAG: slothlogistics/gtools:$CI_COMMIT_REF_NAME
   LOCAL_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   DOCKER_DRIVER: overlay2
   MYSQL_DATABASE: test_gtools
