@@ -5,10 +5,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
 
 from netdevice.models import router, interface, logical_interface
+from address.models import ipv6_address, ipv4_address
 from static.models import ipv6_static, ipv4_static
 from bgp.models import aut_num, neighbor
 
-from .forms import RouterForm, ASNForm, NeighborForm, IPv6StaticForm, IPv4StaticForm, InterfaceForm, LogicalInterfaceForm
+from .forms import RouterForm, ASNForm, NeighborForm
+from .forms import IPv6StaticForm, IPv4StaticForm
+from .forms import InterfaceForm, LogicalInterfaceForm
+from .forms import IPv6AddressForm, IPv4AddressForm
 
 @login_required
 def index(request):
@@ -142,6 +146,54 @@ def ipv4_static_edit(request, ipv4_static_id):
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required
+def ipv6_address_create(request, logical_interface_id):
+    logical_interface_obj = get_object_or_404(logical_interface, pk=logical_interface_id)
+    if request.method == "POST":
+        form = IPv6AddressForm(request.POST)
+        if form.is_valid():
+            ipv6_address_obj = form.save()
+            return redirect('op_webgui:router_detail', router_id=ipv6_address_obj.logical_interface.interface.router.pk)
+    else:
+        form = IPv6AddressForm(initial={'interface': logical_interface_obj})
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
+
+@login_required
+def ipv6_address_edit(request, ipv6_address_id):
+    ipv6_address_obj = get_object_or_404(ipv6_address, pk=ipv6_address_id)
+    if request.method == "POST":
+        form = IPv6AddressForm(request.POST, instance=ipv6_address_obj)
+        if form.is_valid():
+            ipv6_address_obj = form.save()
+            return redirect('op_webgui:router_detail', router_id=ipv6_address_obj.logical_interface.interface.router.pk)
+    else:
+        form = IPv6AddressForm(instance=ipv6_address_obj)
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
+
+@login_required
+def ipv4_address_create(request, logical_interface_id):
+    logical_interface_obj = get_object_or_404(logical_interface, pk=logical_interface_id)
+    if request.method == "POST":
+        form = IPv4AddressForm(request.POST)
+        if form.is_valid():
+            ipv4_address_obj = form.save()
+            return redirect('op_webgui:router_detail', router_id=ipv4_address_obj.logical_interface.interface.router.pk)
+    else:
+        form = IPv4AddressForm(initial={'interface': logical_interface_obj})
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
+
+@login_required
+def ipv4_address_edit(request, ipv4_address_id):
+    ipv4_address_obj = get_object_or_404(ipv4_address, pk=ipv4_address_id)
+    if request.method == "POST":
+        form = IPv4AddressForm(request.POST, instance=ipv4_address_obj)
+        if form.is_valid():
+            ipv4_address_obj = form.save()
+            return redirect('op_webgui:router_detail', router_id=ipv4_address_obj.logical_interface.interface.router.pk)
+    else:
+        form = IPv4AddressForm(instance=ipv4_address_obj)
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
+
+@login_required
 def interface_create(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
     if request.method == "POST":
@@ -166,15 +218,15 @@ def interface_edit(request, interface_id):
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required
-def logical_interface_create(request, router_id):
-    router_obj = get_object_or_404(router, pk=router_id)
+def logical_interface_create(request, interface_id):
+    interface_obj = get_object_or_404(router, pk=interface_id)
     if request.method == "POST":
         form = LogicalInterfaceForm(request.POST)
         if form.is_valid():
             logical_interface_obj = form.save()
             return redirect('op_webgui:router_detail', router_id=logical_interface_obj.interface.router.pk)
     else:
-        form = LogicalInterfaceForm(initial={'router': router_obj})
+        form = LogicalInterfaceForm(initial={'interface': interface_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 @login_required

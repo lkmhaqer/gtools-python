@@ -3,6 +3,7 @@
 from django import forms
 
 from netdevice.models import router, interface, logical_interface
+from address.models import ipv6_address, ipv4_address
 from static.models import ipv6_static, ipv4_static
 from bgp.models import aut_num, neighbor
 
@@ -22,6 +23,18 @@ class LogicalInterfaceForm(forms.ModelForm):
 
     class Meta:
         model  = logical_interface
+        fields = ('__all__')
+
+class IPv6AddressForm(forms.ModelForm):
+
+    class Meta:
+        model  = ipv6_address
+        fields = ('__all__')
+
+class IPv4AddressForm(forms.ModelForm):
+
+    class Meta:
+        model  = ipv4_address
         fields = ('__all__')
 
 class ASNForm(forms.ModelForm):
