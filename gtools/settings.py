@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': os.environ.get('GTOOLS_DB_NAME', 'gtools'),
         'HOST': os.environ.get('GTOOLS_DB_HOST', 'mysql'),
         'USER': os.environ.get('GTOOLS_DB_USER', 'gtools'),
-        'PASSWORD': os.environ.get('GTOOLS_DB_PASS', ''),
+        'PASSWORD': os.environ.get('GTOOLS_DB_PASS', 'gtools_password'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES';",
         }
