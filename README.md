@@ -13,13 +13,46 @@ pytz==2018.4
 
 ## Docker Install
 
-Working towards public docker images now, please let me know if there is demand. Right now, you can build the image yourself with the following steps:
+Public docker images now available: https://hub.docker.com/r/slothlogistics/gtools/
 
-* Clone or pull down this repository: `git clone https://github.com/lkmhaqer/gtools-python.git`
-* Move to your new directory: `cd gtools-python`
-* Build the image with this command: `docker build -t gtools -f docker/Dockerfile .`
+You only need one variable to start gtools:
 
-If everything went well, you should have an easy to deploy docker image named gtools that you can now run.
+```
+host$ docker run slothlogistics/gtools \
+      --name gtools -d \
+      -e GTOOLS_SECRET_KEY="really-long-secret-key-here"
+```
+
+You can set all the database variables as well, the defaults are the values below.
+
+```
+host$ docker run slothlogistics/gtools \
+      --name gtools -d \
+      -e GTOOLS_SECRET_KEY="really-long-secret-key-here" \
+      -e GTOOLS_DB_HOST="mysql" \
+      -e GTOOLS_DB_NAME="gtools" \
+      -e GTOOLS_DB_USER="gtools" \
+      -e GTOOLS_DB_PASS=""
+```
+
+After that, you should be up and running! Please report any issues. If you don't already have a mysql installation or container running, you can use the two steps below to get going super quick.
+
+```
+host$ docker run mysql:5.7 \
+      --name gtools-mysql -d \
+      -e MYSQL_ROOT_PASSWORD=test \
+      -e MYSQL_DATABASE=gtools \
+      -e MYSQL_USER=gtools \
+      -e MYSQL_PASSWORD="gtools-password"
+
+...
+host$ docker run slothlogistics/gtools -d \
+      --name gtools --link gtools-mysql:mysql \
+      -e GTOOLS_SECRET_KEY="really-long-secret-key-here" \
+      -e GTOOLS_DB_PASS="gtools-password"
+```
+
+This will start two containers, one for gtools the app, and one for mysql. Docker compose may come in the future.
 
 ## Lab or Development Install
 

@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2u6_8th54gt)v#@l&+e%s*lu#428q0v*j4_x@3&ch9hby$rgd1'
+SECRET_KEY = os.environ.get('GTOOLS_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'gtools.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gtools',
-        'HOST': 'mysql',
-        'USER': 'gtools',
-        'PASSWORD': 'OOsX7qu6Scp1EHcxvMy7JLxw',
+        'NAME': os.environ.get('GTOOLS_DB_NAME', 'gtools'),
+        'HOST': os.environ.get('GTOOLS_DB_HOST', 'mysql'),
+        'USER': os.environ.get('GTOOLS_DB_USER', 'gtools'),
+        'PASSWORD': os.environ.get('GTOOLS_DB_PASS', ''),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES';",
         }

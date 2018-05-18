@@ -8,8 +8,6 @@ from netdevice.models import router, network_os
 from netdevice.tests import create_router
 from bgp.models import aut_num
 
-#user = User.objects.create_user('test', 'test', 'test')
-#user.save()
 
 
 class WebGUIViewTests(TestCase):
