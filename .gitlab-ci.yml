@@ -8,7 +8,7 @@ test:
   stage: test
   before_script:
     - apk update
-    - apk add postgresql-dev
+    - apk add gcc make musl-dev libc-dev linux-headers postgresql-dev
     - pip install -r requirements.txt
   when: on_success
   script:
