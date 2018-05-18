@@ -1,7 +1,8 @@
 stages:
   - test
   - build
-  
+  - deploy
+
 test:
   image: python:2.7-stretch
   stage: test
@@ -18,17 +19,28 @@ build:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   when: on_success
   script:
-    - docker build --pull -t $IMAGE_TAG -f docker/Dockerfile .
-    - docker push $IMAGE_TAG
-  only:
-    - tags
+    - docker build --pull -t $LOCAL_TAG -f docker/Dockerfile .
+    - docker push $LOCAL_TAG
+
+deploy:
+  image: docker:stable
+  stage: deploy
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  when: on_success
+  script:
+    - docker pull $LOCAL_TAG
+    - docker tag $LOCAL_TAG $PROD_TAG
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD index.docker.io
+    - docker push $PROD_TAG
 
 services:
   - docker:dind
   - mysql:5.7
 
 variables:
-  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  PROD_TAG: index.docker.io/slothlogistics/gtools:$CI_COMMIT_REF_NAME
+  LOCAL_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   DOCKER_DRIVER: overlay2
   MYSQL_DATABASE: test_gtools
   MYSQL_ROOT_PASSWORD: test_user_password
