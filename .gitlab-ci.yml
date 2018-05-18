@@ -21,6 +21,8 @@ build:
   script:
     - docker build --pull -t $LOCAL_TAG -f docker/Dockerfile .
     - docker push $LOCAL_TAG
+  only:
+    - tags
 
 deploy:
   image: docker:stable
@@ -31,15 +33,20 @@ deploy:
   script:
     - docker pull $LOCAL_TAG
     - docker tag $LOCAL_TAG $PROD_TAG
+    - docker tag $LOCAL_TAG $HUB_REPO:latest
     - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
     - docker push $PROD_TAG
+    - docker push $HUB_REPO:latest
+  only:
+    - tags
 
 services:
   - docker:dind
   - mysql:5.7
 
 variables:
-  PROD_TAG: slothlogistics/gtools:$CI_COMMIT_REF_NAME
+  HUB_REPO: slothlogistics/gtools
+  PROD_TAG: $HUB_REPO:$CI_COMMIT_REF_NAME
   LOCAL_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   DOCKER_DRIVER: overlay2
   MYSQL_DATABASE: test_gtools
