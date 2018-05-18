@@ -32,7 +32,7 @@ host$ docker run slothlogistics/gtools \
       -e GTOOLS_DB_HOST="mysql" \
       -e GTOOLS_DB_NAME="gtools" \
       -e GTOOLS_DB_USER="gtools" \
-      -e GTOOLS_DB_PASS=""
+      -e GTOOLS_DB_PASS="gtools_password"
 ```
 
 After that, you should be up and running! Please report any issues. If you don't already have a mysql installation or container running, you can use the two steps below to get going super quick.
