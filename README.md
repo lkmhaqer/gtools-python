@@ -15,41 +15,41 @@ pytz==2018.4
 
 Public docker images now available: https://hub.docker.com/r/slothlogistics/gtools/
 
-You only need one variable to start gtools:
+You only need one variable to start gtools, GTOOLS_SECRET_KEY. This assumes we can resolve the db host as "mysql" and a user "gtools" has grant all on a database "gtools" with the password "gtools_password." Most people will want to set a better password at least.
 
 ```
-host$ docker run slothlogistics/gtools \
-      --name gtools -d \
-      -e GTOOLS_SECRET_KEY="really-long-secret-key-here"
+host$ docker run --name gtools -d \
+      -e GTOOLS_SECRET_KEY="really-long-secret-key-here" \
+      slothlogistics/gtools
 ```
 
 You can set all the database variables as well, the defaults are the values below.
 
 ```
-host$ docker run slothlogistics/gtools \
-      --name gtools -d \
+host$ docker run --name gtools -d \
       -e GTOOLS_SECRET_KEY="really-long-secret-key-here" \
       -e GTOOLS_DB_HOST="mysql" \
       -e GTOOLS_DB_NAME="gtools" \
       -e GTOOLS_DB_USER="gtools" \
-      -e GTOOLS_DB_PASS="gtools_password"
+      -e GTOOLS_DB_PASS="gtools_password" \
+      slothlogistics/gtools
 ```
 
 After that, you should be up and running! Please report any issues. If you don't already have a mysql installation or container running, you can use the two steps below to get going super quick.
 
 ```
-host$ docker run mysql:5.7 \
-      --name gtools-mysql -d \
+host$ docker run --name gtools-mysql -d \
       -e MYSQL_ROOT_PASSWORD=test \
       -e MYSQL_DATABASE=gtools \
       -e MYSQL_USER=gtools \
-      -e MYSQL_PASSWORD="gtools-password"
+      -e MYSQL_PASSWORD="gtools-password" \
+      mysql:5.7
 
-...
-host$ docker run slothlogistics/gtools -d \
-      --name gtools --link gtools-mysql:mysql \
+
+host$ docker run -d --name gtools --link gtools-mysql:mysql \
       -e GTOOLS_SECRET_KEY="really-long-secret-key-here" \
-      -e GTOOLS_DB_PASS="gtools-password"
+      -e GTOOLS_DB_PASS="gtools-password" \
+      slothlogistics/gtools
 ```
 
 This will start two containers, one for gtools the app, and one for mysql. Docker compose may come in the future.
