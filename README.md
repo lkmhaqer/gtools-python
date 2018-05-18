@@ -1,4 +1,4 @@
-# gtools-python 0.0.10
+# gtools-python 0.0.11
 
 A configuration generation tool for networking devices. Written in python with Django as web framework and ORM. Define network information like ports, addressing, and routing neighborships, then generate network device configurations based on templates. Examples for IOS, JunOS, BIRD and Quagga included.
 
@@ -42,13 +42,12 @@ host$ docker run --name gtools-mysql -d \
       -e MYSQL_ROOT_PASSWORD=test \
       -e MYSQL_DATABASE=gtools \
       -e MYSQL_USER=gtools \
-      -e MYSQL_PASSWORD="gtools-password" \
+      -e MYSQL_PASSWORD="gtools_password" \
       mysql:5.7
 
 
 host$ docker run -d --name gtools --link gtools-mysql:mysql \
       -e GTOOLS_SECRET_KEY="really-long-secret-key-here" \
-      -e GTOOLS_DB_PASS="gtools-password" \
       slothlogistics/gtools
 ```
 
