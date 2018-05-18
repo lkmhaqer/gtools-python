@@ -14,7 +14,7 @@ RUN set -ex \
             musl-dev \
             libc-dev \
             linux-headers \
-            mariadb-dev \
+            postgresql-dev \
     && pip install -U pip \
     && pip install uwsgi supervisor \
     && pip install -r /requirements.txt 
