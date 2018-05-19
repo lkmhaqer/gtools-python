@@ -219,7 +219,7 @@ def interface_edit(request, interface_id):
 
 @login_required
 def logical_interface_create(request, interface_id):
-    interface_obj = get_object_or_404(router, pk=interface_id)
+    interface_obj = get_object_or_404(interface, pk=interface_id)
     if request.method == "POST":
         form = LogicalInterfaceForm(request.POST)
         if form.is_valid():
@@ -236,7 +236,7 @@ def logical_interface_edit(request, logical_interface_id):
         form = LogicalInterfaceForm(request.POST, instance=logical_interface_obj)
         if form.is_valid():
             logical_interface_obj = form.save()
-            return redirect('op_webgui:router_detail', router_id=logical_interface_obj.router.pk)
+            return redirect('op_webgui:router_detail', router_id=logical_interface_obj.interface.router.pk)
     else:
         form = LogicalInterfaceForm(instance=logical_interface_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
