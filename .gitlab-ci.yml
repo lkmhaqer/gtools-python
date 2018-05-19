@@ -7,8 +7,7 @@ test:
   image: python:2.7-alpine3.7
   stage: test
   before_script:
-    - apk update
-    - apk add gcc libc-dev postgresql-dev
+    - apk -U add gcc libc-dev postgresql-dev
     - pip install -r requirements.txt
   when: on_success
   script:
