@@ -9,9 +9,7 @@ COPY requirements.txt /requirements.txt
 RUN set -ex \
     && apk add --no-cache \
             gcc \
-            make \
             nginx \
-            musl-dev \
             libc-dev \
             linux-headers \
             postgresql-dev \
