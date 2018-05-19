@@ -152,7 +152,7 @@ def ipv6_address_create(request, logical_interface_id):
         form = IPv6AddressForm(request.POST)
         if form.is_valid():
             ipv6_address_obj = form.save()
-            return redirect('op_webgui:router_detail', router_id=ipv6_address_obj.logical_interface.interface.router.pk)
+            return redirect('op_webgui:router_detail', router_id=ipv6_address_obj.interface.interface.router.pk)
     else:
         form = IPv6AddressForm(initial={'interface': logical_interface_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
@@ -164,7 +164,7 @@ def ipv6_address_edit(request, ipv6_address_id):
         form = IPv6AddressForm(request.POST, instance=ipv6_address_obj)
         if form.is_valid():
             ipv6_address_obj = form.save()
-            return redirect('op_webgui:router_detail', router_id=ipv6_address_obj.logical_interface.interface.router.pk)
+            return redirect('op_webgui:router_detail', router_id=ipv6_address_obj.interface.interface.router.pk)
     else:
         form = IPv6AddressForm(instance=ipv6_address_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
@@ -176,7 +176,7 @@ def ipv4_address_create(request, logical_interface_id):
         form = IPv4AddressForm(request.POST)
         if form.is_valid():
             ipv4_address_obj = form.save()
-            return redirect('op_webgui:router_detail', router_id=ipv4_address_obj.logical_interface.interface.router.pk)
+            return redirect('op_webgui:router_detail', router_id=ipv4_address_obj.interface.interface.router.pk)
     else:
         form = IPv4AddressForm(initial={'interface': logical_interface_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
@@ -188,7 +188,7 @@ def ipv4_address_edit(request, ipv4_address_id):
         form = IPv4AddressForm(request.POST, instance=ipv4_address_obj)
         if form.is_valid():
             ipv4_address_obj = form.save()
-            return redirect('op_webgui:router_detail', router_id=ipv4_address_obj.logical_interface.interface.router.pk)
+            return redirect('op_webgui:router_detail', router_id=ipv4_address_obj.interface.interface.router.pk)
     else:
         form = IPv4AddressForm(instance=ipv4_address_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
