@@ -14,12 +14,26 @@
             <tr>
                 <th>&nbsp;</th>
                 <th>Hostname</th>
+                <th>Loopback IP</th>
+                <th>Local ASN</th>
+                <th>Network OS</th>
+                <th>iBGP Enabled</th>
+                <th>SSH Enabled</th>
+                <th>NETCONF Enabled</th>
             </tr>
         {% for router in router_list %}
             <tr>
-                <td><a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-default btn-xs">config</a>
-                <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default btn-xs">edit</a></td>
+                <td>
+                  <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-default btn-xs">config</a>
+                  <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default btn-xs">edit</a>
+                </td>
                 <td><a href="{% url 'op_webgui:router_detail' router.id %}">{{ router.hostname }}</a></td>
+                <td>{{ router.routing_id }}</td>
+                <td>{{ router.local_aut_num.asn }}</td>
+                <td>{{ router.network_os.name }}</td>
+                <td>{{ router.ibgp }}</td>
+                <td>{{ router.service_ssh }}</td>
+                <td>{{ router.service_netconf }}</td>
             </tr>
         {% endfor %}
         </table>
