@@ -6,12 +6,12 @@
 
 {% block content %}
 
-  <table>
     <form method="POST">
       {% csrf_token %}
-      {{ form }}
-      <tr><th>&nbsp;</th><th><button type="submit">Submit</button></th></tr>
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit">Submit</button></th></tr>
+      {% endbuttons %}
     </form>
-  </table>
 
 {% endblock %}
