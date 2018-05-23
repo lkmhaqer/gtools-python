@@ -116,3 +116,25 @@ class StaticViewTest(TestCase):
         response           = self.client.get(reverse('op_webgui:ipv4_static_create', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
+
+    def test_edit_ipv6_static_route_form_view(self):
+        """
+        Create a router, and static route, then check that the edit form view is displayed correctly.
+        """
+        test_router        = create_router('junos')
+        static_route       = create_v6_static(test_router, '2001:db8:1::')
+
+        response           = self.client.get(reverse('op_webgui:ipv6_static_edit', kwargs={'ipv6_static_id': static_route.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_ipv4_static_route_form_view(self):
+        """
+        Create a router, and static route, then check that the edit form view is displayed correctly.
+        """
+        test_router        = create_router('junos')
+        static_route       = create_v4_static(test_router, '192.0.2.0')
+
+        response           = self.client.get(reverse('op_webgui:ipv4_static_edit', kwargs={'ipv4_static_id': static_route.id}))
+
+        self.assertEqual(response.status_code, 200)
