@@ -102,7 +102,6 @@ class StaticViewTest(TestCase):
         Create a router, then test that the create a static route page view is displayed correctly.
         """
         test_router        = create_router('junos')
-
         response           = self.client.get(reverse('op_webgui:ipv6_static_create', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
@@ -112,7 +111,6 @@ class StaticViewTest(TestCase):
         Create a router, then test that the create a static route page view is displayed correctly.
         """
         test_router        = create_router('junos')
-
         response           = self.client.get(reverse('op_webgui:ipv4_static_create', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
