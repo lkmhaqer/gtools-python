@@ -81,3 +81,25 @@ class NetdeviceViewTests(TestCase):
         response                = self.client.get(reverse('op_webgui:interface_edit', kwargs={'interface_id': test_logical_interface.interface.id}))
 
         self.assertEqual(response.status_code, 200)
+
+    def test_create_logical_interface_form_view(self):
+        """
+        Create a router, then check the create interface form view is displayed correctly.
+        """
+        test_router             = create_router('junos')
+        test_logical_interface  = create_interface(test_router)
+
+        response                = self.client.get(reverse('op_webgui:logical_interface_create', kwargs={'interface_id': test_logical_interface.interface.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_logical_interface_form_view(self):
+        """
+        Create a router, create an interface, then check the edit interface form view is displayed correctly.
+        """
+        test_router             = create_router('junos')
+        test_logical_interface  = create_interface(test_router)
+
+        response                = self.client.get(reverse('op_webgui:logical_interface_edit', kwargs={'logical_interface_id': test_logical_interface.id}))
+
+        self.assertEqual(response.status_code, 200)
