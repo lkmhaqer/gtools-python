@@ -97,4 +97,22 @@ class StaticViewTest(TestCase):
             self.assertContains(response, 'route 10.' + str(i) + '.0.0/16 next-hop 172.16.0.1')
             self.assertContains(response, 'route 2001:db8:' + str(i) + '::/48 next-hop 2001:db8::1')
 
+    def test_create_ipv6_static_route_form_view(self):
+        """
+        Create a router, then test that the create a static route page view is displayed correctly.
+        """
+        test_router        = create_router('junos')
 
+        response           = self.client.get(reverse('op_webgui:ipv6_static_create', kwargs={'router_id': test_router.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_ipv4_static_route_form_view(self):
+        """
+        Create a router, then test that the create a static route page view is displayed correctly.
+        """
+        test_router        = create_router('junos')
+
+        response           = self.client.get(reverse('op_webgui:ipv4_static_create', kwargs={'router_id': test_router.id}))
+
+        self.assertEqual(response.status_code, 200)
