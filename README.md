@@ -60,9 +60,9 @@ To get a basic copy running with the built in httpd, there should just be a few 
 Virtualenv is a good idea, but I leave that up to you. You'll want to have python, django, and the database libraries of your choice. (postgreSQL by default in this project.)
 
 * Example for Debian/Ubuntu: `apt-get install python-pip python-dev libpq-dev`
-* Install Python libraries: `pip install -r requirements.txt`
 * Check out the code: `git clone https://github.com/lkmhaqer/gtools-python.git`
 * Move to your new directory: `cd gtools-python`
+* Install Python libraries: `pip install -r requirements.txt`
 
 Setup a database, and user with permissions to it, then update gtools/settings.py with these details. Now you're ready to run django's migrate command. Alternatively, set the backend to sqlite3 in gtools/settings.py (see example below "SQLite Settings") and specifiy a file instead of using postgres, then migrate.
 
