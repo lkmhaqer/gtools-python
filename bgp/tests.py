@@ -118,3 +118,25 @@ class AddressViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, asn_one_config)
         self.assertContains(response, asn_two_config)
+
+    def test_create_neighbor_form_view(self):
+        """
+        Create a test router, and then test the form view of create display.
+        """
+        test_router     = create_router('junos')
+
+        response = self.client.get(reverse('op_webgui:neighbor_create', kwargs={'router_id': test_router.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_neighbor_form_view(self):
+        """
+        Create a test router, and neighbor, then test the form view of neighbor edit is displayed correctly.
+        """
+        test_router     = create_router('junos')
+        test_asn_one    = create_aut_num('65001')
+        test_neighbor   = create_neighbor(test_router, test_asn_one, '2001:db8:1::1')
+
+        response = self.client.get(reverse('op_webgui:neighbor_edit', kwargs={'neighbor_id': test_neighbor.id}))
+
+        self.assertEqual(response.status_code, 200)
