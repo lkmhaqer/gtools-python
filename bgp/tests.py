@@ -140,3 +140,21 @@ class AddressViewTests(TestCase):
         response = self.client.get(reverse('op_webgui:neighbor_edit', kwargs={'neighbor_id': test_neighbor.id}))
 
         self.assertEqual(response.status_code, 200)
+
+    def test_create_aut_num_form_view(self):
+        """
+        Test the form view of create ASN display.
+        """
+        response = self.client.get(reverse('op_webgui:aut_num_create'))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_aut_num_form_view(self):
+        """
+        Create an ASN, then test the form view of the edit ASN display.
+        """
+        test_asn = create_aut_num('65001')
+
+        response = self.client.get(reverse('op_webgui:aut_num_edit', kwargs={'aut_num_id': test_asn.id}))
+
+        self.assertEqual(response.status_code, 200)
