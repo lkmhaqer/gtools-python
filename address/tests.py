@@ -107,6 +107,7 @@ class AddressViewTests(TestCase):
         response = self.client.get(reverse('op_webgui:ipv6_address_create', kwargs={'logical_interface_id': test_interface.id}))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<option value="1" selected>test-router ge-0/0/0.10 (A logical test description.)</option>')
 
     def test_ipv4_address_create_form_view(self):
         """
@@ -118,6 +119,7 @@ class AddressViewTests(TestCase):
         response = self.client.get(reverse('op_webgui:ipv4_address_create', kwargs={'logical_interface_id': test_interface.id}))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<option value="1" selected>test-router ge-0/0/0.10 (A logical test description.)</option>')
 
     def test_ipv6_address_edit_form_view(self):
         """
