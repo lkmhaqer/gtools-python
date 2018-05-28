@@ -1,16 +1,18 @@
 {% extends 'op_webgui/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
-{% block bootstrap3_title %}{% block title %}{{ request.path }}{% endblock %}{% endblock %}
+{% block bootstrap4_title %}{% block title %}{{ request.path }}{% endblock %}{% endblock %}
 
 {% block content %}
 
   <table>
     <form method="POST">
       {% csrf_token %}
-      {{ form }}
+      {% bootstrap_form form %}
+      {% buttons %}
       <tr><th>&nbsp;</th><th><button type="submit">Submit</button></th></tr>
+      {% endbuttons %}
     </form>
   </table>
 

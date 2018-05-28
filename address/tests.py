@@ -132,7 +132,7 @@ class AddressViewTests(TestCase):
         response = self.client.get(reverse('op_webgui:ipv6_address_edit', kwargs={'ipv6_address_id': test_address.id}))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, '<input type="text" name="host" value="2001:db8:1::1" required id="id_host" />')
+        self.assertContains(response, '<input type="text" name="host" value="2001:db8:1::1" title="" required id="id_host" placeholder="Host" class="form-control" />')
 
     def test_ipv4_address_edit_form_view(self):
         """
@@ -145,4 +145,4 @@ class AddressViewTests(TestCase):
         response = self.client.get(reverse('op_webgui:ipv4_address_edit', kwargs={'ipv4_address_id': test_address.id}))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, '<input type="text" name="host" value="192.0.2.1" required id="id_host" />')
+        self.assertContains(response, '<input type="text" name="host" value="192.0.2.1" title="" required id="id_host" placeholder="Host" class="form-control" />')

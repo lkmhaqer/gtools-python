@@ -1,5 +1,5 @@
 Django==1.11.13
-django-bootstrap3==10.0.1
+django-bootstrap4==0.0.6
 Jinja2==2.9.5
 MarkupSafe==0.23
 psycopg2==2.7.4

@@ -1,8 +1,8 @@
 {% extends 'op_webgui/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
-{% block bootstrap3_title %}{% block title %}Login{% endblock %}{% endblock %}
+{% block bootstrap4_title %}{% block title %}Login{% endblock %}{% endblock %}
 
 {% block content %}
 
@@ -11,8 +11,10 @@
     <table>
       <form method="post">
         {% csrf_token %}
-        {{ form.as_table }}
+        {% bootstrap_form form %}
+        {% buttons %}
         <tr><th>&nbsp;</th><th><button type="submit">Login</button></th></tr>
+        {% endbuttons %}
       </form>
     </table>
   </div>
