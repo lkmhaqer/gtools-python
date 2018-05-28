@@ -14,13 +14,13 @@
 
               <li class="nav-item">
                 <a href="{% url 'op_webgui:index' %}" class="nav-link{% if router_count %} active{% endif %}">routers
-                  {% if router_count %}&nbsp;<span class="badge">{{ router_count }}</span>{% endif %}
+                  {% if router_count %}&nbsp;<span class="badge badge-secondary">{{ router_count }}</span>{% endif %}
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{% url 'op_webgui:asn' %}" class="nav-link{% if asn_count %} active{% endif %}">aut-num 
-                  {% if asn_count %}&nbsp;<span class="badge">{{ asn_count }}</span>{% endif %}
+                  {% if asn_count %}&nbsp;<span class="badge badge-secondary">{{ asn_count }}</span>{% endif %}
                 </a>
               </li>
 
