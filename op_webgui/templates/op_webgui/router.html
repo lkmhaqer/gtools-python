@@ -72,7 +72,7 @@
            <a href="{% url 'op_webgui:ipv4_address_edit' ipv4_address.id %}" class="btn btn-outline-primary btn-xs">
            {{ ipv4_address.host }}/{{ ipv4_address.cidr }}
            </a>
-         </li>
+         </li><br />
       {% endfor %}
       </ul>
       <ul>
@@ -81,9 +81,9 @@
            <a href="{% url 'op_webgui:ipv6_address_edit' ipv6_address.id %}" class="btn btn-outline-primary btn-xs">
            {{ ipv6_address.host }}/{{ ipv6_address.cidr }}
            </a>
-         </li>
+         </li><br />
       {% endfor %}
-      </ul><br />
+      </ul>
     {% endfor %}
     </ul>
   {% endfor %}
@@ -97,7 +97,7 @@
       <a href="{% url 'op_webgui:ipv6_static_edit' ipv6_static.id %}" class="btn btn-outline-primary btn-xs">
       {{ ipv6_static.network }}/{{ ipv6_static.cidr }} next-hop {{ ipv6_static.next_hop }}
       </a>
-    </li>
+    </li><br />
   {% endfor %}
   </ul>
 
@@ -107,7 +107,7 @@
       <a href="{% url 'op_webgui:ipv4_static_edit' ipv4_static.id %}" class="btn btn-outline-primary btn-xs">
       {{ ipv4_static.network }}/{{ ipv4_static.cidr }} next-hop {{ ipv4_static.next_hop }}
       </a>
-    </li>
+    </li><br />
   {% endfor %}
   </ul>
 
