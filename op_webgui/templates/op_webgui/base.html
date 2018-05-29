@@ -1,8 +1,8 @@
-{% extends 'bootstrap3/bootstrap3.html' %}
+{% extends 'bootstrap4/bootstrap4.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
-{% block bootstrap3_content %}
+{% block bootstrap4_content %}
 
     <div class="container">
         <h1>{% block title %}(no title){% endblock %}</h1>
@@ -12,21 +12,21 @@
           <p>
             <ul class="nav nav-tabs">
 
-              <li role="presentation"{% if router_count %} class="active"{% endif %}>
-                <a href="{% url 'op_webgui:index' %}">routers
-                  {% if router_count %}&nbsp;<span class="badge">{{ router_count }}</span>{% endif %}
+              <li class="nav-item">
+                <a href="{% url 'op_webgui:index' %}" class="nav-link{% if router_count %} active{% endif %}">routers
+                  {% if router_count %}&nbsp;<span class="badge badge-secondary">{{ router_count }}</span>{% endif %}
                 </a>
               </li>
 
-              <li role="presentation"{% if asn_count %} class="active"{% endif %}>
-                <a href="{% url 'op_webgui:asn' %}">aut-num 
-                  {% if asn_count %}&nbsp;<span class="badge">{{ asn_count }}</span>{% endif %}
+              <li class="nav-item">
+                <a href="{% url 'op_webgui:asn' %}" class="nav-link{% if asn_count %} active{% endif %}">aut-num 
+                  {% if asn_count %}&nbsp;<span class="badge badge-secondary">{{ asn_count }}</span>{% endif %}
                 </a>
               </li>
 
-              <li role="presentation"><a href="{% url 'admin:index' %}">admin</a></li>
+              <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link">admin</a></li>
 
-              <li role="presentation"><a href="{% url 'logout' %}">logout</a></li>
+              <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">logout</a></li>
 
             </ul>
           <p>

@@ -1,14 +1,14 @@
 {% extends 'op_webgui/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
-{% block bootstrap3_title %}{% block title %}Router {{ router.hostname }}{% endblock %}{% endblock %}
+{% block bootstrap4_title %}{% block title %}Router {{ router.hostname }}{% endblock %}{% endblock %}
 
 {% block content %}
 
   <br />
-  <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-default btn-sm">Config</a>
-  <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default btn-sm">Edit</a>
+  <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-outline-primary btn-sm">Config</a>
+  <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
   <a href="{% url 'op_webgui:ipv6_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv6 Static Route</a>
   <a href="{% url 'op_webgui:ipv4_static_create' router.id %}" class="btn btn-success btn-sm">Add IPv4 Static Route</a>
   <a href="{% url 'op_webgui:neighbor_create' router.id %}" class="btn btn-success btn-sm">Add BGP Neighbor</a>
@@ -31,7 +31,7 @@
   <ul>
   {% for neighbor in router.neighbor_set.all %}
     <li>
-      <a href="{% url 'op_webgui:neighbor_edit' neighbor.id %}" class="btn btn-default btn-xs">
+      <a href="{% url 'op_webgui:neighbor_edit' neighbor.id %}" class="btn btn-outline-primary btn-xs">
       {{ neighbor.peer_ip }} - {{ neighbor.aut_num }}
       </a>
     </li>
@@ -43,7 +43,7 @@
   <ul>
   {% for interface in router.interface_set.all %}
     <li><hr />
-    <a href="{% url 'op_webgui:interface_edit' interface.id %}" class="btn btn-default btn-xs">
+    <a href="{% url 'op_webgui:interface_edit' interface.id %}" class="btn btn-outline-primary btn-xs">
     edit
     </a>
     <a href="{% url 'op_webgui:logical_interface_create' interface.id %}" class="btn btn-success btn-xs">
@@ -56,7 +56,7 @@
       <li>
         Sub-interface {{ logical_interface.name }}
         ({{ logical_interface.description }}) <br />
-        <a href="{% url 'op_webgui:logical_interface_edit' logical_interface.id %}" class="btn btn-default btn-xs">
+        <a href="{% url 'op_webgui:logical_interface_edit' logical_interface.id %}" class="btn btn-outline-primary btn-xs">
         edit sub-interface {{ logical_interface.name }}
         </a>
         <a href="{% url 'op_webgui:ipv6_address_create' logical_interface.id %}" class="btn btn-success btn-xs">
@@ -67,23 +67,35 @@
         </a>
       </li><br />
       <ul>
-      {% for ipv4_address in logical_interface.ipv4_address_set.all %}
+      {% if logical_interface.inet_dhcp_client %}
          <li>
-           <a href="{% url 'op_webgui:ipv4_address_edit' ipv4_address.id %}" class="btn btn-default btn-xs">
-           {{ ipv4_address.host }}/{{ ipv4_address.cidr }}
-           </a>
-         </li>
-      {% endfor %}
+           DHCP
+         </li><br />
+       {% else %}
+         {% for ipv4_address in logical_interface.ipv4_address_set.all %}
+           <li>
+             <a href="{% url 'op_webgui:ipv4_address_edit' ipv4_address.id %}" class="btn btn-outline-primary btn-xs">
+             {{ ipv4_address.host }}/{{ ipv4_address.cidr }}
+             </a>
+           </li><br />
+         {% endfor %}
+       {% endif %}
       </ul>
       <ul>
-      {% for ipv6_address in logical_interface.ipv6_address_set.all %}
-         <li>
-           <a href="{% url 'op_webgui:ipv6_address_edit' ipv6_address.id %}" class="btn btn-default btn-xs">
-           {{ ipv6_address.host }}/{{ ipv6_address.cidr }}
-           </a>
-         </li>
-      {% endfor %}
-      </ul><br />
+      {% if logical_interface.inet6_dhcp_client %}
+        <li>
+          DHCP
+        </li><br />
+      {% else %}
+         {% for ipv6_address in logical_interface.ipv6_address_set.all %}
+           <li>
+             <a href="{% url 'op_webgui:ipv6_address_edit' ipv6_address.id %}" class="btn btn-outline-primary btn-xs">
+             {{ ipv6_address.host }}/{{ ipv6_address.cidr }}
+             </a>
+           </li><br />
+        {% endfor %}
+      {% endif %}
+      </ul>
     {% endfor %}
     </ul>
   {% endfor %}
@@ -94,20 +106,20 @@
   <ul>
   {% for ipv6_static in router.ipv6_static_set.all %}
     <li>
-      <a href="{% url 'op_webgui:ipv6_static_edit' ipv6_static.id %}" class="btn btn-default btn-xs">
+      <a href="{% url 'op_webgui:ipv6_static_edit' ipv6_static.id %}" class="btn btn-outline-primary btn-xs">
       {{ ipv6_static.network }}/{{ ipv6_static.cidr }} next-hop {{ ipv6_static.next_hop }}
       </a>
-    </li>
+    </li><br />
   {% endfor %}
   </ul>
 
   <ul>
   {% for ipv4_static in router.ipv4_static_set.all %}
     <li>
-      <a href="{% url 'op_webgui:ipv4_static_edit' ipv4_static.id %}" class="btn btn-default btn-xs">
+      <a href="{% url 'op_webgui:ipv4_static_edit' ipv4_static.id %}" class="btn btn-outline-primary btn-xs">
       {{ ipv4_static.network }}/{{ ipv4_static.cidr }} next-hop {{ ipv4_static.next_hop }}
       </a>
-    </li>
+    </li><br />
   {% endfor %}
   </ul>
 

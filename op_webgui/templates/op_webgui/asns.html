@@ -1,8 +1,8 @@
 {% extends 'op_webgui/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
-{% block bootstrap3_title %}{% block title %}ASN List{% endblock %}{% endblock %}
+{% block bootstrap4_title %}{% block title %}ASN List{% endblock %}{% endblock %}
 
 {% block content %}
 
@@ -19,7 +19,7 @@
             </tr>
         {% for asn in asn_list %}
             <tr>
-                <td><a href="{% url 'op_webgui:aut_num_edit' asn.id %}" class="btn btn-default btn-xs">edit</a></td>
+                <td><a href="{% url 'op_webgui:aut_num_edit' asn.id %}" class="btn btn-outline-primary btn-xs">edit</a></td>
                 <td><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn.asn }}</a></td>
                 <td>{{ asn.name }}</td>
                 <td>{{ asn.contact }}</td>

@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'bootstrap3',
+    'bootstrap4',
     'netdevice.apps.NetdeviceConfig',
     'address.apps.AddressConfig',
     'bgp.apps.BgpConfig',

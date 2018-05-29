@@ -1,8 +1,8 @@
 {% extends 'op_webgui/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
-{% block bootstrap3_title %}{% block title %}Router List{% endblock %}{% endblock %}
+{% block bootstrap4_title %}{% block title %}Router List{% endblock %}{% endblock %}
 
 {% block content %}
 
@@ -24,8 +24,8 @@
         {% for router in router_list %}
             <tr>
                 <td>
-                  <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-default btn-xs">config</a>
-                  <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-default btn-xs">edit</a>
+                  <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-outline-primary btn-xs">config</a>
+                  <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-outline-primary btn-xs">edit</a>
                 </td>
                 <td><a href="{% url 'op_webgui:router_detail' router.id %}">{{ router.hostname }}</a></td>
                 <td>{{ router.routing_id }}</td>

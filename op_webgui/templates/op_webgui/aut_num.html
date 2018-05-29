@@ -1,12 +1,12 @@
 {% extends 'op_webgui/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
-{% block bootstrap3_title %}{% block title %}AS {{ aut_num.asn }}{% endblock %}{% endblock %}
+{% block bootstrap4_title %}{% block title %}AS {{ aut_num.asn }}{% endblock %}{% endblock %}
 
 {% block content %}
 
-  <br /><a href="{% url 'op_webgui:aut_num_edit' aut_num.id %}" class="btn btn-default btn-sm">Edit</a><hr />
+  <br /><a href="{% url 'op_webgui:aut_num_edit' aut_num.id %}" class="btn btn-outline-primary btn-sm">Edit</a><hr />
 
   <ul>
     <li><b>Name:</b> {{ aut_num.name }}</li>

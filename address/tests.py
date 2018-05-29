@@ -96,3 +96,53 @@ class AddressViewTests(TestCase):
         for i in range(1, address_count):
             self.assertContains(response, 'address 1.1.' + str(i) + '.1/24')
             self.assertContains(response, 'address 2600:' + str(i) + '::1/64')
+
+    def test_ipv6_address_create_form_view(self):
+        """
+        Create a test router and interface, then test the form view of ipv6_address_create is displayed correctly.
+        """
+        test_router    = create_router('junos')
+        test_interface = create_interface(test_router)
+
+        response = self.client.get(reverse('op_webgui:ipv6_address_create', kwargs={'logical_interface_id': test_interface.id}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<option value="1" selected>test-router ge-0/0/0.10 (A logical test description.)</option>')
+
+    def test_ipv4_address_create_form_view(self):
+        """
+        Create a test router and interface, then test the form view of ipv4_address_create is displayed correctly.
+        """
+        test_router    = create_router('junos')
+        test_interface = create_interface(test_router)
+
+        response = self.client.get(reverse('op_webgui:ipv4_address_create', kwargs={'logical_interface_id': test_interface.id}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<option value="1" selected>test-router ge-0/0/0.10 (A logical test description.)</option>')
+
+    def test_ipv6_address_edit_form_view(self):
+        """
+        Create a test router, interface and address, then test the form view of ipv6_address_edit is displayed correctly.
+        """
+        test_router    = create_router('junos')
+        test_interface = create_interface(test_router)
+        test_address   = create_v6_address(test_interface, '2001:db8:1::1')
+
+        response = self.client.get(reverse('op_webgui:ipv6_address_edit', kwargs={'ipv6_address_id': test_address.id}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<input type="text" name="host" value="2001:db8:1::1" title="" required id="id_host" placeholder="Host" class="form-control" />')
+
+    def test_ipv4_address_edit_form_view(self):
+        """
+        Create a test router, interface and address, then test the form view of ipv4_address_edit is displayed correctly.
+        """
+        test_router    = create_router('junos')
+        test_interface = create_interface(test_router)
+        test_address   = create_v4_address(test_interface, '192.0.2.1')
+
+        response = self.client.get(reverse('op_webgui:ipv4_address_edit', kwargs={'ipv4_address_id': test_address.id}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<input type="text" name="host" value="192.0.2.1" title="" required id="id_host" placeholder="Host" class="form-control" />')
