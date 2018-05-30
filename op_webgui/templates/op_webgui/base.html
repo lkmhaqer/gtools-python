@@ -28,14 +28,12 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'op_webgui:index' %}">
-                  <span data-feather="home"></span>
+                <a class="nav-link" href="{% url 'op_webgui:index' %}">
                   Overview
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'op_webgui:index' %}">
-                  <span data-feather="file"></span>
+                <a class="nav-link{% if router_count %} active{% endif %}" href="{% url 'op_webgui:index' %}">
                   Routers
                   {% if router_count %}
                   <span class="sr-only">(current)</span>
@@ -43,8 +41,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'op_webgui:asn' %}">
-                  <span data-feather="shopping-cart"></span>
+                <a class="nav-link{% if asn_count %} active{% endif %}" href="{% url 'op_webgui:asn' %}">
                   ASNs
                   {% if asn_count %}
                   <span class="sr-only">(current)</span>
