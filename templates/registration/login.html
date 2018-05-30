@@ -1,12 +1,14 @@
-{% extends 'op_webgui/base.html' %}
+{% extends 'bootstrap4/bootstrap4.html' %}
 
 {% load bootstrap4 %}
 
 {% block bootstrap4_title %}{% block title %}Login{% endblock %}{% endblock %}
 
-{% block content %}
+{% block bootstrap4_content %}
 
-  <!-- templates/registration/login.html -->
+ <div class="container-fluid">
+  <h1>Login</h1>
+  <hr>
   <div id="login-box">
     <table>
       <form method="post">
@@ -18,5 +20,6 @@
       </form>
     </table>
   </div>
+ </div>
 
 {% endblock %}
