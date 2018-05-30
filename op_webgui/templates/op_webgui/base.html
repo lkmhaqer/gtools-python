@@ -1,45 +1,88 @@
 {% extends 'bootstrap4/bootstrap4.html' %}
 
 {% load bootstrap4 %}
+{% load static %}
+
+{% block bootstrap4_extra_head %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block bootstrap4_content %}
 
-    <div class="container">
-        <h1>{% block title %}(no title){% endblock %}</h1>
-
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">GTools</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
         {%  if user.is_authenticated %}
-
-          <p>
-            <ul class="nav nav-tabs">
-
-              <li class="nav-item">
-                <a href="{% url 'op_webgui:index' %}" class="nav-link{% if router_count %} active{% endif %}">routers
-                  {% if router_count %}&nbsp;<span class="badge badge-secondary">{{ router_count }}</span>{% endif %}
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{% url 'op_webgui:asn' %}" class="nav-link{% if asn_count %} active{% endif %}">aut-num 
-                  {% if asn_count %}&nbsp;<span class="badge badge-secondary">{{ asn_count }}</span>{% endif %}
-                </a>
-              </li>
-
-              <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link">admin</a></li>
-
-              <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">logout</a></li>
-
-            </ul>
-          <p>
-
-        {% else %}
-
-          <hr>
-
+          <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
         {% endif %}
+        </li>
+      </ul>
+    </nav>
 
-        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'op_webgui:index' %}">
+                  <span data-feather="home"></span>
+                  Overview
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'op_webgui:index' %}">
+                  <span data-feather="file"></span>
+                  Routers
+                  {% if router_count %}
+                  <span class="sr-only">(current)</span>
+                  {% endif %}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'op_webgui:asn' %}">
+                  <span data-feather="shopping-cart"></span>
+                  ASNs
+                  {% if asn_count %}
+                  <span class="sr-only">(current)</span>
+                  {% endif %}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}">
+                  <span data-feather="users"></span>
+                  Admin
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
 
-        {% block content %}(no content){% endblock %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="padding-top: 48px">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">{% block title %}(no title){% endblock %}</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                This week
+              </button>
+            </div>
+          </div>
+
+          {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+          <div>
+          {% block content %}(no content){% endblock %}
+          </div>
+        </main>
+      </div>
     </div>
 
 {% endblock %}
