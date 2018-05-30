@@ -7,7 +7,7 @@
 {% block content %}
 
     <p>
-    <span align="right"><a href="{% url 'op_webgui:aut_num_create' %}" class="btn btn-success btn-sm">Add ASN</a></span>
+    <span align="right"><a href="{% url 'op_webgui:aut_num_create' %}" class="btn btn-success">Add ASN</a></span>
     {% if asn_list %}
         <p>&nbsp;
         <table class="table table-hover">
@@ -19,7 +19,7 @@
             </tr>
         {% for asn in asn_list %}
             <tr>
-                <td><a href="{% url 'op_webgui:aut_num_edit' asn.id %}" class="btn btn-outline-primary btn-xs">edit</a></td>
+                <td><a href="{% url 'op_webgui:aut_num_edit' asn.id %}" class="btn btn-outline-primary btn-sm">edit</a></td>
                 <td><a href="{% url 'op_webgui:aut_num_detail' asn.id %}">{{ asn.asn }}</a></td>
                 <td>{{ asn.name }}</td>
                 <td>{{ asn.contact }}</td>
