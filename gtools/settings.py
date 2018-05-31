@@ -135,5 +135,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,'assets'),)
 # User-set project settings
 #
 
+GTOOLS_VERSION = "v0.0.15"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
