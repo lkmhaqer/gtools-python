@@ -16,12 +16,25 @@
     <form class="form-signin" method="post">
       {% csrf_token %}
       <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">Authenticate</h1>
+      <h1 class="h3 mb-3 font-weight-normal">GTools</h1>
       <label for="{{ form.username.html_name }}" class="sr-only">{{ form.username.label_tag }}</label>
-      <input type="text" title="" name="{{ form.username.html_name }}" id="{{ form.username.html_name }}" class="form-control" placeholder="Username" required autofocus>
+      <input type="text" 
+             title=""
+             name="{{ form.username.html_name }}"
+             id="{{ form.username.html_name }}"
+             class="form-control"
+             placeholder="Username"
+             required
+             autofocus>
       <label for="{{ form.password.html_name }}" class="sr-only">{{ form.password.label_tag }}</label>
-      <input type="password" title="" name="{{ form.password.html_name }}" id="{{ form.password.html_name }}" class="form-control" placeholder="Password" required>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <input type="password"
+             title=""
+             name="{{ form.password.html_name }}"
+             id="{{ form.password.html_name }}"
+             class="form-control"
+             placeholder="Password"
+             required>
+      <button class="btn btn-lg btn-success btn-block" type="submit">authenticate</button>
       <p class="mt-5 mb-3 text-muted">&nbsp;</p>
     </form>
  </div>
