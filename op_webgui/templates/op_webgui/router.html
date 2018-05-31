@@ -15,28 +15,28 @@
   <a href="{% url 'op_webgui:interface_create' router.id %}" class="btn btn-success">Add Interface</a>
   <hr />
 
-  <h3>Router Details</h3>
+  <div class="col align-self-start">
+  <h3>Router Details</h3><br />
 
-  <ul>
-    <li><b>Router ID:</b> {{ router.routing_id }}</li>
-    <li><b>ASN:</b> {{ router.local_aut_num.asn }}</li>
-    <li><b>Network OS:</b> {{ router.network_os }}</li>
-    <li><b>iBGP Enabled:</b> {{ router.ibgp }}</li>
-    <li><b>SSH Enabled:</b> {{ router.service_ssh }}</li>
-    <li><b>NETCONF Enabled:</b> {{ router.service_netconf }}</li>
-  </ul>
+  <ul class="list-group">
+    <li class="list-group-item"><b>Router ID:</b> {{ router.routing_id }}</li>
+    <li class="list-group-item"><b>ASN:</b> {{ router.local_aut_num.asn }}</li>
+    <li class="list-group-item"><b>Network OS:</b> {{ router.network_os }}</li>
+    <li class="list-group-item"><b>iBGP Enabled:</b> {{ router.ibgp }}</li>
+    <li class="list-group-item"><b>SSH Enabled:</b> {{ router.service_ssh }}</li>
+    <li class="list-group-item"><b>NETCONF Enabled:</b> {{ router.service_netconf }}</li>
+  </ul><br />
 
   <h3>BGP Neighbors</h3>
 
-  <ul>
+  <div class="list-group">
   {% for neighbor in router.neighbor_set.all %}
-    <li>
-      <a href="{% url 'op_webgui:neighbor_edit' neighbor.id %}" class="btn btn-outline-primary btn-sm">
-      {{ neighbor.peer_ip }} - {{ neighbor.aut_num }}
-      </a>
-    </li><br />
+    <a href="{% url 'op_webgui:neighbor_edit' neighbor.id %}"
+       class="list-group-item list-group-item-action">
+    {{ neighbor.peer_ip }} - {{ neighbor.aut_num }}
+    </a>
   {% endfor %}
-  </ul>
+  </div><br />
 
   <h3>Interfaces and IPs</h3>
 
@@ -103,24 +103,20 @@
 
   <h3>Static Routes</h3>
 
-  <ul>
+  <div class="list-group">
   {% for ipv6_static in router.ipv6_static_set.all %}
-    <li>
-      <a href="{% url 'op_webgui:ipv6_static_edit' ipv6_static.id %}" class="btn btn-outline-primary btn-sm">
-      {{ ipv6_static.network }}/{{ ipv6_static.cidr }} next-hop {{ ipv6_static.next_hop }}
-      </a>
-    </li><br />
+    <a href="{% url 'op_webgui:ipv6_static_edit' ipv6_static.id %}"
+       class="list-group-item list-group-item-action">
+    {{ ipv6_static.network }}/{{ ipv6_static.cidr }} next-hop {{ ipv6_static.next_hop }}
+    </a>
   {% endfor %}
-  </ul>
-
-  <ul>
   {% for ipv4_static in router.ipv4_static_set.all %}
-    <li>
-      <a href="{% url 'op_webgui:ipv4_static_edit' ipv4_static.id %}" class="btn btn-outline-primary btn-sm">
-      {{ ipv4_static.network }}/{{ ipv4_static.cidr }} next-hop {{ ipv4_static.next_hop }}
-      </a>
-    </li><br />
+    <a href="{% url 'op_webgui:ipv4_static_edit' ipv4_static.id %}"
+       class="list-group-item list-group-item-action">
+    {{ ipv4_static.network }}/{{ ipv4_static.cidr }} next-hop {{ ipv4_static.next_hop }}
+    </a>
   {% endfor %}
-  </ul>
+  </div><br /><!-- static ipv4 div -->
+  </div><!-- main container div -->
 
 {% endblock %}
