@@ -1,25 +1,29 @@
 {% extends 'bootstrap4/bootstrap4.html' %}
 
 {% load bootstrap4 %}
+{% load static %}
+
+{% block bootstrap4_extra_head %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block bootstrap4_title %}{% block title %}Login{% endblock %}{% endblock %}
 
 {% block bootstrap4_content %}
 
  <div class="container-fluid">
-  <h1>Login</h1>
-  <hr>
-  <div id="login-box">
-    <table>
-      <form method="post">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-        <tr><th>&nbsp;</th><th><button type="submit">Login</button></th></tr>
-        {% endbuttons %}
-      </form>
-    </table>
-  </div>
+    <form class="form-signin" method="post">
+      {% csrf_token %}
+      <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Authenticate</h1>
+      <label for="{{ form.username.html_name }}" class="sr-only">{{ form.username.label_tag }}</label>
+      <input type="text" title="" name="{{ form.username.html_name }}" id="{{ form.username.html_name }}" class="form-control" placeholder="Username" required autofocus>
+      <label for="{{ form.password.html_name }}" class="sr-only">{{ form.password.label_tag }}</label>
+      <input type="password" title="" name="{{ form.password.html_name }}" id="{{ form.password.html_name }}" class="form-control" placeholder="Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&nbsp;</p>
+    </form>
  </div>
 
 {% endblock %}
