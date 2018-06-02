@@ -19,7 +19,7 @@ class WebGUIViewTests(TestCase):
         We want to see an error if there are no routers.
         """
         self.client.login(username='test', password='test')
-        response = self.client.get(reverse('op_webgui:index'), follow=True)
+        response = self.client.get(reverse('op_webgui:router_list'), follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No routers")
         self.assertQuerysetEqual(response.context['router_list'], [])
@@ -29,7 +29,7 @@ class WebGUIViewTests(TestCase):
         Create a router, then check that the view reflects this.
         """
         test_router      = create_router('ios')
-        response         = self.client.get(reverse('op_webgui:index'))
+        response         = self.client.get(reverse('op_webgui:router_list'))
 
         self.assertQuerysetEqual(
             response.context['router_list'], ['<router: test-router>']
@@ -53,7 +53,7 @@ class WebGUIViewTests(TestCase):
             )
             new_router_list.append('<router: test-router-' + str(i) + '>')
 
-        response = self.client.get(reverse('op_webgui:index'))
+        response = self.client.get(reverse('op_webgui:router_list'))
 
         self.assertQuerysetEqual(
             response.context['router_list'], new_router_list
