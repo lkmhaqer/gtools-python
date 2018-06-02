@@ -28,7 +28,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'op_webgui:index' %}">
+                <a class="nav-link{% if not router_count and not asn_count %} active{% endif %}" href="{% url 'op_webgui:index' %}">
                   Overview
                 </a>
               </li>
