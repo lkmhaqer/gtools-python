@@ -6,7 +6,20 @@
 
 {% block content %}
 
-    <p>
-    Yo!
+  <p>
+  <div class="card-deck">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header">Routers</div>
+      <div class="card-body">
+        <h3 class="card-title">{{ info.router_count }}</h3>
+      </div>
+    </div>
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header">ASNs</div>
+      <div class="card-body">
+        <h3 class="card-title">{{ info.asn_count }}</h3>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

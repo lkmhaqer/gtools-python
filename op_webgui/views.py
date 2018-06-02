@@ -16,7 +16,10 @@ from .forms import IPv6AddressForm, IPv4AddressForm
 
 @login_required
 def index(request):
-    context = {}
+    info                 = {}
+    info['router_count'] = router.objects.count()
+    info['asn_count']    = aut_num.objects.count()
+    context = {'info': info}
     return render(request, 'op_webgui/index.html', context)
 
 @login_required
