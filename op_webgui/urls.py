@@ -8,7 +8,8 @@ from . import views
 app_name = 'op_webgui'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^asn/$', views.asn, name='asn'),
+    url(r'^router/$', views.router_list, name='router_list'),
+    url(r'^asn/$', views.asn_list, name='asn_list'),
     url(r'^create/aut_num/$', views.aut_num_create, name='aut_num_create'),
     url(r'^(?P<aut_num_id>[0-9]+)/edit/aut_num/$', views.aut_num_edit, name='aut_num_edit'),
     url(r'^(?P<aut_num_id>[0-9]+)/aut_num/$', views.aut_num_detail, name='aut_num_detail'),

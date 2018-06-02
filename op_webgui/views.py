@@ -16,16 +16,21 @@ from .forms import IPv6AddressForm, IPv4AddressForm
 
 @login_required
 def index(request):
+    context = {}
+    return render(request, 'op_webgui/index.html', context)
+
+@login_required
+def router_list(request):
     router_list   = router.objects.order_by('hostname')
     router_count  = router_list.count()
     context       = {
                     'router_list':  router_list,
                     'router_count': router_count,
                     }
-    return render(request, 'op_webgui/index.html', context)
+    return render(request, 'op_webgui/router_list.html', context)
 
 @login_required
-def asn(request):
+def asn_list(request):
     asns      = aut_num.objects.order_by('asn')
     asn_count = asns.count()
     paginator = Paginator(asns, 20)
@@ -43,7 +48,7 @@ def asn(request):
               'asn_count': asn_count,
               }
 
-    return render(request, 'op_webgui/asns.html', context)
+    return render(request, 'op_webgui/asn_list.html', context)
 
 @login_required
 def aut_num_detail(request, aut_num_id):

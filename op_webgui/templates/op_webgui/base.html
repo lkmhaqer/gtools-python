@@ -33,7 +33,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link{% if router_count %} active{% endif %}" href="{% url 'op_webgui:index' %}">
+                <a class="nav-link{% if router_count %} active{% endif %}" href="{% url 'op_webgui:router_list' %}">
                   Routers
                   {% if router_count %}
                   <span class="sr-only">(current)</span>
@@ -41,7 +41,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link{% if asn_count %} active{% endif %}" href="{% url 'op_webgui:asn' %}">
+                <a class="nav-link{% if asn_count %} active{% endif %}" href="{% url 'op_webgui:asn_list' %}">
                   ASNs
                   {% if asn_count %}
                   <span class="sr-only">(current)</span>
