@@ -1,6 +1,5 @@
 # file: op_webgui/views.py
 
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
 
@@ -14,7 +13,6 @@ from .forms import IPv6StaticForm, IPv4StaticForm
 from .forms import InterfaceForm, LogicalInterfaceForm
 from .forms import IPv6AddressForm, IPv4AddressForm
 
-@login_required
 def index(request):
     info                 = {}
     info['router_count'] = router.objects.count()
@@ -22,7 +20,6 @@ def index(request):
     context = {'info': info}
     return render(request, 'op_webgui/index.html', context)
 
-@login_required
 def router_list(request):
     router_list   = router.objects.order_by('hostname')
     router_count  = router_list.count()
@@ -32,7 +29,6 @@ def router_list(request):
                     }
     return render(request, 'op_webgui/router_list.html', context)
 
-@login_required
 def asn_list(request):
     asns      = aut_num.objects.order_by('asn')
     asn_count = asns.count()
@@ -53,12 +49,10 @@ def asn_list(request):
 
     return render(request, 'op_webgui/asn_list.html', context)
 
-@login_required
 def aut_num_detail(request, aut_num_id):
     aut_num_obj    = get_object_or_404(aut_num, pk=aut_num_id)
     return render(request, 'op_webgui/aut_num.html', {'aut_num': aut_num_obj})
 
-@login_required
 def aut_num_create(request):
     if request.method == "POST":
         form = ASNForm(request.POST)
@@ -69,7 +63,6 @@ def aut_num_create(request):
         form = ASNForm()
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def aut_num_edit(request, aut_num_id):
     asn = get_object_or_404(aut_num, pk=aut_num_id)
     if request.method == "POST":
@@ -81,7 +74,6 @@ def aut_num_edit(request, aut_num_id):
         form = ASNForm(instance=asn)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def neighbor_create(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
     if request.method == "POST":
@@ -93,7 +85,6 @@ def neighbor_create(request, router_id):
         form = NeighborForm(initial={'router': router_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def neighbor_edit(request, neighbor_id):
     neighbor_obj = get_object_or_404(neighbor, pk=neighbor_id)
     if request.method == "POST":
@@ -105,7 +96,6 @@ def neighbor_edit(request, neighbor_id):
         form = NeighborForm(instance=neighbor_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv6_static_create(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
     if request.method == "POST":
@@ -117,7 +107,6 @@ def ipv6_static_create(request, router_id):
         form = IPv6StaticForm(initial={'router': router_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv6_static_edit(request, ipv6_static_id):
     ipv6_static_obj = get_object_or_404(ipv6_static, pk=ipv6_static_id)
     if request.method == "POST":
@@ -129,7 +118,6 @@ def ipv6_static_edit(request, ipv6_static_id):
         form = IPv6StaticForm(instance=ipv6_static_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv4_static_create(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
     if request.method == "POST":
@@ -141,7 +129,6 @@ def ipv4_static_create(request, router_id):
         form = IPv4StaticForm(initial={'router': router_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv4_static_edit(request, ipv4_static_id):
     ipv4_static_obj = get_object_or_404(ipv4_static, pk=ipv4_static_id)
     if request.method == "POST":
@@ -153,7 +140,6 @@ def ipv4_static_edit(request, ipv4_static_id):
         form = IPv4StaticForm(instance=ipv4_static_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv6_address_create(request, logical_interface_id):
     logical_interface_obj = get_object_or_404(logical_interface, pk=logical_interface_id)
     if request.method == "POST":
@@ -165,7 +151,6 @@ def ipv6_address_create(request, logical_interface_id):
         form = IPv6AddressForm(initial={'interface': logical_interface_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv6_address_edit(request, ipv6_address_id):
     ipv6_address_obj = get_object_or_404(ipv6_address, pk=ipv6_address_id)
     if request.method == "POST":
@@ -177,7 +162,6 @@ def ipv6_address_edit(request, ipv6_address_id):
         form = IPv6AddressForm(instance=ipv6_address_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv4_address_create(request, logical_interface_id):
     logical_interface_obj = get_object_or_404(logical_interface, pk=logical_interface_id)
     if request.method == "POST":
@@ -189,7 +173,6 @@ def ipv4_address_create(request, logical_interface_id):
         form = IPv4AddressForm(initial={'interface': logical_interface_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def ipv4_address_edit(request, ipv4_address_id):
     ipv4_address_obj = get_object_or_404(ipv4_address, pk=ipv4_address_id)
     if request.method == "POST":
@@ -201,7 +184,6 @@ def ipv4_address_edit(request, ipv4_address_id):
         form = IPv4AddressForm(instance=ipv4_address_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def interface_create(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
     if request.method == "POST":
@@ -213,7 +195,6 @@ def interface_create(request, router_id):
         form = InterfaceForm(initial={'router': router_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def interface_edit(request, interface_id):
     interface_obj = get_object_or_404(interface, pk=interface_id)
     if request.method == "POST":
@@ -225,7 +206,6 @@ def interface_edit(request, interface_id):
         form = InterfaceForm(instance=interface_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def logical_interface_create(request, interface_id):
     interface_obj = get_object_or_404(interface, pk=interface_id)
     if request.method == "POST":
@@ -237,7 +217,6 @@ def logical_interface_create(request, interface_id):
         form = LogicalInterfaceForm(initial={'interface': interface_obj})
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def logical_interface_edit(request, logical_interface_id):
     logical_interface_obj = get_object_or_404(logical_interface, pk=logical_interface_id)
     if request.method == "POST":
@@ -249,12 +228,10 @@ def logical_interface_edit(request, logical_interface_id):
         form = LogicalInterfaceForm(instance=logical_interface_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def router_detail(request, router_id):
     router_obj     = get_object_or_404(router, pk=router_id)
     return render(request, 'op_webgui/router.html', {'router': router_obj})
 
-@login_required
 def router_create(request):
     if request.method == "POST":
         form = RouterForm(request.POST)
@@ -265,7 +242,6 @@ def router_create(request):
         form = RouterForm()
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def router_edit(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
     if request.method == "POST":
@@ -277,7 +253,6 @@ def router_edit(request, router_id):
         form = RouterForm(instance=router_obj)
     return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
-@login_required
 def router_config(request, router_id):
     router_obj     = get_object_or_404(router, pk=router_id)
     router_list    = router.objects.exclude(id=router_id)
