@@ -6,6 +6,7 @@
 
 {% block content %}
 
+  <div class="col-5">
     <form method="POST">
       {% csrf_token %}
       {% bootstrap_form form %}
@@ -13,5 +14,6 @@
         <button type="submit">Submit</button></th></tr>
       {% endbuttons %}
     </form>
+  </div>
 
 {% endblock %}
