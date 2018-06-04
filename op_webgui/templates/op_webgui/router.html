@@ -54,7 +54,7 @@
     {% for logical_interface in interface.logical_interface_set.all %}
       <li><div class="btn-group mr-2" role="group" aria-label="First group">
         <a href="{% url 'op_webgui:logical_interface_edit' logical_interface.id %}" class="btn btn-outline-primary btn-sm">
-        {{ interface.name }}.{{ logical_interface.name }}
+        {{ interface.name }}.{{ logical_interface.name }} ({{ logical_interface.description }})
         </a>
         <a href="{% url 'op_webgui:ipv6_address_create' logical_interface.id %}" class="btn btn-success btn-sm">
         Add IPv6
