@@ -24,3 +24,19 @@ class NetworkOsList(generics.ListCreateAPIView):
 class NetworkOsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = network_os.objects.all()
     serializer_class = NetworkOsSerializer
+
+class InterfaceList(generics.ListCreateAPIView):
+    queryset = interface.objects.all()
+    serializer_class = InterfaceSerializer
+
+class InterfaceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = interface.objects.all()
+    serializer_class = InterfaceSerializer
+
+class LogicalInterfaceList(generics.ListCreateAPIView):
+    queryset = logical_interface.objects.all()
+    serializer_class = LogicalInterfaceSerializer
+
+class LogicalInterfaceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = logical_interface.objects.all()
+    serializer_class = LogicalInterfaceSerializer
