@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'bootstrap4',
     'stronghold',
+    'rest_framework',
     'netdevice.apps.NetdeviceConfig',
     'address.apps.AddressConfig',
     'bgp.apps.BgpConfig',
