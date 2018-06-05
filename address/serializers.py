@@ -9,7 +9,7 @@ class Ipv6AddressSerializer(serializers.ModelSerializer):
         model = ipv6_address
         fields = ('__all__')
 
-class Ipv6AddressSerializer(serializers.ModelSerializer):
+class Ipv4AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ipv6_address
+        model = ipv4_address
         fields = ('__all__')

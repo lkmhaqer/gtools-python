@@ -8,6 +8,9 @@ from rest_framework import generics
 from netdevice.models import router, network_os, interface, logical_interface
 from netdevice.serializers import RouterSerializer, NetworkOsSerializer, InterfaceSerializer, LogicalInterfaceSerializer
 
+from address.models import ipv6_address, ipv4_address
+from address.serializers import Ipv6AddressSerializer, Ipv4AddressSerializer
+
 
 class RouterList(generics.ListCreateAPIView):
     queryset = router.objects.all()
@@ -40,3 +43,19 @@ class LogicalInterfaceList(generics.ListCreateAPIView):
 class LogicalInterfaceDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = logical_interface.objects.all()
     serializer_class = LogicalInterfaceSerializer
+
+class Ipv6AddressList(generics.ListCreateAPIView):
+    queryset = ipv6_address.objects.all()
+    serializer_class = Ipv6AddressSerializer
+
+class Ipv6AddressDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ipv6_address.objects.all()
+    serializer_class = Ipv6AddressSerializer
+
+class Ipv4AddressList(generics.ListCreateAPIView):
+    queryset = ipv4_address.objects.all()
+    serializer_class = Ipv4AddressSerializer
+
+class Ipv4AddressDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ipv4_address.objects.all()
+    serializer_class = Ipv4AddressSerializer

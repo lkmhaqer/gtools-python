@@ -15,6 +15,10 @@ urlpatterns = [
     url(r'^interfaces/(?P<pk>[0-9]+)/$', views.InterfaceDetail.as_view()),
     url(r'^logical_interfaces/$', views.LogicalInterfaceList.as_view()),
     url(r'^logical_interfaces/(?P<pk>[0-9]+)/$', views.LogicalInterfaceDetail.as_view()),
+    url(r'^ipv6_address/$', views.Ipv6AddressList.as_view()),
+    url(r'^ipv6_address/(?P<pk>[0-9]+)/$', views.Ipv6AddressDetail.as_view()),
+    url(r'^ipv4_address/$', views.Ipv4AddressList.as_view()),
+    url(r'^ipv4_address/(?P<pk>[0-9]+)/$', views.Ipv4AddressDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

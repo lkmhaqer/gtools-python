@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.test import TestCase
+from django.urls import reverse
 
-# Create your tests here.
+from rest_framework import status
+from rest_framework.test import APITestCase
+
+from netdevice.models import router, network_os
+
+
