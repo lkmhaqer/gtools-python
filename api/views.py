@@ -5,11 +5,14 @@ from __future__ import unicode_literals
 
 from rest_framework import generics
 
-from netdevice.models import router, network_os, interface, logical_interface
-from netdevice.serializers import RouterSerializer, NetworkOsSerializer, InterfaceSerializer, LogicalInterfaceSerializer
-
 from address.models import ipv6_address, ipv4_address
 from address.serializers import Ipv6AddressSerializer, Ipv4AddressSerializer
+
+from bgp.models import aut_num, neighbor
+from bgp.serializers import AutNumSerializer, NeighborSerializer
+
+from netdevice.models import router, network_os, interface, logical_interface
+from netdevice.serializers import RouterSerializer, NetworkOsSerializer, InterfaceSerializer, LogicalInterfaceSerializer
 
 
 class RouterList(generics.ListCreateAPIView):
@@ -59,3 +62,19 @@ class Ipv4AddressList(generics.ListCreateAPIView):
 class Ipv4AddressDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ipv4_address.objects.all()
     serializer_class = Ipv4AddressSerializer
+
+class AutNumList(generics.ListCreateAPIView):
+    queryset = aut_num.objects.all()
+    serializer_class = AutNumSerializer
+
+class AutNumDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = aut_num.objects.all()
+    serializer_class = AutNumSerializer
+
+class NeighborList(generics.ListCreateAPIView):
+    queryset = neighbor.objects.all()
+    serializer_class = NeighborSerializer
+
+class NeighborDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = neighbor.objects.all()
+    serializer_class = NeighborSerializer
