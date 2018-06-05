@@ -3,15 +3,16 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
 
-from netdevice.models import router, interface, logical_interface
 from address.models import ipv6_address, ipv4_address
-from static.models import ipv6_static, ipv4_static
 from bgp.models import aut_num, neighbor
+from netdevice.models import router, interface, logical_interface
+from static.models import ipv6_static, ipv4_static
 
-from .forms import RouterForm, ASNForm, NeighborForm
-from .forms import IPv6StaticForm, IPv4StaticForm
-from .forms import InterfaceForm, LogicalInterfaceForm
-from .forms import IPv6AddressForm, IPv4AddressForm
+from address.forms import IPv6AddressForm, IPv4AddressForm
+from bgp.forms import ASNForm, NeighborForm
+from netdevice.forms import RouterForm, InterfaceForm, LogicalInterfaceForm
+from static.forms import IPv6StaticForm, IPv4StaticForm
+
 
 def index(request):
     info                 = {}
