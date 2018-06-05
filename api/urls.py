@@ -5,6 +5,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from .views import RouterList, RouterDetail, NetworkOsList, NetworkOsDetail
 
+app_name = 'api'
 urlpatterns = [
     url(r'^routers/$', RouterList.as_view()),
     url(r'^routers/(?P<pk>[0-9]+)/$', RouterDetail.as_view()),

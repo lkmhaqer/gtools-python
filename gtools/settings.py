@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'stronghold',
     'rest_framework',
+    'api.apps.ApiConfig',
     'netdevice.apps.NetdeviceConfig',
     'address.apps.AddressConfig',
     'bgp.apps.BgpConfig',
@@ -141,3 +142,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,'assets'),)
 GTOOLS_VERSION = "v0.0.15"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+STRONGHOLD_PUBLIC_URLS = (
+                          r'^%s.+$' % '/api/',
+                         )
