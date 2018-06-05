@@ -14,6 +14,9 @@ from bgp.serializers import AutNumSerializer, NeighborSerializer
 from netdevice.models import router, network_os, interface, logical_interface
 from netdevice.serializers import RouterSerializer, NetworkOsSerializer, InterfaceSerializer, LogicalInterfaceSerializer
 
+from static.models import ipv6_static, ipv4_static
+from static.serializers import Ipv6StaticSerializer, Ipv4StaticSerializer
+
 
 class RouterList(generics.ListCreateAPIView):
     queryset = router.objects.all()
@@ -62,6 +65,22 @@ class Ipv4AddressList(generics.ListCreateAPIView):
 class Ipv4AddressDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ipv4_address.objects.all()
     serializer_class = Ipv4AddressSerializer
+
+class Ipv6StaticList(generics.ListCreateAPIView):
+    queryset = ipv6_static.objects.all()
+    serializer_class = Ipv6StaticSerializer
+
+class Ipv6StaticDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ipv6_static.objects.all()
+    serializer_class = Ipv6StaticSerializer
+
+class Ipv4StaticList(generics.ListCreateAPIView):
+    queryset = ipv4_static.objects.all()
+    serializer_class = Ipv4StaticSerializer
+
+class Ipv4StaticDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ipv4_static.objects.all()
+    serializer_class = Ipv4StaticSerializer
 
 class AutNumList(generics.ListCreateAPIView):
     queryset = aut_num.objects.all()
