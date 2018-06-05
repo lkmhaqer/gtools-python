@@ -16,3 +16,11 @@ class RouterList(generics.ListCreateAPIView):
 class RouterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = router.objects.all()
     serializer_class = RouterSerializer
+
+class NetworkOsList(generics.ListCreateAPIView):
+    queryset = network_os.objects.all()
+    serializer_class = NetworkOsSerializer
+
+class NetworkOsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = network_os.objects.all()
+    serializer_class = NetworkOsSerializer
