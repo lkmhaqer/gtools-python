@@ -2,7 +2,7 @@
 
 from django import forms
 
-from .models import ipv6_address, ipv4_address
+from address.models import ipv6_address, ipv4_address
 
 
 class IPv6AddressForm(forms.ModelForm):

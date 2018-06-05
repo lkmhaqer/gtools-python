@@ -2,7 +2,7 @@
 
 from django import forms
 
-from .models import router, interface, logical_interface
+from netdevice.models import router, interface, logical_interface
 
 
 class RouterForm(forms.ModelForm):

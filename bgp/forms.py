@@ -2,7 +2,7 @@
 
 from django import forms
 
-from .models import aut_num, neighbor
+from bgp.models import aut_num, neighbor
 
 
 class ASNForm(forms.ModelForm):

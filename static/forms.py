@@ -2,7 +2,7 @@
 
 from django import forms
 
-from .models import ipv6_static, ipv4_static
+from static.models import ipv6_static, ipv4_static
 
 
 class IPv6StaticForm(forms.ModelForm):
