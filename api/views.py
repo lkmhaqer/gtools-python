@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
+# file: api/views.py
+
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from netdevice.models import router, network_os, interface, logical_interface
+from netdevice.serializers import RouterSerializer, NetworkOsSerializer, InterfaceSerializer, LogicalInterfaceSerializer
+
+
+class RouterList(generics.ListCreateAPIView):
+    queryset = router.objects.all()
+    serializer_class = RouterSerializer
+
+class RouterDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = router.objects.all()
+    serializer_class = RouterSerializer
