@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from django.contrib.auth.models import User
 from netdevice.tests import create_router, create_interface
-from .models import ipv6_address, ipv4_address
+from address.models import ipv6_address, ipv4_address
 
 def create_v4_address(logical_interface, address):
     v4_address = ipv4_address.objects.create(interface=logical_interface,

@@ -1,10 +1,10 @@
-# file: netdevices/tests.py
+# file: netdevice/tests.py
 
 from django.test import TestCase
 from django.urls import reverse
 
 from django.contrib.auth.models import User
-from .models import router, network_os, interface, logical_interface
+from netdevice.models import router, network_os, interface, logical_interface
 from bgp.models import aut_num
 
 def create_router(network_os_name):

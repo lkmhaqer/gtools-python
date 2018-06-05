@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from django.contrib.auth.models import User
 from netdevice.tests import create_router, create_interface
-from .models import aut_num, neighbor
+from bgp.models import aut_num, neighbor
 
 def create_aut_num(asn):
     test_asn      = aut_num.objects.create(asn=asn,

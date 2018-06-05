@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from django.contrib.auth.models import User
 from netdevice.tests import create_router
-from .models import ipv6_static, ipv4_static
+from static.models import ipv6_static, ipv4_static
 
 def create_v4_static(test_router, network):
     v4_route     = ipv4_static.objects.create(router=test_router,
