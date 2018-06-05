@@ -6,6 +6,8 @@ Built with:
 
 Django==1.11.13
 django-bootstrap4==0.0.6
+django-stronghold==0.3.0
+djangorestframework==3.8.2
 Jinja2==2.9.5
 MarkupSafe==0.23
 psycopg2==2.7.4
