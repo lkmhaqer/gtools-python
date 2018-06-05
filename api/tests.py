@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# file api/tests.py
+
 from __future__ import unicode_literals
 
 from django.urls import reverse
@@ -8,6 +10,8 @@ from rest_framework.test import APITestCase
 
 from netdevice.models import router, network_os
 from bgp.models import aut_num, neighbor
+
+from netdevice.tests import create_router
 
 class APITests(APITestCase):
     def test_create_aut_num(self):
@@ -21,6 +25,19 @@ class APITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(aut_num.objects.count(), 1)
         self.assertEqual(str(aut_num.objects.get().asn), '65000')
+
+    def test_create_aut_num_and_view_detail(self):
+        """
+        Create an aut_num object, then check the aut_num_detail api view.
+        """
+        local_aut_num = aut_num.objects.create(asn=65000, name='test asn')
+        url           = reverse('api:aut_num_detail', kwargs={'pk': local_aut_num.pk})
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(aut_num.objects.count(), 1)
+        self.assertEqual(aut_num.objects.get().asn, local_aut_num.asn)
 
     def test_create_router(self):
         """
@@ -40,5 +57,15 @@ class APITests(APITestCase):
         response = self.client.post(reverse('api:routers'), data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(router.objects.count(), 1)
+        self.assertEqual(router.objects.get().hostname, 'test-router')
+
+    def test_create_router_and_view_detail(self):
+        test_router = create_router('junos')
+        url         = reverse('api:routers_detail', kwargs={'pk': test_router.pk})
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(router.objects.count(), 1)
         self.assertEqual(router.objects.get().hostname, 'test-router')
