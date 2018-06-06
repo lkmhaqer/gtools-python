@@ -8,7 +8,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from netdevice.models import router, network_os
+from netdevice.models import router, network_os, interface, logical_interface
 from bgp.models import aut_num, neighbor
 
 from netdevice.tests import create_router
@@ -92,3 +92,37 @@ class APITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(network_os.objects.count(), 6)
         self.assertEqual(network_os.objects.get(name='test-os'), test_os)
+
+    def test_create_interface(self):
+        """
+        Create a network_os object, then view it in the api.
+        """
+        test_router  = create_router('junos')
+        data         = {
+                        "router": test_router.pk,
+                        "name": 'ge-0/0/0',
+                        "description": 'test-interface',
+                       }
+        url          = reverse('api:interfaces')
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(interface.objects.count(), 1)
+        self.assertEqual(str(interface.objects.get().name), 'ge-0/0/0')
+
+    def test_create_interface_and_view_detail(self):
+        test_router     = create_router('junos')
+        test_interface  = interface.objects.create(router=test_router,
+                                                   name='ge-0/0/0',
+                                                   description='test-interface')
+        url             = reverse(
+                                  'api:interfaces_detail',
+                                  kwargs={'pk': test_interface.pk}
+                                 )
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(interface.objects.count(), 1)
+        self.assertEqual(interface.objects.get(name='ge-0/0/0'), test_interface)
