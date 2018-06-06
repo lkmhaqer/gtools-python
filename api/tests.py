@@ -61,11 +61,34 @@ class APITests(APITestCase):
         self.assertEqual(router.objects.get().hostname, 'test-router')
 
     def test_create_router_and_view_detail(self):
-        test_router = create_router('junos')
-        url         = reverse('api:routers_detail', kwargs={'pk': test_router.pk})
+        test_router  = create_router('junos')
+        url          = reverse('api:routers_detail', kwargs={'pk': test_router.pk})
 
         response = self.client.get(url, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(router.objects.count(), 1)
         self.assertEqual(router.objects.get().hostname, 'test-router')
+
+    def test_create_network_os(self):
+        """
+        Create a network_os object, then view it in the api.
+        """
+        data  = {"name": 'test-os'}
+        url   = reverse('api:network_os')
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(network_os.objects.count(), 6)
+        self.assertEqual(str(network_os.objects.get(name='test-os')), 'test-os')
+
+    def test_create_network_os_and_view_detail(self):
+        test_os  = network_os.objects.create(name='test-os')
+        url      = reverse('api:network_os_detail',  kwargs={'pk': test_os.pk})
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(network_os.objects.count(), 6)
+        self.assertEqual(network_os.objects.get(name='test-os'), test_os)
