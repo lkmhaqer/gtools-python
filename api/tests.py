@@ -126,3 +126,45 @@ class APITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(interface.objects.count(), 1)
         self.assertEqual(interface.objects.get(name='ge-0/0/0'), test_interface)
+
+    def test_create_logical_interface(self):
+        """
+        Create a network_os object, then view it in the api.
+        """
+        test_router  = create_router('junos')
+        test_interface  = interface.objects.create(router=test_router,
+                                                   name='ge-0/0/0',
+                                                   description='test-interface')
+        data         = {
+                        "interface": test_interface.pk,
+                        "name": '0',
+                        "description": 'test-logical-interface',
+                       }
+        url          = reverse('api:logical_interfaces')
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(logical_interface.objects.count(), 1)
+        self.assertEqual(str(logical_interface.objects.get().name), '0')
+
+    def test_create_logical_interface_and_view_detail(self):
+        test_router     = create_router('junos')
+        test_interface  = interface.objects.create(router=test_router,
+                                                   name='ge-0/0/0',
+                                                   description='test-interface')
+        test_logical_interface = logical_interface.objects.create(
+                                                   interface=test_interface,
+                                                   name='0',
+                                                   description='test-description',
+                                                   )
+        url             = reverse(
+                                  'api:logical_interfaces_detail',
+                                  kwargs={'pk': test_logical_interface.pk}
+                                 )
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(logical_interface.objects.count(), 1)
+        self.assertEqual(logical_interface.objects.get(name='0'), test_logical_interface)
