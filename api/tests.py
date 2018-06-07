@@ -8,8 +8,9 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from netdevice.models import router, network_os, interface, logical_interface
+from address.models import ipv6_address, ipv4_address
 from bgp.models import aut_num, neighbor
+from netdevice.models import router, network_os, interface, logical_interface
 
 from netdevice.tests import create_router, create_interface
 
@@ -169,4 +170,48 @@ class APITests(APITestCase):
         self.assertEqual(
                          logical_interface.objects.get(name='10'),
                          test_interface
+                        )
+
+    def test_create_ipv6_address(self):
+        """
+        Create an ipv6_address object, then view it in the api.
+        """
+        test_router     = create_router('junos')
+        test_interface  = create_interface(test_router)
+        data         = {
+                        "interface": test_interface.pk,
+                        "host": '2001:db8::1',
+                        "cidr": '64',
+                       }
+        url          = reverse('api:ipv6_address')
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(ipv6_address.objects.count(), 1)
+        self.assertEqual(str(ipv6_address.objects.get().host), '2001:db8::1')
+
+    def test_create_ipv6_address_and_view_detail(self):
+        """
+        Create an ipv6_address object, then view the detailed api call.
+        """
+        test_router     = create_router('junos')
+        test_interface  = create_interface(test_router)
+        test_address    = ipv6_address.objects.create(
+                                                      interface=test_interface,
+                                                      host='2001:db8::1',
+                                                      cidr=64,
+                                                     )
+        url             = reverse(
+                                  'api:ipv6_address_detail',
+                                  kwargs={'pk': test_address.pk}
+                                 )
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(ipv6_address.objects.count(), 1)
+        self.assertEqual(
+                         ipv6_address.objects.get(host='2001:db8::1'),
+                         test_address
                         )
