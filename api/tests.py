@@ -11,7 +11,7 @@ from rest_framework.test import APITestCase
 from netdevice.models import router, network_os, interface, logical_interface
 from bgp.models import aut_num, neighbor
 
-from netdevice.tests import create_router
+from netdevice.tests import create_router, create_interface
 
 class APITests(APITestCase):
     def test_create_aut_num(self):
@@ -95,7 +95,7 @@ class APITests(APITestCase):
 
     def test_create_interface(self):
         """
-        Create a network_os object, then view it in the api.
+        Create an interface object, then view it in the api.
         """
         test_router  = create_router('junos')
         data         = {
@@ -112,6 +112,9 @@ class APITests(APITestCase):
         self.assertEqual(str(interface.objects.get().name), 'ge-0/0/0')
 
     def test_create_interface_and_view_detail(self):
+        """
+        Create an interface object, then view the detailed api call.
+        """
         test_router     = create_router('junos')
         test_interface  = interface.objects.create(router=test_router,
                                                    name='ge-0/0/0',
@@ -129,9 +132,9 @@ class APITests(APITestCase):
 
     def test_create_logical_interface(self):
         """
-        Create a network_os object, then view it in the api.
+        Create a logical_interface object, then view it in the api.
         """
-        test_router  = create_router('junos')
+        test_router     = create_router('junos')
         test_interface  = interface.objects.create(router=test_router,
                                                    name='ge-0/0/0',
                                                    description='test-interface')
@@ -149,6 +152,9 @@ class APITests(APITestCase):
         self.assertEqual(str(logical_interface.objects.get().name), '0')
 
     def test_create_logical_interface_and_view_detail(self):
+        """
+        Create a logical_interface object, then view the detailed api call.
+        """
         test_router     = create_router('junos')
         test_interface  = interface.objects.create(router=test_router,
                                                    name='ge-0/0/0',
