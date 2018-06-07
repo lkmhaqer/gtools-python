@@ -156,21 +156,17 @@ class APITests(APITestCase):
         Create a logical_interface object, then view the detailed api call.
         """
         test_router     = create_router('junos')
-        test_interface  = interface.objects.create(router=test_router,
-                                                   name='ge-0/0/0',
-                                                   description='test-interface')
-        test_logical_interface = logical_interface.objects.create(
-                                                   interface=test_interface,
-                                                   name='0',
-                                                   description='test-description',
-                                                   )
+        test_interface  = create_interface(test_router)
         url             = reverse(
                                   'api:logical_interfaces_detail',
-                                  kwargs={'pk': test_logical_interface.pk}
+                                  kwargs={'pk': test_interface.pk}
                                  )
 
         response = self.client.get(url, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(logical_interface.objects.count(), 1)
-        self.assertEqual(logical_interface.objects.get(name='0'), test_logical_interface)
+        self.assertEqual(
+                         logical_interface.objects.get(name='10'),
+                         test_interface
+                        )
