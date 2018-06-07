@@ -215,3 +215,47 @@ class APITests(APITestCase):
                          ipv6_address.objects.get(host='2001:db8::1'),
                          test_address
                         )
+
+    def test_create_ipv4_address(self):
+        """
+        Create an ipv4_address object, then view it in the api.
+        """
+        test_router     = create_router('junos')
+        test_interface  = create_interface(test_router)
+        data         = {
+                        "interface": test_interface.pk,
+                        "host": '192.0.2.1',
+                        "cidr": '24',
+                       }
+        url          = reverse('api:ipv4_address')
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(ipv4_address.objects.count(), 1)
+        self.assertEqual(str(ipv4_address.objects.get().host), '192.0.2.1')
+
+    def test_create_ipv4_address_and_view_detail(self):
+        """
+        Create an ipv4_address object, then view the detailed api call.
+        """
+        test_router     = create_router('junos')
+        test_interface  = create_interface(test_router)
+        test_address    = ipv4_address.objects.create(
+                                                      interface=test_interface,
+                                                      host='192.0.2.1',
+                                                      cidr=24,
+                                                     )
+        url             = reverse(
+                                  'api:ipv4_address_detail',
+                                  kwargs={'pk': test_address.pk}
+                                 )
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(ipv4_address.objects.count(), 1)
+        self.assertEqual(
+                         ipv4_address.objects.get(host='192.0.2.1'),
+                         test_address
+                        )
