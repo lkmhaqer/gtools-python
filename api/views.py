@@ -12,7 +12,9 @@ from bgp.models import aut_num, neighbor
 from bgp.serializers import AutNumSerializer, NeighborSerializer
 
 from netdevice.models import router, network_os, interface, logical_interface
-from netdevice.serializers import RouterSerializer, NetworkOsSerializer, InterfaceSerializer, LogicalInterfaceSerializer
+from netdevice.serializers import RouterSerializer, NetworkOsSerializer
+from netdevice.serializers import InterfaceSerializer
+from netdevice.serializers import LogicalInterfaceSerializer
 
 from static.models import ipv6_static, ipv4_static
 from static.serializers import Ipv6StaticSerializer, Ipv4StaticSerializer
