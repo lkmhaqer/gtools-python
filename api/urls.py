@@ -99,7 +99,7 @@ urlpatterns = [
     url(
         r'^bgp_neighbor/$',
         views.NeighborList.as_view(),
-        name='bgp_neigbor'
+        name='bgp_neighbor'
        ),
     url(
         r'^bgp_neighbor/(?P<pk>[0-9]+)/$',

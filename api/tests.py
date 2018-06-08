@@ -48,6 +48,46 @@ class APITests(APITestCase):
         self.assertEqual(aut_num.objects.count(), 1)
         self.assertEqual(aut_num.objects.get().asn, local_aut_num.asn)
 
+    def test_create_bgp_neighbor(self):
+        """
+        Create a bgp neighbor object, then check if it exists.
+        """
+        test_router = create_router('junos')
+        data        = {
+                       "router": test_router.pk,
+                       "aut_num": test_router.local_aut_num.pk,
+                       "peer_ip": '192.0.2.1',
+                      }
+        url         = reverse('api:bgp_neighbor')
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(neighbor.objects.count(), 1)
+        self.assertEqual(str(neighbor.objects.get().peer_ip), '192.0.2.1')
+
+    def test_create_bgp_neighbor_and_view_detail(self):
+        """
+        Create a bgp neighbor, then test the detailed api view.
+        """
+        test_router   = create_router('junos')
+        test_asn      = test_router.local_aut_num
+        test_neighbor = neighbor.objects.create(
+                                                router=test_router,
+                                                aut_num=test_asn,
+                                                peer_ip='192.0.2.1',
+                                               )
+        url           = reverse(
+                                'api:bgp_neighbor_detail',
+                                kwargs={'pk': test_neighbor.pk},
+                               )
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(neighbor.objects.count(), 1)
+        self.assertEqual(neighbor.objects.get().peer_ip, test_neighbor.peer_ip)
+
     def test_create_router(self):
         """
         Create an ASN, then create a router and check that it exists.
