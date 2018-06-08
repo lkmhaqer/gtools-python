@@ -21,12 +21,9 @@ class APITests(APITestCase):
         Create an aut_num object, and check if it exists.
         """
         data = {"asn": '65000', "name": 'My Test ASN', "contact": ''}
+        url  = reverse('api:aut_num')
 
-        response = self.client.post(
-                                    reverse('api:aut_num'),
-                                    data,
-                                    format='json'
-                                   )
+        response = self.client.post(url, data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(aut_num.objects.count(), 1)
