@@ -11,6 +11,7 @@ from rest_framework.test import APITestCase
 from address.models import ipv6_address, ipv4_address
 from bgp.models import aut_num, neighbor
 from netdevice.models import router, network_os, interface, logical_interface
+from static.models import ipv6_static, ipv4_static
 
 from netdevice.tests import create_router, create_interface
 
@@ -170,7 +171,7 @@ class APITests(APITestCase):
         test_interface  = create_interface(test_router)
         url             = reverse(
                                   'api:logical_interfaces_detail',
-                                  kwargs={'pk': test_interface.pk}
+                                  kwargs={'pk': test_interface.pk},
                                  )
 
         response = self.client.get(url, format='json')
@@ -214,7 +215,7 @@ class APITests(APITestCase):
                                                      )
         url             = reverse(
                                   'api:ipv6_address_detail',
-                                  kwargs={'pk': test_address.pk}
+                                  kwargs={'pk': test_address.pk},
                                  )
 
         response = self.client.get(url, format='json')
@@ -232,12 +233,12 @@ class APITests(APITestCase):
         """
         test_router     = create_router('junos')
         test_interface  = create_interface(test_router)
-        data         = {
-                        "interface": test_interface.pk,
-                        "host": '192.0.2.1',
-                        "cidr": '24',
-                       }
-        url          = reverse('api:ipv4_address')
+        data            = {
+                           "interface": test_interface.pk,
+                           "host": '192.0.2.1',
+                           "cidr": '24',
+                          }
+        url             = reverse('api:ipv4_address')
 
         response = self.client.post(url, data, format='json')
 
@@ -258,7 +259,7 @@ class APITests(APITestCase):
                                                      )
         url             = reverse(
                                   'api:ipv4_address_detail',
-                                  kwargs={'pk': test_address.pk}
+                                  kwargs={'pk': test_address.pk},
                                  )
 
         response = self.client.get(url, format='json')
@@ -268,4 +269,46 @@ class APITests(APITestCase):
         self.assertEqual(
                          ipv4_address.objects.get(host='192.0.2.1'),
                          test_address
+                        )
+
+    def test_create_ipv6_static(self):
+        """
+        Create an ipv6_static object, with an api call.
+        """
+        test_router     = create_router('junos')
+        data            = {
+                           "router": test_router.pk,
+                           "network": '2001:db8::',
+                           "next_hop": '2001:db8:1::1',
+                          }
+        url             = reverse('api:ipv6_static')
+
+        response  = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(ipv6_static.objects.count(), 1)
+        self.assertEqual(str(ipv6_static.objects.get().network), '2001:db8::')
+
+    def test_create_ipv6_static_and_view_detail(self):
+        """
+        Create an ipv6 static object, then check the detailed api view.
+        """
+        test_router     = create_router('junos')
+        test_route      = ipv6_static.objects.create(
+                                                     router=test_router,
+                                                     network='2001:db8::',
+                                                     next_hop='2001:db8:1::1',
+                                                    )
+        url             = reverse(
+                                  'api:ipv6_static_detail',
+                                  kwargs={'pk': test_route.pk},
+                                 )
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(ipv6_static.objects.count(), 1)
+        self.assertEqual(
+                         ipv6_static.objects.get(network='2001:db8::'),
+                         test_route,
                         )
