@@ -21,7 +21,11 @@ class APITests(APITestCase):
         """
         data = {"asn": '65000', "name": 'My Test ASN', "contact": ''}
 
-        response = self.client.post(reverse('api:aut_num'), data, format='json')
+        response = self.client.post(
+                                    reverse('api:aut_num'),
+                                    data,
+                                    format='json'
+                                   )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(aut_num.objects.count(), 1)
@@ -32,7 +36,10 @@ class APITests(APITestCase):
         Create an aut_num object, then check the aut_num_detail api view.
         """
         local_aut_num = aut_num.objects.create(asn=65000, name='test asn')
-        url           = reverse('api:aut_num_detail', kwargs={'pk': local_aut_num.pk})
+        url           = reverse(
+                                'api:aut_num_detail',
+                                kwargs={'pk': local_aut_num.pk}
+                               )
 
         response = self.client.get(url, format='json')
 
@@ -63,7 +70,10 @@ class APITests(APITestCase):
 
     def test_create_router_and_view_detail(self):
         test_router  = create_router('junos')
-        url          = reverse('api:routers_detail', kwargs={'pk': test_router.pk})
+        url          = reverse(
+                               'api:routers_detail',
+                               kwargs={'pk': test_router.pk}
+                              )
 
         response = self.client.get(url, format='json')
 
