@@ -312,3 +312,45 @@ class APITests(APITestCase):
                          ipv6_static.objects.get(network='2001:db8::'),
                          test_route,
                         )
+
+    def test_create_ipv4_static(self):
+        """
+        Create an ipv4_static object, with an api call.
+        """
+        test_router     = create_router('junos')
+        data            = {
+                           "router": test_router.pk,
+                           "network": '192.0.2.0',
+                           "next_hop": '192.0.2.1',
+                          }
+        url             = reverse('api:ipv4_static')
+
+        response  = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(ipv4_static.objects.count(), 1)
+        self.assertEqual(str(ipv4_static.objects.get().network), '192.0.2.0')
+
+    def test_create_ipv4_static_and_view_detail(self):
+        """
+        Create an ipv4 static object, then check the detailed api view.
+        """
+        test_router     = create_router('junos')
+        test_route      = ipv4_static.objects.create(
+                                                     router=test_router,
+                                                     network='192.0.2.0',
+                                                     next_hop='192.0.2.1',
+                                                    )
+        url             = reverse(
+                                  'api:ipv4_static_detail',
+                                  kwargs={'pk': test_route.pk},
+                                 )
+
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(ipv4_static.objects.count(), 1)
+        self.assertEqual(
+                         ipv4_static.objects.get(network='192.0.2.0'),
+                         test_route,
+                        )
