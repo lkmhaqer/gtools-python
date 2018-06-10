@@ -8,12 +8,20 @@ class ipv6_address(models.Model):
     """
     IPv6 Addresses - 128 bit Internet Protocol Addresses
     interface:    The logical interface the IP is tied to. (optional)
-    host:         IP Address itself                                                    [2001:db8:1:1::1]
-    cidr:         The CIDR (Classless Inter-Domain Routing) notation of mask length    [64]
+    host:         IP Address itself
+                  [2001:db8:1:1::1]
+    cidr:         The CIDR (Classless Inter-Domain Routing)
+                  notation of mask length
+                  [64]
     Example string: 2001:db8:1:1::1/64
     """
 
-    interface    = models.ForeignKey('netdevice.logical_interface', on_delete=models.CASCADE, null=True, blank=True)
+    interface    = models.ForeignKey(
+                                     'netdevice.logical_interface',
+                                     on_delete=models.CASCADE,
+                                     null=True,
+                                     blank=True
+                                    )
     host         = models.GenericIPAddressField(unpack_ipv4=False)
     cidr         = models.PositiveSmallIntegerField(default=64)
 
@@ -26,19 +34,28 @@ class ipv6_address(models.Model):
 class ipv4_address(models.Model):
     """
     IPv4 Addresses - 32 bit Internet Protocol Addresses
-    interface:    The logical interface the IP is tied to. (optional)
-    host:         IP Address itself                                                    [198.51.100.0]
-    cidr:         The CIDR (Classless Inter-Domain Routing) notation of mask length    [24]
+    interface:      The logical interface the IP is tied to. (optional)
+    host:           IP Address itself
+                    [198.51.100.0]
+    cidr:           The CIDR (Classless Inter-Domain Routing)
+                    notation of mask length
+                    [24]
     Example string: 198.51.100.0/24
     """
 
-    interface    = models.ForeignKey('netdevice.logical_interface', on_delete=models.CASCADE, null=True, blank=True)
+    interface    = models.ForeignKey(
+                                     'netdevice.logical_interface',
+                                     on_delete=models.CASCADE,
+                                     null=True,
+                                     blank=True
+                                    )
     host         = models.GenericIPAddressField(unpack_ipv4=True)
     cidr         = models.PositiveSmallIntegerField(default=24)
 
     def subnet_mask(self):
         host_bits = 32 - int(self.cidr)
-        netmask = socket.inet_ntoa(struct.pack('!I', (1 << 32) - (1 << host_bits)))
+        bitmask = struct.pack('!I', (1 << 32) - (1 << host_bits))
+        netmask = socket.inet_ntoa(bitmask)
         return netmask
 
     def __str__(self):
