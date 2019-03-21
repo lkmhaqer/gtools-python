@@ -51,7 +51,6 @@ variables:
   HUB_REPO: index.docker.io/slothlogistics/gtools
   PROD_TAG: $HUB_REPO:$CI_COMMIT_REF_NAME
   LOCAL_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-  DOCKER_DRIVER: overlay2
   POSTGRES_DB: gtools
   POSTGRES_USER: gtools
   POSTGRES_PASSWORD: "gtools_password"
