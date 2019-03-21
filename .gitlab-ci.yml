@@ -45,7 +45,6 @@ deploy:
     - tags
 
 services:
-  - docker:dind
   - postgres:latest
 
 variables:
