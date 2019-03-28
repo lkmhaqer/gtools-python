@@ -18,36 +18,6 @@ urlpatterns = [
         name='router_list'
        ),
     url(
-        r'^asn/$',
-        views.asn_list,
-        name='asn_list'
-       ),
-    url(
-        r'^create/aut_num/$',
-        views.aut_num_create,
-        name='aut_num_create'
-       ),
-    url(
-        r'^(?P<aut_num_id>[0-9]+)/edit/aut_num/$',
-        views.aut_num_edit,
-        name='aut_num_edit'
-       ),
-    url(
-        r'^(?P<aut_num_id>[0-9]+)/aut_num/$',
-        views.aut_num_detail,
-        name='aut_num_detail'
-       ),
-    url(
-        r'^(?P<router_id>[0-9]+)/create/bgp_neighbor/$',
-        views.neighbor_create,
-        name='neighbor_create'
-       ),
-    url(
-        r'^(?P<neighbor_id>[0-9]+)/edit/bgp_neighbor/$',
-        views.neighbor_edit,
-        name='neighbor_edit'
-       ),
-    url(
         r'^(?P<router_id>[0-9]+)/create/ipv6_static/$',
         views.ipv6_static_create,
         name='ipv6_static_create'
@@ -106,25 +76,5 @@ urlpatterns = [
         r'^(?P<logical_interface_id>[0-9]+)/edit/logical_interface/$',
         views.logical_interface_edit,
         name='logical_interface_edit'
-       ),
-    url(
-        r'^create/router/$',
-        views.router_create,
-        name='router_create'
-       ),
-    url(
-        r'^(?P<router_id>[0-9]+)/edit/router/$',
-        views.router_edit,
-        name='router_edit'
-       ),
-    url(
-        r'^(?P<router_id>[0-9]+)/routers/$',
-        views.router_detail,
-        name='router_detail'
-       ),
-    url(
-        r'^(?P<router_id>[0-9]+)/config/$',
-        views.router_config,
-        name='router_config'
        ),
 ]

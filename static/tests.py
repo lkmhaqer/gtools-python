@@ -39,7 +39,7 @@ class StaticViewTest(TestCase):
         test_v4_route    = create_v4_static(test_router, '10.0.0.0')
         test_v6_route    = create_v6_static(test_router, '2001:db8:100::')
 
-        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+        response         = self.client.get(reverse('netdevice:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'ip route 10.0.0.0 255.255.0.0 172.16.0.1')
@@ -53,7 +53,7 @@ class StaticViewTest(TestCase):
         test_v4_route    = create_v4_static(test_router, '10.0.0.0')
         test_v6_route    = create_v6_static(test_router, '2001:db8:100::')
 
-        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+        response         = self.client.get(reverse('netdevice:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'route 10.0.0.0/16 next-hop 172.16.0.1')
@@ -70,7 +70,7 @@ class StaticViewTest(TestCase):
             create_v4_static(test_router, '10.' + str(i) + '.0.0')
             create_v6_static(test_router, '2001:db8:' + str(i) + '::')
 
-        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+        response         = self.client.get(reverse('netdevice:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -89,7 +89,7 @@ class StaticViewTest(TestCase):
             create_v4_static(test_router, '10.' + str(i) + '.0.0')
             create_v6_static(test_router, '2001:db8:' + str(i) + '::')
 
-        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+        response         = self.client.get(reverse('netdevice:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
 

@@ -49,7 +49,7 @@ class NetdeviceViewTests(TestCase):
         Create an IOS router, interface, and IP addresses, then check the configuration template output.
         """
         test_router      = create_router('ios')
-        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+        response         = self.client.get(reverse('netdevice:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -58,7 +58,7 @@ class NetdeviceViewTests(TestCase):
         Create a JunOS router, interface, and IP addresses, then check the configuration template output.
         """
         test_router      = create_router('junos')
-        response         = self.client.get(reverse('op_webgui:router_config', kwargs={'router_id': test_router.id}))
+        response         = self.client.get(reverse('netdevice:router_config', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
 

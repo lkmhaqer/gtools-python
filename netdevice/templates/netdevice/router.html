@@ -7,11 +7,11 @@
 {% block content %}
 
   <br />
-  <a href="{% url 'op_webgui:router_config' router.id %}" class="btn btn-outline-primary">Config</a>
-  <a href="{% url 'op_webgui:router_edit' router.id %}" class="btn btn-outline-primary">Edit</a>
+  <a href="{% url 'netdevice:router_config' router.id %}" class="btn btn-outline-primary">Config</a>
+  <a href="{% url 'netdevice:router_edit' router.id %}" class="btn btn-outline-primary">Edit</a>
   <a href="{% url 'op_webgui:ipv6_static_create' router.id %}" class="btn btn-success">Add IPv6 Static Route</a>
   <a href="{% url 'op_webgui:ipv4_static_create' router.id %}" class="btn btn-success">Add IPv4 Static Route</a>
-  <a href="{% url 'op_webgui:neighbor_create' router.id %}" class="btn btn-success">Add BGP Neighbor</a>
+  <a href="{% url 'bgp:neighbor_create' router.id %}" class="btn btn-success">Add BGP Neighbor</a>
   <a href="{% url 'op_webgui:interface_create' router.id %}" class="btn btn-success">Add Interface</a>
   <hr />
 
@@ -31,7 +31,7 @@
 
   <div class="list-group">
   {% for neighbor in router.neighbor_set.all %}
-    <a href="{% url 'op_webgui:neighbor_edit' neighbor.id %}"
+    <a href="{% url 'bgp:neighbor_edit' neighbor.id %}"
        class="list-group-item list-group-item-action">
     {{ neighbor.peer_ip }} - {{ neighbor.aut_num }}
     </a>

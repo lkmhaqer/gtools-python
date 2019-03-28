@@ -65,7 +65,7 @@ class WebGUIViewTests(TestCase):
         """
         one_router       = create_router('junos')
 
-        response         = self.client.get(reverse('op_webgui:router_detail',
+        response         = self.client.get(reverse('netdevice:router_detail',
                                            kwargs={'router_id': one_router.id})
                                           )
 

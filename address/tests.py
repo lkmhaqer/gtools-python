@@ -38,7 +38,7 @@ class AddressViewTests(TestCase):
         test_v4_address = create_v4_address(test_interface, '1.1.1.1')
         test_v6_address = create_v6_address(test_interface, '2600::1')
         url             = reverse(
-                                  'op_webgui:router_config',
+                                  'netdevice:router_config',
                                   kwargs={'router_id': test_router.id},
                                  )
 
@@ -58,7 +58,7 @@ class AddressViewTests(TestCase):
         test_v4_address = create_v4_address(test_interface, '1.1.1.1')
         test_v6_address = create_v6_address(test_interface, '2600::1')
         url             = reverse(
-                                  'op_webgui:router_config',
+                                  'netdevice:router_config',
                                   kwargs={'router_id': test_router.id},
                                  )
 
@@ -82,7 +82,7 @@ class AddressViewTests(TestCase):
             create_v6_address(test_interface, '2600:' + str(i) + '::1')
 
         url      = reverse(
-                           'op_webgui:router_config',
+                           'netdevice:router_config',
                            kwargs={'router_id': test_router.id},
                           )
 
@@ -114,7 +114,7 @@ class AddressViewTests(TestCase):
             create_v6_address(test_interface, '2600:' + str(i) + '::1')
 
         url      = reverse(
-                           'op_webgui:router_config',
+                           'netdevice:router_config',
                            kwargs={'router_id': test_router.id},
                           )
 

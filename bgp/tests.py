@@ -43,7 +43,7 @@ class AddressViewTests(TestCase):
                                            '2001:db8::1'
                                           )
         url              = reverse(
-                                   'op_webgui:router_config',
+                                   'netdevice:router_config',
                                    kwargs={'router_id': test_router.id},
                                   )
 
@@ -63,7 +63,7 @@ class AddressViewTests(TestCase):
         test_v4_neighbor = create_neighbor(test_router, test_asn, '1.1.1.1')
         test_v6_neighbor = create_neighbor(test_router, test_asn, '2001:db8::1')
         url              = reverse(
-                                   'op_webgui:router_config',
+                                   'netdevice:router_config',
                                    kwargs={'router_id': test_router.id},
                                   )
 
@@ -92,7 +92,7 @@ class AddressViewTests(TestCase):
                            )
 
         url = reverse(
-                      'op_webgui:router_config',
+                      'netdevice:router_config',
                       kwargs={'router_id': test_router.id},
                      )
 
@@ -151,7 +151,7 @@ class AddressViewTests(TestCase):
         asn_one_config += '        }'
         asn_two_config += '        }'
         url             = reverse(
-                                  'op_webgui:router_config',
+                                  'netdevice:router_config',
                                   kwargs={'router_id': test_router.id},
                                  )
 
@@ -167,7 +167,7 @@ class AddressViewTests(TestCase):
         """
         test_router  = create_router('junos')
         url          = reverse(
-                               'op_webgui:neighbor_create',
+                               'bgp:neighbor_create',
                                kwargs={'router_id': test_router.id},
                               )
 
@@ -188,7 +188,7 @@ class AddressViewTests(TestCase):
                                           '2001:db8:1::1'
                                          )
         url             = reverse(
-                                  'op_webgui:neighbor_edit',
+                                  'bgp:neighbor_edit',
                                   kwargs={'neighbor_id': test_neighbor.id},
                                  )
 
@@ -200,7 +200,7 @@ class AddressViewTests(TestCase):
         """
         Test the form view of create ASN display.
         """
-        response = self.client.get(reverse('op_webgui:aut_num_create'))
+        response = self.client.get(reverse('bgp:aut_num_create'))
 
         self.assertEqual(response.status_code, 200)
 
@@ -210,7 +210,7 @@ class AddressViewTests(TestCase):
         """
         test_asn = create_aut_num('65001')
         url      = reverse(
-                           'op_webgui:aut_num_edit',
+                           'bgp:aut_num_edit',
                            kwargs={'aut_num_id': test_asn.id},
                           )
 
