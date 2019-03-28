@@ -21,6 +21,12 @@ class logical_interface(models.Model):
     """
 
     interface             = models.ForeignKey('interface', on_delete=models.CASCADE)
+    vrf                   = models.ForeignKey(
+                                              'netdevice.vrf',
+                                              on_delete=models.CASCADE,
+                                              null=True,
+                                              blank=True
+                                             )
     name                  = models.CharField(max_length=255)
     description           = models.CharField(max_length=1024, blank=True)
     mtu                   = models.BigIntegerField(default=1500)
@@ -88,6 +94,25 @@ class router(models.Model):
 
     def __str__(self):
         return self.hostname
+
+
+class vrf(models.Model):
+    """
+    Virtual Routing and Forwarding - multiple co-existing routing instances in
+                                     a single physical router.
+
+    vrf_name:    The name of this VRF instance.
+    vrf_target:  String of what the target identifier for the VRF is.
+                 [target:65000:65000]
+
+    Example string: VRF_Name (target:65000:65000)
+    """
+
+    vrf_name    = models.CharField(max_length=255)
+    vrf_target  = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.vrf_name + " (" + self.vrf_target + ")"
 
 
 class network_os(models.Model):

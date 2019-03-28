@@ -22,6 +22,12 @@ class neighbor(models.Model):
                                       'netdevice.router',
                                       on_delete=models.CASCADE
                                      )
+    vrf           = models.ForeignKey(
+                                      'netdevice.vrf',
+                                      on_delete=models.CASCADE,
+                                      null=True,
+                                      blank=True
+                                     )
     aut_num       = models.ForeignKey('aut_num', on_delete=models.CASCADE)
     peer_ip       = models.GenericIPAddressField(unpack_ipv4=True)
     soft_inbound  = models.BooleanField(default=True)
@@ -51,6 +57,12 @@ class aut_num(models.Model):
     asn        = models.BigIntegerField(unique=True)
     name       = models.CharField(max_length=255)
     contact    = models.EmailField(blank=True)
+    vrf        = models.ForeignKey(
+                                   'netdevice.vrf',
+                                   on_delete=models.CASCADE,
+                                   null=True,
+                                   blank=True
+                                  )
 
     def __str__(self):
         return str(self.asn) + ": " + self.name + " (" + self.contact + ")"

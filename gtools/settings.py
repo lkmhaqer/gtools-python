@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'netdevice.apps.NetdeviceConfig',
     'address.apps.AddressConfig',
-    'vrf.apps.VrfConfig',
     'bgp.apps.BgpConfig',
     'static.apps.StaticConfig',
     'config_gen.apps.ConfigGenConfig',

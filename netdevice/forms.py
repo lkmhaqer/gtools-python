@@ -2,7 +2,7 @@
 
 from django import forms
 
-from netdevice.models import router, interface, logical_interface
+from netdevice.models import router, interface, logical_interface, vrf
 
 
 class RouterForm(forms.ModelForm):
@@ -11,11 +11,20 @@ class RouterForm(forms.ModelForm):
         model  = router
         fields = ('__all__')
 
+
+class VrfForm(forms.ModelForm):
+
+    class Meta:
+        model = vrf
+        fields = ('__all__')
+
+
 class InterfaceForm(forms.ModelForm):
 
     class Meta:
         model  = interface
         fields = ('__all__')
+
 
 class LogicalInterfaceForm(forms.ModelForm):
 

@@ -17,6 +17,12 @@ class ipv6_static(models.Model):
     """
 
     router      = models.ForeignKey('netdevice.router', on_delete=models.CASCADE, null=True, blank=True)
+    vrf         = models.ForeignKey(
+                                    'netdevice.vrf',
+                                    on_delete=models.CASCADE,
+                                    null=True,
+                                    blank=True
+                                   )
     network     = models.GenericIPAddressField(unpack_ipv4=False)
     cidr        = models.PositiveSmallIntegerField(default=64)
     next_hop    = models.GenericIPAddressField(unpack_ipv4=True)
@@ -40,6 +46,12 @@ class ipv4_static(models.Model):
     """
 
     router      = models.ForeignKey('netdevice.router', on_delete=models.CASCADE, null=True, blank=True)
+    vrf         = models.ForeignKey(
+                                    'netdevice.vrf',
+                                    on_delete=models.CASCADE,
+                                    null=True,
+                                    blank=True
+                                   )
     network     = models.GenericIPAddressField(unpack_ipv4=True)
     cidr        = models.PositiveSmallIntegerField(default=24)
     next_hop    = models.GenericIPAddressField(unpack_ipv4=True)
