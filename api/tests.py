@@ -20,7 +20,7 @@ class APITests(APITestCase):
         """
         Create an aut_num object, and check if it exists.
         """
-        data = {"asn": '65000', "name": 'My Test ASN', "contact": ''}
+        data = {"asn": '65000', "name": 'My Test ASN', "contact": '', "vrf": ''}
         url  = reverse('api:aut_num')
 
         response = self.client.post(url, data, format='json')
