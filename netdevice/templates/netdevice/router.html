@@ -9,8 +9,8 @@
   <br />
   <a href="{% url 'netdevice:router_config' router.id %}" class="btn btn-outline-primary">Config</a>
   <a href="{% url 'netdevice:router_edit' router.id %}" class="btn btn-outline-primary">Edit</a>
-  <a href="{% url 'netdevice:ipv6_static_create' router.id %}" class="btn btn-success">Add IPv6 Static Route</a>
-  <a href="{% url 'netdevice:ipv4_static_create' router.id %}" class="btn btn-success">Add IPv4 Static Route</a>
+  <a href="{% url 'static:ipv6_static_create' router.id %}" class="btn btn-success">Add IPv6 Static Route</a>
+  <a href="{% url 'static:ipv4_static_create' router.id %}" class="btn btn-success">Add IPv4 Static Route</a>
   <a href="{% url 'bgp:neighbor_create' router.id %}" class="btn btn-success">Add BGP Neighbor</a>
   <a href="{% url 'netdevice:interface_create' router.id %}" class="btn btn-success">Add Interface</a>
   <hr />
@@ -90,13 +90,13 @@
 
   <div class="list-group">
   {% for ipv6_static in router.ipv6_static_set.all %}
-    <a href="{% url 'netdevice:ipv6_static_edit' ipv6_static.id %}"
+    <a href="{% url 'static:ipv6_static_edit' ipv6_static.id %}"
        class="list-group-item list-group-item-action">
     {{ ipv6_static.network }}/{{ ipv6_static.cidr }} next-hop {{ ipv6_static.next_hop }}
     </a>
   {% endfor %}
   {% for ipv4_static in router.ipv4_static_set.all %}
-    <a href="{% url 'netdevice:ipv4_static_edit' ipv4_static.id %}"
+    <a href="{% url 'static:ipv4_static_edit' ipv4_static.id %}"
        class="list-group-item list-group-item-action">
     {{ ipv4_static.network }}/{{ ipv4_static.cidr }} next-hop {{ ipv4_static.next_hop }}
     </a>
