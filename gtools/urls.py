@@ -3,6 +3,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include('op_webgui.urls')),
+    url(r'^address/', include('address.urls')),
     url(r'^bgp/', include('bgp.urls')),
     url(r'^netdevice/', include('netdevice.urls')),
     url(r'^static_route/', include('static.urls')),

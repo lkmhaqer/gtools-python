@@ -134,7 +134,7 @@ class AddressViewTests(TestCase):
         test_router    = create_router('junos')
         test_interface = create_interface(test_router)
         url            = reverse(
-                                 'netdevice:ipv6_address_create',
+                                 'address:ipv6_address_create',
                                  kwargs={
                                          'logical_interface_id':
                                          test_interface.id
@@ -155,7 +155,7 @@ class AddressViewTests(TestCase):
         test_router    = create_router('junos')
         test_interface = create_interface(test_router)
         url            = reverse(
-                                 'netdevice:ipv4_address_create',
+                                 'address:ipv4_address_create',
                                  kwargs={
                                          'logical_interface_id':
                                          test_interface.id
@@ -177,7 +177,7 @@ class AddressViewTests(TestCase):
         test_interface = create_interface(test_router)
         test_address   = create_v6_address(test_interface, '2001:db8:1::1')
         url            = reverse(
-                                 'netdevice:ipv6_address_edit',
+                                 'address:ipv6_address_edit',
                                  kwargs={'ipv6_address_id': test_address.id},
                                 )
 
@@ -201,7 +201,7 @@ class AddressViewTests(TestCase):
         test_interface = create_interface(test_router)
         test_address   = create_v4_address(test_interface, '192.0.2.1')
         url            = reverse(
-                                 'netdevice:ipv4_address_edit',
+                                 'address:ipv4_address_edit',
                                  kwargs={'ipv4_address_id': test_address.id},
                                 )
 
