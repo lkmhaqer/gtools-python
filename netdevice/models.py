@@ -35,6 +35,7 @@ class logical_interface(models.Model):
     ldp                   = models.BooleanField(default=False)
     inet_dhcp_client      = models.BooleanField(default=False)
     inet6_dhcp_client     = models.BooleanField(default=False)
+    disabled              = models.BooleanField(default=False)
 
     def __str__(self):
         if self.physical_interface:
@@ -61,6 +62,7 @@ class interface(models.Model):
     description   = models.CharField(max_length=1024, blank=True)
     mtu           = models.BigIntegerField(default=1514)
     dot1q         = models.BooleanField(default=False)
+    disabled      = models.BooleanField(default=False)
 
     def __str__(self):
         return self.router.hostname + " " + self.name + " (" + self.description + ")"
