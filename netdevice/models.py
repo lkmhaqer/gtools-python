@@ -118,13 +118,15 @@ class vrf(models.Model):
 class network_os(models.Model):
     """
     Network Operating Systems - The software platform which runs networking focused hardware.
-    name:    The name of the NOS, and the template file to build the configuration with.    [junos]
+    name:                  The name of the NOS, and the template file to build the configuration with.    [junos]
+    mgmt_interface_name:   Name prefix for platform management interfaces.                                [fxp]
     Example string: junos
                     ios-12
                     ios-xe
     """
 
-    name = models.CharField(max_length=255)
+    name                = models.CharField(max_length=255)
+    mgmt_interface_name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
