@@ -102,7 +102,7 @@ class StaticViewTest(TestCase):
         Create a router, then test that the create a static route page view is displayed correctly.
         """
         test_router        = create_router('junos')
-        response           = self.client.get(reverse('op_webgui:ipv6_static_create', kwargs={'router_id': test_router.id}))
+        response           = self.client.get(reverse('netdevice:ipv6_static_create', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -111,7 +111,7 @@ class StaticViewTest(TestCase):
         Create a router, then test that the create a static route page view is displayed correctly.
         """
         test_router        = create_router('junos')
-        response           = self.client.get(reverse('op_webgui:ipv4_static_create', kwargs={'router_id': test_router.id}))
+        response           = self.client.get(reverse('netdevice:ipv4_static_create', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -122,7 +122,7 @@ class StaticViewTest(TestCase):
         test_router        = create_router('junos')
         static_route       = create_v6_static(test_router, '2001:db8:1::')
 
-        response           = self.client.get(reverse('op_webgui:ipv6_static_edit', kwargs={'ipv6_static_id': static_route.id}))
+        response           = self.client.get(reverse('netdevice:ipv6_static_edit', kwargs={'ipv6_static_id': static_route.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -133,6 +133,6 @@ class StaticViewTest(TestCase):
         test_router        = create_router('junos')
         static_route       = create_v4_static(test_router, '192.0.2.0')
 
-        response           = self.client.get(reverse('op_webgui:ipv4_static_edit', kwargs={'ipv4_static_id': static_route.id}))
+        response           = self.client.get(reverse('netdevice:ipv4_static_edit', kwargs={'ipv4_static_id': static_route.id}))
 
         self.assertEqual(response.status_code, 200)

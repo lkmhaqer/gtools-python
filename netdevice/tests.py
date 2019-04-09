@@ -67,7 +67,7 @@ class NetdeviceViewTests(TestCase):
         Create a router, then check the create interface form view is displayed correctly.
         """
         test_router             = create_router('junos')
-        response                = self.client.get(reverse('op_webgui:interface_create', kwargs={'router_id': test_router.id}))
+        response                = self.client.get(reverse('netdevice:interface_create', kwargs={'router_id': test_router.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -78,7 +78,7 @@ class NetdeviceViewTests(TestCase):
         test_router             = create_router('junos')
         test_logical_interface  = create_interface(test_router)
 
-        response                = self.client.get(reverse('op_webgui:interface_edit', kwargs={'interface_id': test_logical_interface.interface.id}))
+        response                = self.client.get(reverse('netdevice:interface_edit', kwargs={'interface_id': test_logical_interface.interface.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -89,7 +89,7 @@ class NetdeviceViewTests(TestCase):
         test_router             = create_router('junos')
         test_logical_interface  = create_interface(test_router)
 
-        response                = self.client.get(reverse('op_webgui:logical_interface_create', kwargs={'interface_id': test_logical_interface.interface.id}))
+        response                = self.client.get(reverse('netdevice:logical_interface_create', kwargs={'interface_id': test_logical_interface.interface.id}))
 
         self.assertEqual(response.status_code, 200)
 
@@ -100,6 +100,6 @@ class NetdeviceViewTests(TestCase):
         test_router             = create_router('junos')
         test_logical_interface  = create_interface(test_router)
 
-        response                = self.client.get(reverse('op_webgui:logical_interface_edit', kwargs={'logical_interface_id': test_logical_interface.id}))
+        response                = self.client.get(reverse('netdevice:logical_interface_edit', kwargs={'logical_interface_id': test_logical_interface.id}))
 
         self.assertEqual(response.status_code, 200)

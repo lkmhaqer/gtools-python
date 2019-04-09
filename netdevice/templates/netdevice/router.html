@@ -9,10 +9,10 @@
   <br />
   <a href="{% url 'netdevice:router_config' router.id %}" class="btn btn-outline-primary">Config</a>
   <a href="{% url 'netdevice:router_edit' router.id %}" class="btn btn-outline-primary">Edit</a>
-  <a href="{% url 'op_webgui:ipv6_static_create' router.id %}" class="btn btn-success">Add IPv6 Static Route</a>
-  <a href="{% url 'op_webgui:ipv4_static_create' router.id %}" class="btn btn-success">Add IPv4 Static Route</a>
+  <a href="{% url 'netdevice:ipv6_static_create' router.id %}" class="btn btn-success">Add IPv6 Static Route</a>
+  <a href="{% url 'netdevice:ipv4_static_create' router.id %}" class="btn btn-success">Add IPv4 Static Route</a>
   <a href="{% url 'bgp:neighbor_create' router.id %}" class="btn btn-success">Add BGP Neighbor</a>
-  <a href="{% url 'op_webgui:interface_create' router.id %}" class="btn btn-success">Add Interface</a>
+  <a href="{% url 'netdevice:interface_create' router.id %}" class="btn btn-success">Add Interface</a>
   <hr />
 
   <div class="col-5 align-self-start">
@@ -43,39 +43,39 @@
   {% for interface in router.interface_set.all %}
     <hr />
     <div class="btn-group mr-2" role="group" aria-label="First group">
-      <a href="{% url 'op_webgui:interface_edit' interface.id %}" class="btn btn-outline-primary">
+      <a href="{% url 'netdevice:interface_edit' interface.id %}" class="btn btn-outline-primary">
       {{ interface.name }} ({{ interface.description }})
       </a>
-      <a href="{% url 'op_webgui:logical_interface_create' interface.id %}" class="btn btn-success">
+      <a href="{% url 'netdevice:logical_interface_create' interface.id %}" class="btn btn-success">
       Add Sub-interface
       </a>
     </div><br /><br />
     <ul>
     {% for logical_interface in interface.logical_interface_set.all %}
       <li><div class="btn-group mr-2" role="group" aria-label="First group">
-        <a href="{% url 'op_webgui:logical_interface_edit' logical_interface.id %}" class="btn btn-outline-primary btn-sm">
+        <a href="{% url 'netdevice:logical_interface_edit' logical_interface.id %}" class="btn btn-outline-primary btn-sm">
         {{ interface.name }}.{{ logical_interface.name }} ({{ logical_interface.description }})
         </a>
-        <a href="{% url 'op_webgui:ipv6_address_create' logical_interface.id %}" class="btn btn-success btn-sm">
+        <a href="{% url 'netdevice:ipv6_address_create' logical_interface.id %}" class="btn btn-success btn-sm">
         Add IPv6
         </a>
         {% if logical_interface.inet6_dhcp_client %}
           <button type="button" class="btn">DHCP</button>
         {% else %}
           {% for ipv6_address in logical_interface.ipv6_address_set.all %}
-             <a href="{% url 'op_webgui:ipv6_address_edit' ipv6_address.id %}" class="btn btn-outline-primary">
+             <a href="{% url 'netdevice:ipv6_address_edit' ipv6_address.id %}" class="btn btn-outline-primary">
              {{ ipv6_address.host }}/{{ ipv6_address.cidr }}
              </a>
           {% endfor %}
         {% endif %}
-        <a href="{% url 'op_webgui:ipv4_address_create' logical_interface.id %}" class="btn btn-success btn-sm">
+        <a href="{% url 'netdevice:ipv4_address_create' logical_interface.id %}" class="btn btn-success btn-sm">
         Add IPv4
         </a>
         {% if logical_interface.inet_dhcp_client %}
           <button type="button" class="btn">DHCP</button>
         {% else %}
           {% for ipv4_address in logical_interface.ipv4_address_set.all %}
-             <a href="{% url 'op_webgui:ipv4_address_edit' ipv4_address.id %}" class="btn btn-outline-primary">
+             <a href="{% url 'netdevice:ipv4_address_edit' ipv4_address.id %}" class="btn btn-outline-primary">
              {{ ipv4_address.host }}/{{ ipv4_address.cidr }}
              </a>
           {% endfor %}
@@ -90,13 +90,13 @@
 
   <div class="list-group">
   {% for ipv6_static in router.ipv6_static_set.all %}
-    <a href="{% url 'op_webgui:ipv6_static_edit' ipv6_static.id %}"
+    <a href="{% url 'netdevice:ipv6_static_edit' ipv6_static.id %}"
        class="list-group-item list-group-item-action">
     {{ ipv6_static.network }}/{{ ipv6_static.cidr }} next-hop {{ ipv6_static.next_hop }}
     </a>
   {% endfor %}
   {% for ipv4_static in router.ipv4_static_set.all %}
-    <a href="{% url 'op_webgui:ipv4_static_edit' ipv4_static.id %}"
+    <a href="{% url 'netdevice:ipv4_static_edit' ipv4_static.id %}"
        class="list-group-item list-group-item-action">
     {{ ipv4_static.network }}/{{ ipv4_static.cidr }} next-hop {{ ipv4_static.next_hop }}
     </a>
