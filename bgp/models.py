@@ -54,7 +54,7 @@ class aut_num(models.Model):
     Example string: 65000: 123 ISP Inc. (john.smith@example.com)
     """
 
-    asn        = models.BigIntegerField(unique=True)
+    asn        = models.BigIntegerField(unique=False)
     name       = models.CharField(max_length=255)
     contact    = models.EmailField(blank=True)
     vrf        = models.ForeignKey(
@@ -63,6 +63,8 @@ class aut_num(models.Model):
                                    null=True,
                                    blank=True
                                   )
+    class Meta:
+        unique_together = ("asn", "vrf")
 
     def __str__(self):
         return str(self.asn) + ": " + self.name + " (" + self.contact + ")"

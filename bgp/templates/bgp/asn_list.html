@@ -16,6 +16,7 @@
                 <th>ASN</th>
                 <th>Name</th>
                 <th>Contact</th>
+		<th>VRF</th>
             </tr>
         {% for asn in asn_list %}
             <tr>
@@ -23,6 +24,7 @@
                 <td><a href="{% url 'bgp:aut_num_detail' asn.id %}">{{ asn.asn }}</a></td>
                 <td>{{ asn.name }}</td>
                 <td>{{ asn.contact }}</td>
+		<td>{{ asn.vrf }}</td>
             </tr>
         {% endfor %}
         </table>
