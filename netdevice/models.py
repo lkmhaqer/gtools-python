@@ -110,11 +110,11 @@ class vrf(models.Model):
     Example string: VRF_Name (target:65000:65000)
     """
 
-    vrf_name    = models.CharField(max_length=255)
-    vrf_target  = models.CharField(max_length=255)
+    name    = models.CharField(max_length=255)
+    target  = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.vrf_name + " (" + self.vrf_target + ")"
+        return self.name + " (" + self.target + ")"
 
 
 class network_os(models.Model):

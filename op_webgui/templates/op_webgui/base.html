@@ -26,7 +26,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link{% if not router_count and not asn_count %} active{% endif %}" href="{% url 'op_webgui:index' %}">
+                <a class="nav-link{% if not router_count and not asn_count and not vrf_count %} active{% endif %}" href="{% url 'op_webgui:index' %}">
                   Overview
                 </a>
               </li>
@@ -42,6 +42,14 @@
                 <a class="nav-link{% if asn_count %} active{% endif %}" href="{% url 'bgp:asn_list' %}">
                   ASNs
                   {% if asn_count %}
+                  <span class="sr-only">(current)</span>
+                  {% endif %}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link{% if vrf_count %} active{% endif %}" href="{% url 'netdevice:vrf_list' %}">
+                  VRFs
+                  {% if vrf_count %}
                   <span class="sr-only">(current)</span>
                   {% endif %}
                 </a>

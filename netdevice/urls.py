@@ -29,6 +29,26 @@ urlpatterns = [
         name='router_config'
        ),
     url(
+        r'^vrf/$',
+        views.vrf_list,
+        name='vrf_list'
+       ),
+    url(
+        r'^create/vrf/$',
+        views.vrf_create,
+        name='vrf_create'
+       ),
+    url(
+        r'^(?P<vrf_id>[0-9]+)/edit/vrf/$',
+        views.vrf_edit,
+        name='vrf_edit'
+       ),
+    url(
+        r'^(?P<vrf_id>[0-9]+)/vrf/$',
+        views.vrf_detail,
+        name='vrf_detail'
+       ),
+    url(
         r'^(?P<router_id>[0-9]+)/create/interface/$',
         views.interface_create,
         name='interface_create'

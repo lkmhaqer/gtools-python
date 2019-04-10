@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from django.contrib.auth.models import User
-from netdevice.models import router, network_os, interface, logical_interface
+from netdevice.models import router, network_os, interface, logical_interface, vrf
 from bgp.models import aut_num
 
 def create_router(network_os_name):
@@ -43,6 +43,45 @@ def create_interface(test_router):
 class NetdeviceViewTests(TestCase):
     def setUp(self):
         self.client.force_login(User.objects.get_or_create(username='testuser')[0])
+
+    def test_vrf_list_view_with_one_vrf(self):
+        """
+        Create one VRF, then check the vrf_list view and template.
+        """
+        test_vrf  = vrf.objects.create(name='Test VRF', target='target:65000:65000')
+        response  = self.client.get(reverse('netdevice:vrf_list'))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_vrf_list_view_with_100_vrf(self):
+        """
+        Create 100 VRF, then check the vrf_list view.
+        """
+        test_vrfs = []
+        for i in range(00, 99):
+            target_str = 'target:650' + str(i) + ':65000'
+            test_vrfs.append(vrf.objects.create(name='Test VRF #' + str(i), target=target_str))
+        response  = self.client.get(reverse('netdevice:vrf_list'))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_vrf_detail_view(self):
+        """
+        Create one VRF, then check the detail view.
+        """
+        test_vrf  = vrf.objects.create(name='Test VRF', target='target:65000:65000')
+        response  = self.client.get(reverse('netdevice:vrf_detail', kwargs={'vrf_id': test_vrf.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_vrf_edit_view(self):
+        """
+        Create one VRF, then check the edit view.
+        """
+        test_vrf  = vrf.objects.create(name='Test VRF', target='target:65000:65000')
+        response  = self.client.get(reverse('netdevice:vrf_edit', kwargs={'vrf_id': test_vrf.id}))
+
+        self.assertEqual(response.status_code, 200)
 
     def test_config_view_with_ios_router(self):
         """

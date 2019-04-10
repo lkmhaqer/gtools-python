@@ -1,0 +1,31 @@
+{% extends 'op_webgui/base.html' %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}{% block title %}VRF List{% endblock %}{% endblock %}
+
+{% block content %}
+
+    <p>
+    <span align="right"><a href="{% url 'netdevice:vrf_create' %}" class="btn btn-success">Add VRF</a></span>
+    {% if vrf_list %}
+        <p>&nbsp;
+        <table class="table table-hover">
+            <tr>
+                <th>&nbsp;</th>
+                <th>Name</th>
+                <th>Target</th>
+            </tr>
+        {% for vrf in vrf_list %}
+            <tr>
+                <td><a href="{% url 'netdevice:vrf_edit' vrf.id %}" class="btn btn-outline-primary btn-sm">edit</a></td>
+                <td><a href="{% url 'netdevice:vrf_detail' vrf.id %}">{{ vrf.name }}</a></td>
+		<td>{{ vrf.target }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No VRFs ¯\_(ツ)_/¯</p>
+    {% endif %}
+
+{% endblock %}

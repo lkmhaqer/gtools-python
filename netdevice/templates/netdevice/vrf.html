@@ -1,0 +1,16 @@
+{% extends 'op_webgui/base.html' %}
+
+{% load bootstrap4 %}
+
+{% block bootstrap4_title %}{% block title %}VRF {{ vrf.name }}{% endblock %}{% endblock %}
+
+{% block content %}
+
+  <br /><a href="{% url 'netdevice:vrf_edit' vrf.id %}" class="btn btn-outline-primary">Edit</a><hr />
+
+  <ul class="list-group col-4">
+    <li class="list-group-item"><b>Name:</b> {{ vrf.name }}</li>
+    <li class="list-group-item"><b>Target:</b> {{ vrf.target }}</li>
+  </ul>
+
+{% endblock %}

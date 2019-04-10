@@ -2,9 +2,9 @@
 
 from django.shortcuts import get_object_or_404, render, redirect
 
-from netdevice.models import router, interface, logical_interface
+from netdevice.models import router, interface, logical_interface, vrf
 
-from netdevice.forms import RouterForm, InterfaceForm, LogicalInterfaceForm
+from netdevice.forms import RouterForm, InterfaceForm, LogicalInterfaceForm, VrfForm
 
 
 def router_detail(request, router_id):
@@ -44,6 +44,40 @@ def router_config(request, router_id):
                      }
 
     return render(request, 'netdevice/router_config.html', context)
+
+def vrf_list(request):
+    vrf_list  = vrf.objects.order_by('target')
+    vrf_count = vrf_list.count()
+    context   = {
+                'vrf_list':  vrf_list,
+                'vrf_count': vrf_count,
+                }
+    return render(request, 'netdevice/vrf_list.html', context)
+
+def vrf_detail(request, vrf_id):
+    vrf_obj = get_object_or_404(vrf, pk=vrf_id)
+    return render(request, 'netdevice/vrf.html', {'vrf': vrf_obj})
+
+def vrf_create(request):
+    if request.method == "POST":
+        form = VrfForm(request.POST)
+        if form.is_valid():
+            vrf = form.save()
+            return redirect('netdevice:vrf_detail', vrf_id=vrf.pk)
+    else:
+        form = VrfForm()
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
+
+def vrf_edit(request, vrf_id):
+    vrf_obj = get_object_or_404(vrf, pk=vrf_id)
+    if request.method == "POST":
+        form = VrfForm(request.POST, instance=vrf_obj)
+        if form.is_valid():
+            vrf_obj = form.save()
+            return redirect('netdevice:vrf_detail', vrf_id=vrf_obj.pk)
+    else:
+        form = VrfForm(instance=vrf_obj)
+    return render(request, 'op_webgui/generic_edit.html', {'form': form})
 
 def interface_create(request, router_id):
     router_obj = get_object_or_404(router, pk=router_id)
