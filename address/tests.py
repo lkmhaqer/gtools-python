@@ -185,8 +185,8 @@ class AddressViewTests(TestCase):
 
         test_text = ''.join([
                      '<input type="text" name="host" value="2001:db8:1::1" ',
-                     'title="" required id="id_host" placeholder="Host" ',
-                     'class="form-control" />',
+                     'class="form-control" placeholder="Host" title="" ',
+                     'required id="id_host">',
                     ])
 
         self.assertEqual(response.status_code, 200)
@@ -209,8 +209,8 @@ class AddressViewTests(TestCase):
 
         test_text = ''.join([
                      '<input type="text" name="host" value="192.0.2.1" ',
-                     'title="" required id="id_host" placeholder="Host" ',
-                     'class="form-control" />',
+                     'class="form-control" placeholder="Host" title="" ',
+                     'required id="id_host">',
                     ])
 
         self.assertEqual(response.status_code, 200)
