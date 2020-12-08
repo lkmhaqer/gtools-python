@@ -2,3 +2,4 @@
 *.pyc
 .PRODUCTION_VARS
 db.sqlite3
+**/.vscode
